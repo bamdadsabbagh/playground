@@ -28,6 +28,9 @@ import {
 import {Example2D, shuffle} from "./dataset";
 import {AppendingLineChart} from "./linechart";
 import * as d3 from 'd3';
+import {Coolearning} from './coolearning/coolearning'
+
+Coolearning()
 
 let mainWidth;
 
