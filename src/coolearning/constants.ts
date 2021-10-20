@@ -6,6 +6,8 @@ export const PARAMETERS = {
     learningRate: document.getElementById('learningRate'),
     activation: document.getElementById('activations'),
     regularizations: document.getElementById('regularizations'),
+    addLayers: document.getElementById('add-layers'),
+    removeLayers: document.getElementById('remove-layers'),
 }
 
 export const TYPES = {
