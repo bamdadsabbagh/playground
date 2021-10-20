@@ -1,6 +1,6 @@
-import {MODAL_CONTAINER} from "../settings.constants";
+import {getContainer} from "./get-container";
 
 export function hideModal(){
-    const modal = document.getElementById(MODAL_CONTAINER)
-    modal.style.display = 'none'
+    const container = getContainer()
+    container.style.display = 'none'
 }
