@@ -1,10 +1,11 @@
 import {hideModal} from "./hide-modal";
+import {MODAL_CONTAINER, MODAL_CONTENT} from "../settings.constants";
 
 export function createModal(){
     const container = document.createElement('div')
     const content = document.createElement('div')
 
-    container.id = 'modal'
+    container.id = MODAL_CONTAINER
     container.style.display = 'none'
     container.style.position = 'fixed'
     container.style.justifyContent = 'center'
@@ -15,6 +16,7 @@ export function createModal(){
     container.style.overflow = 'auto'
     container.style.backgroundColor = 'rgba(0, 0, 0, 0.4)'
 
+    content.id = MODAL_CONTENT
     content.style.backgroundColor = '#fefefe'
     content.style.margin = '45vh auto'
     content.style.padding = '20px'
@@ -23,7 +25,7 @@ export function createModal(){
 
     container.addEventListener('click', (e) => {
         //@ts-ignore
-        const isModal = e.target.id === 'modal'
+        const isModal = e.target.id === MODAL_CONTAINER
         if(!isModal) return
         hideModal()
     })
