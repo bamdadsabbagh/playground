@@ -1,7 +1,7 @@
-import {showModal} from "./show-modal";
+import { showModal } from './show-modal'
 
-export function createButton(){
-    const button = document.createElement('button')
+export function createButton () {
+    const button = document.createElement ('button')
 
     button.style.display = 'block'
     button.style.position = 'fixed'
@@ -9,9 +9,9 @@ export function createButton(){
     button.style.left = '5px'
     button.innerText = 'settings'
 
-    button.addEventListener('click', () => {
-        showModal()
+    button.addEventListener ('click', () => {
+        showModal ()
     })
 
-    document.body.insertBefore(button, document.body.firstChild)
+    document.body.insertBefore (button, document.body.firstChild)
 }

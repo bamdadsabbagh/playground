@@ -1,11 +1,11 @@
-import {getContent} from "./get-content";
-import {PARAMETERS} from "../../constants";
-import {isControlled} from "../../utils/is-controlled";
-import {getControlId} from "../../utils/get-control-id";
-import {getControlType} from "../../utils/get-control-type";
+import { getContent } from './get-content'
+import { PARAMETERS } from '../../constants'
+import { isControlled } from '../../utils/is-controlled'
+import { getControlId } from '../../utils/get-control-id'
+import { getControlType } from '../../utils/get-control-type'
 
-export function initializeContent() {
-    const content = getContent()
+export function initializeContent () {
+    const content = getContent ()
     content.style.display = 'flex'
     content.style.flexDirection = 'column'
     content.style.justifyContent = 'center'
@@ -27,16 +27,16 @@ export function initializeContent() {
         </div>
     `
 
-    Object.keys(PARAMETERS).forEach((parameter) => {
+    Object.keys (PARAMETERS).forEach ((parameter) => {
         let control, type, actions
 
-        if (isControlled(parameter)) {
-            control = getControlId(parameter)
-            type = getControlType(parameter)
+        if (isControlled (parameter)) {
+            control = getControlId (parameter)
+            type = getControlType (parameter)
             actions = `<button>x</button>`
         } else {
-            control = "N/A"
-            type = "N/A"
+            control = 'N/A'
+            type = 'N/A'
             actions = `
                 <button onclick="
                     window.coolState.isLearning = true

@@ -1,6 +1,6 @@
-import {STATE_ID} from "../constants";
+import { STATE_ID } from '../constants'
 
-export function setState(action, payload) {
+export function setState (action, payload) {
     const state = window[STATE_ID]
     switch (action) {
         case 'isLearning':
@@ -17,6 +17,6 @@ export function setState(action, payload) {
             }
             break
         default:
-            throw new Error('action not found')
+            throw new Error ('action not found')
     }
 }

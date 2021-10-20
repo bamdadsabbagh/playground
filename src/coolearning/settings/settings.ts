@@ -1,12 +1,12 @@
-import {createModal} from "./utils/create-modal";
-import {createButton} from "./utils/create-button";
-import {initializeContent} from "./utils/initialize-content";
+import { createModal } from './utils/create-modal'
+import { createButton } from './utils/create-button'
+import { initializeContent } from './utils/initialize-content'
 
-export function Settings() {
+export function Settings () {
 
-    createButton()
+    createButton ()
 
-    createModal()
+    createModal ()
 
-    initializeContent()
+    initializeContent ()
 }

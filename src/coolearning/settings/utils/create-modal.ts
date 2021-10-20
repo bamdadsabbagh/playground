@@ -1,9 +1,9 @@
-import {hideModal} from "./hide-modal";
-import {MODAL_CONTAINER, MODAL_CONTENT} from "../settings.constants";
+import { hideModal } from './hide-modal'
+import { MODAL_CONTAINER, MODAL_CONTENT } from '../settings.constants'
 
-export function createModal(){
-    const container = document.createElement('div')
-    const content = document.createElement('div')
+export function createModal () {
+    const container = document.createElement ('div')
+    const content = document.createElement ('div')
 
     container.id = MODAL_CONTAINER
     container.style.display = 'none'
@@ -23,13 +23,13 @@ export function createModal(){
     content.style.border = '1px solid #888'
     content.style.width = '80vw'
 
-    container.addEventListener('click', (e) => {
+    container.addEventListener ('click', (e) => {
         //@ts-ignore
         const isModal = e.target.id === MODAL_CONTAINER
-        if(!isModal) return
-        hideModal()
+        if (!isModal) return
+        hideModal ()
     })
 
-    container.appendChild(content)
-    document.body.insertBefore(container, document.body.firstChild)
+    container.appendChild (content)
+    document.body.insertBefore (container, document.body.firstChild)
 }

@@ -1,6 +1,6 @@
-import {STATE_ID} from "../constants";
+import { STATE_ID } from '../constants'
 
-export function initializeState() {
+export function initializeState () {
     const state = {
         isLearning: false,
         learningParameter: null,

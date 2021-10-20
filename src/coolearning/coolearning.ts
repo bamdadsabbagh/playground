@@ -1,46 +1,46 @@
-import {Settings} from "./settings/settings";
-import {removeHeader} from "./utils/remove-header";
-import {removeArticle} from "./utils/remove-article";
-import {removeFooter} from "./utils/remove-footer";
-import {initializeState} from "./utils/initialize-state";
-import {addControl} from "./utils/add-control";
-import {setupMidi} from "./utils/setup-midi";
+import { Settings } from './settings/settings'
+import { removeHeader } from './utils/remove-header'
+import { removeArticle } from './utils/remove-article'
+import { removeFooter } from './utils/remove-footer'
+import { initializeState } from './utils/initialize-state'
+import { addControl } from './utils/add-control'
+import { setupMidi } from './utils/setup-midi'
 
-export function Coolearning() {
+export function Coolearning () {
 
-    window.addEventListener('load', () => {
+    window.addEventListener ('load', () => {
         // cleaning old interface
-        removeHeader()
-        removeArticle()
-        removeFooter()
+        removeHeader ()
+        removeArticle ()
+        removeFooter ()
 
         // state
-        initializeState()
-        addControl({
+        initializeState ()
+        addControl ({
             parameter: 'playPauseButton',
             control: '41',
             type: 'button',
         })
 
-        addControl({
+        addControl ({
             parameter: 'resetButton',
             control: '73',
             type: 'button',
         })
 
-        addControl({
+        addControl ({
             parameter: 'learningRate',
             control: '77',
             type: 'range',
         })
 
-        addControl({
+        addControl ({
             parameter: 'activation',
             control: '49',
             type: 'range',
         })
 
-        Settings()
-        setupMidi()
+        Settings ()
+        setupMidi ()
     })
 }

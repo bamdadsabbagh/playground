@@ -1,7 +1,7 @@
-import {getState} from "./get-state";
+import { getState } from './get-state'
 
-export function removeControl({parameter}) {
-    const state = getState()
+export function removeControl ({parameter}) {
+    const state = getState ()
     const control = state.controlByParameter[parameter] && state.controlByParameter[parameter].control
 
     if (state.controlByParameter[parameter]) {
@@ -12,7 +12,7 @@ export function removeControl({parameter}) {
         if (state.parametersByControl[control].length === 1) {
             delete state.parametersByControl[control]
         } else {
-            state.parametersByControl[control] = state.parametersByControl[control].filter(p => p !== parameter)
+            state.parametersByControl[control] = state.parametersByControl[control].filter (p => p !== parameter)
         }
     }
 }

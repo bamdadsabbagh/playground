@@ -1,6 +1,6 @@
-import {getContainer} from "./get-container";
+import { getContainer } from './get-container'
 
-export function hideModal(){
-    const container = getContainer()
+export function hideModal () {
+    const container = getContainer ()
     container.style.display = 'none'
 }

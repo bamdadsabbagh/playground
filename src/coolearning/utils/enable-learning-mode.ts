@@ -1,6 +1,6 @@
-import {setState} from "./set-state";
+import { setState } from './set-state'
 
-export function enableLearningMode(learningParameter) {
-    setState('isLearning', true)
-    setState('learningParameter', learningParameter)
+export function enableLearningMode (learningParameter) {
+    setState ('isLearning', true)
+    setState ('learningParameter', learningParameter)
 }
