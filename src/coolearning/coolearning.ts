@@ -24,8 +24,20 @@ export function Coolearning() {
 
         addControl({
             parameter: 'resetButton',
-            control: '42',
+            control: '73',
             type: 'button',
+        })
+
+        addControl({
+            parameter: 'learningRate',
+            control: '77',
+            type: 'range',
+        })
+
+        addControl({
+            parameter: 'activation',
+            control: '49',
+            type: 'range',
         })
 
         Settings()

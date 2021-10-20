@@ -1,8 +1,9 @@
 // https://raw.githubusercontent.com/erictherobot/react-web-midi/master/src/lib/MidiScript.js
 // todo lot of cleaning and logic extraction
 
-import {PARAMETERS} from "../constants";
+import {PARAMETERS, TYPES} from "../constants";
 import {getState} from "./get-state";
+import * as d3 from "d3";
 
 export function setupMidi() {
     const log = console.log.bind(console)
@@ -128,6 +129,13 @@ export function setupMidi() {
 
         // logger(keyData, 'key data', data)
 
+        console.log({
+            channel,
+            note,
+            velocity,
+            type
+        })
+
         const state = getState()
 
         if (state.isLearning && state.learningParameter) {
@@ -152,18 +160,29 @@ export function setupMidi() {
             console.log(`learning note ${note} as type ${myType} for parameter ${id}`)
 
         } else if (state.parametersByControl[note]) {
-            // console.log({
-            //     channel,
-            //     note,
-            //     value: velocity,
-            //     type
-            // })
+
             state.parametersByControl[note].forEach(parameter => {
                 const element = PARAMETERS[parameter]
 
-                // 144 on 128 off
-                if (state.controlByParameter[parameter].type === 'button' && type === 144) {
-                    element.click()
+                switch (element.tagName) {
+                    case 'SELECT':
+                        if (type === TYPES.range) {
+                            const length = element.children.length - 1
+                            const v = rangeMap(velocity, 0, 127, 0, length)
+                            const n = parseInt(v)
+                            if (n !== element.selectedIndex) {
+                                element.selectedIndex = n
+                                element.dispatchEvent(new Event('change'))
+                            }
+                        }
+                        break
+                    case 'BUTTON':
+                        if (type === TYPES.buttonOn) {
+                            element.click()
+                        }
+                        break
+                    default:
+                        throw new Error(`${element.tagName} target not handled`)
                 }
             })
         }
