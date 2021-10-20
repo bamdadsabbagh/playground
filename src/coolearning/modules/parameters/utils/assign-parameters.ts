@@ -1,6 +1,6 @@
 import {PARAMETERS} from "../parameters.constants";
 
-export function assignParameters(){
+export function assignParameters() {
     const keys = Object.keys(PARAMETERS)
 
     keys.forEach((key) => {
@@ -8,7 +8,7 @@ export function assignParameters(){
         node.style.background = 'red'
         node.style.cursor = 'pointer'
         node.addEventListener('click', () => {
-            console.log("lol")
+            console.log('external trigger!')
         })
     })
 }

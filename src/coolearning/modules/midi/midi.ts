@@ -1,6 +1,6 @@
 import MidiScript from "./MidiScript";
 
-export function Midi () {
+export function Midi() {
     const keyData = document.createElement('div')
     keyData.id = 'key_data'
     document.body.appendChild(keyData)

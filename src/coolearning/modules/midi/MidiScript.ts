@@ -1,5 +1,8 @@
 // https://raw.githubusercontent.com/erictherobot/react-web-midi/master/src/lib/MidiScript.js
 
+import {State} from "../state/state";
+import {PARAMETERS} from "../parameters/parameters.constants";
+
 export default function () {
     const log = console.log.bind(console)
     const keyData = document.getElementById('key_data')
@@ -66,21 +69,22 @@ export default function () {
         key70: 11,
         key71: 12
     }
+
     // user interaction
-    function clickPlayOn (e) {
+    function clickPlayOn(e) {
         e.target.classList.add('active')
         e.target.play()
     }
 
-    function clickPlayOff (e) {
+    function clickPlayOff(e) {
         e.target.classList.remove('active')
     }
 
-    function keyController (e) {
+    function keyController(e) {
     }
 
     // midi functions
-    function onMIDISuccess (midiAccess) {
+    function onMIDISuccess(midiAccess) {
         midi = midiAccess
         const inputs = midi.inputs.values()
         // loop through all inputs
@@ -94,7 +98,7 @@ export default function () {
         showMIDIPorts(midi)
     }
 
-    function onMIDIMessage (event) {
+    function onMIDIMessage(event) {
         data = event.data
         cmd = data[0] >> 4
         channel = data[0] & 0xf
@@ -107,48 +111,104 @@ export default function () {
         // pressure / tilt on
         // pressure: 176, cmd 11:
         // bend: 224, cmd: 14
-        log('MIDI data', data)
+        // log('MIDI data', data)
 
         // Display Midi Notes
-        keyData.innerHTML = keyData.innerHTML + data
+        // keyData.innerHTML = keyData.innerHTML + data
+        //
+        // switch (type) {
+        //     case 144: // noteOn message
+        //         noteOn(note, velocity)
+        //         break
+        //     case 128: // noteOff message
+        //         noteOff(note, velocity)
+        //         break
+        // }
 
-        switch (type) {
-            case 144: // noteOn message
-                noteOn(note, velocity)
-                break
-            case 128: // noteOff message
-                noteOff(note, velocity)
-                break
+        // logger(keyData, 'key data', data)
+
+        const state = State()
+
+        if (state.isLearning && state.learningParameter) {
+
+            const id = state.learningParameter
+            const myType = type === 128 || type === 144 ? 'button' : 'range'
+
+            // update state
+            state.controlByParameter[id] = {
+                type: myType,
+                note,
+            }
+
+            // todo add many parameters
+            state.parametersByControl[note] = [id]
+
+            // todo update settings
+
+            state.isLearning = false
+            state.learningParameter = undefined
+
+            console.log(`learning note ${note} as type ${myType} for parameter ${id}`)
+
+        } else if (state.parametersByControl[note]) {
+            // console.log({
+            //     channel,
+            //     note,
+            //     value: velocity,
+            //     type
+            // })
+            state.parametersByControl[note].forEach(parameter => {
+                const element = PARAMETERS[parameter]
+
+                // 144 on 128 off
+                if (state.controlByParameter[parameter].type === 'button' && type === 144) {
+                    element.click()
+                }
+            })
         }
-
-        logger(keyData, 'key data', data)
     }
 
-    function onStateChange (event) {
-        showMIDIPorts(midi)
-        const port = event.port
-        const state = port.state
-        const name = port.name
-        const type = port.type
-        if (type === 'input') {
-            log('name', name, 'port', port, 'state', state)
-        }
+    function onStateChange(event) {
+        // showMIDIPorts(midi)
+        // const port = event.port
+        // const state = port.state
+        // const name = port.name
+        // const type = port.type
+        // if (type === 'input') {
+        //     log('name', name, 'port', port, 'state', state)
+        // }
+
+        const {port} = event
+
+        if (!port) return
+
+        const {connection, id, type} = port
+        if (!connection) return
+        if (type !== 'input') return
+
+        const state = State()
+        state.devices = [
+            ...state.devices,
+            {id}
+        ]
+
+        console.log(state)
     }
 
-    function listInputs (inputs) {
+    function listInputs(inputs) {
         const input = inputs.value
         log("Input port : [ type:'" + input.type + "' id: '" + input.id + "' manufacturer: '" + input.manufacturer + "' name: '" + input.name + "' version: '" + input.version + "']")
     }
 
-    function noteOn (midiNote, velocity) {
+    function noteOn(midiNote, velocity) {
         player(midiNote, velocity)
     }
 
-    function noteOff (midiNote, velocity) {
+    function noteOff(midiNote, velocity) {
         player(midiNote, velocity)
     }
 
-    function player (note, velocity) {
+    function player(note, velocity) {
         const sample = sampleMap['key' + note]
         if (sample) {
             if (type === (0x80 & 0xf0) || velocity === 0) {
@@ -162,12 +222,12 @@ export default function () {
         }
     }
 
-    function onMIDIFailure (e) {
+    function onMIDIFailure(e) {
         log("No access to MIDI devices or your browser doesn't support WebMIDI API. Please use WebMIDIAPIShim " + e)
     }
 
     // MIDI utility functions
-    function showMIDIPorts (midiAccess) {
+    function showMIDIPorts(midiAccess) {
         const inputs = midiAccess.inputs
         const outputs = midiAccess.outputs
         let html
@@ -209,7 +269,7 @@ export default function () {
     }
 
     // audio functions
-    function loadAudio (object, url) {
+    function loadAudio(object, url) {
         const request = new XMLHttpRequest()
         request.open('GET', url, true)
         request.responseType = 'arraybuffer'
@@ -221,7 +281,7 @@ export default function () {
         request.send()
     }
 
-    function addAudioProperties (object) {
+    function addAudioProperties(object) {
         object.name = object.id
         object.source = object.dataset.sound
         loadAudio(object, object.source)
@@ -246,11 +306,11 @@ export default function () {
     }
 
     // utility functions
-    function randomRange (min, max) {
+    function randomRange(min, max) {
         return Math.random() * (max + min) + min
     }
 
-    function rangeMap (x, a1, a2, b1, b2) {
+    function rangeMap(x, a1, a2, b1, b2) {
         return ((x - a1) / (a2 - a1)) * (b2 - b1) + b1
     }
 
@@ -258,7 +318,7 @@ export default function () {
     //   return 440 * Math.pow(2, (note - 69) / 12)
     // }
 
-    function logger (container, label, data) {
+    function logger(container, label, data) {
         let messages
         messages = label + ' [channel: ' + (data[0] & 0xf) + ', cmd: ' + (data[0] >> 4) + ', type: ' + (data[0] & 0xf0) + ' , note: ' + data[1] + ' , velocity: ' + data[2] + ']'
         container.textContent = messages

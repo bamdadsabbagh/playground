@@ -18,7 +18,7 @@ export function createModal(){
 
     content.id = MODAL_CONTENT
     content.style.backgroundColor = '#fefefe'
-    content.style.margin = '45vh auto'
+    content.style.margin = '30vh auto'
     content.style.padding = '20px'
     content.style.border = '1px solid #888'
     content.style.width = '80vw'

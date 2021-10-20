@@ -1,16 +1,13 @@
 import {createModal} from "./utils/create-modal";
 import {createButton} from "./utils/create-button";
 import {getContent} from "./utils/get-content";
-import {showModal} from "./utils/show-modal";
 import {PARAMETERS} from "../parameters/parameters.constants";
 
-export function Settings () {
+export function Settings() {
 
     createButton()
 
     createModal()
-
-    showModal()
 
     const content = getContent()
     content.style.display = 'flex'
@@ -34,15 +31,21 @@ export function Settings () {
         </div>
     `
 
-    const parameters = Object.keys(PARAMETERS)
-    parameters.forEach((parameter) => {
+    Object.keys(PARAMETERS).forEach((parameter) => {
         content.innerHTML += `
             <div style="
                 display: grid;
                 grid-template-columns: repeat(4, 10vw);
             ">
                 <div>${parameter}</div>
-                <div>TBD</div>
+                <div>
+                    <button onclick="
+                        window.coolState.isLearning = true
+                        window.coolState.learningParameter = this.parentElement.parentElement.firstElementChild.innerText
+                    ">
+                        Learn
+                    </button>
+                </div>
                 <div>TBD</div>
                 <div>
                     <button>x</button>

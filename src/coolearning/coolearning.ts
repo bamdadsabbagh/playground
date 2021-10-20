@@ -4,14 +4,16 @@ import {removeHeader} from "./utils/remove-header";
 import {removeArticle} from "./utils/remove-article";
 import {removeFooter} from "./utils/remove-footer";
 import {Parameters} from "./modules/parameters/parameters";
+import {State} from "./modules/state/state";
 
-export function Coolearning () {
+export function Coolearning() {
 
     window.addEventListener('load', () => {
         removeHeader()
         removeArticle()
         removeFooter()
 
+        State()
         Settings()
         Parameters()
         Midi()
