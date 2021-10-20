@@ -149,6 +149,7 @@ export function setupMidi() {
                 note,
             }
 
+            // todo allow SELECT to only be mapped to ranges and BUTTON to buttons
             // todo add many parameters
             state.parametersByControl[note] = [id]
 
