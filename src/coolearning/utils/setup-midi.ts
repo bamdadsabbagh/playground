@@ -1,13 +1,14 @@
 // https://raw.githubusercontent.com/erictherobot/react-web-midi/master/src/lib/MidiScript.js
+// todo lot of cleaning and logic extraction
 
-import {State} from "../state/state";
-import {PARAMETERS} from "../parameters/parameters.constants";
+import {PARAMETERS} from "../constants";
+import {getState} from "./get-state";
 
-export default function () {
+export function setupMidi() {
     const log = console.log.bind(console)
-    const keyData = document.getElementById('key_data')
-    const deviceInfoInputs = document.getElementById('inputs')
-    const deviceInfoOutputs = document.getElementById('outputs')
+    // const keyData = document.getElementById('key_data')
+    // const deviceInfoInputs = document.getElementById('inputs')
+    // const deviceInfoOutputs = document.getElementById('outputs')
     let midi
     const ua = navigator.userAgent.toLowerCase()
     if (ua.indexOf('safari') !== -1) {
@@ -127,7 +128,7 @@ export default function () {
 
         // logger(keyData, 'key data', data)
 
-        const state = State()
+        const state = getState()
 
         if (state.isLearning && state.learningParameter) {
 
@@ -186,7 +187,7 @@ export default function () {
         if (!connection) return
         if (type !== 'input') return
 
-        const state = State()
+        const state = getState()
         state.devices = [
             ...state.devices,
             {id}
@@ -246,11 +247,11 @@ export default function () {
             }
         })
         console.log(inputs.size)
-        if (inputs.size > 1) {
-            deviceInfoInputs.innerHTML = html + '</div>'
-        } else {
-            deviceInfoInputs.innerHTML = noInputs
-        }
+        // if (inputs.size > 1) {
+        //     deviceInfoInputs.innerHTML = html + '</div>'
+        // } else {
+        //     deviceInfoInputs.innerHTML = noInputs
+        // }
 
         html = '<h4>MIDI Outputs:</h4><div class="info">'
         outputs.forEach(function (port) {
@@ -261,11 +262,11 @@ export default function () {
             }
         })
         console.log(outputs.size)
-        if (outputs.size > 1) {
-            deviceInfoOutputs.innerHTML = html + '</div>'
-        } else {
-            deviceInfoOutputs.innerHTML = noOutputs
-        }
+        // if (outputs.size > 1) {
+        //     deviceInfoOutputs.innerHTML = html + '</div>'
+        // } else {
+        //     deviceInfoOutputs.innerHTML = noOutputs
+        // }
     }
 
     // audio functions

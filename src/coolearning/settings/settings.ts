@@ -1,7 +1,7 @@
 import {createModal} from "./utils/create-modal";
 import {createButton} from "./utils/create-button";
 import {getContent} from "./utils/get-content";
-import {PARAMETERS} from "../parameters/parameters.constants";
+import {PARAMETERS} from "../constants";
 
 export function Settings() {
 
