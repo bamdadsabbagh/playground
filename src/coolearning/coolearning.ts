@@ -12,8 +12,8 @@ export function Coolearning () {
         removeArticle()
         removeFooter()
 
-        Midi()
         Settings()
         Parameters()
+        Midi()
     })
 }
