@@ -5,6 +5,7 @@ import { getControlId } from '../../utils/get-control-id'
 import { getControlType } from '../../utils/get-control-type'
 import { enableLearningMode } from '../../utils/enable-learning-mode'
 import { unlearnControl } from '../../utils/unlearn-control'
+import { buildArrayFromCollection } from '../../utils/build-array-from-collection'
 
 export function initializeContent () {
     const content = getContent ()
@@ -37,11 +38,11 @@ export function initializeContent () {
         if (isControlled (parameter)) {
             control = getControlId (parameter)
             type = getControlType (parameter)
-            actions = `<button class="${CLASSES.UNLEARN}" parameter="${parameter}">x</button>`
+            actions = `<button class="${CLASSES.ACTIONS.UNLEARN}" parameter="${parameter}">x</button>`
         } else {
             control = 'N/A'
             type = 'N/A'
-            actions = `<button class="${CLASSES.LEARN}" parameter="${parameter}">Learn</button>`
+            actions = `<button class="${CLASSES.ACTIONS.LEARN}" parameter="${parameter}">Learn</button>`
         }
 
         content.innerHTML += `
@@ -58,21 +59,21 @@ export function initializeContent () {
     })
 
     // attach onClick listeners
-    const actionsLearn = document.getElementsByClassName (CLASSES.LEARN)
-    for (let i = 0; i < actionsLearn.length; ++i) {
-        actionsLearn[i].addEventListener ('click', (e) => {
+    const actionsLearn = document.getElementsByClassName (CLASSES.ACTIONS.LEARN)
+    buildArrayFromCollection (actionsLearn).forEach (action => {
+        action.onclick = (e) => {
             const button = e.target as HTMLButtonElement
             const parameter = button.getAttribute ('parameter')
             enableLearningMode (parameter)
-        })
-    }
+        }
+    })
 
-    const actionsUnlearn = document.getElementsByClassName (CLASSES.UNLEARN)
-    for (let i = 0; i < actionsUnlearn.length; ++i) {
-        actionsUnlearn[i].addEventListener ('click', (e) => {
+    const actionsUnlearn = document.getElementsByClassName (CLASSES.ACTIONS.UNLEARN)
+    buildArrayFromCollection (actionsUnlearn).forEach (action => {
+        action.onclick = (e) => {
             const button = e.target as HTMLButtonElement
             const parameter = button.getAttribute ('parameter')
             unlearnControl ({parameter})
-        })
-    }
+        }
+    })
 }
