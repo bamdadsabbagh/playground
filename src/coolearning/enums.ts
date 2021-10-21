@@ -18,6 +18,11 @@ export enum State {
     ParametersByControl = 'parametersByControl',
 }
 
+export enum StateExtended {
+    LearnControl = 'learn-control',
+    UnlearnControl = 'unlearn-control'
+}
+
 export enum Parameters {
     Select = 'SELECT',
     Button = 'BUTTON',
