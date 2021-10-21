@@ -68,20 +68,29 @@ export function initializeContent () {
 
     // attach onClick listeners
     const actionsLearn = document.getElementsByClassName (CLASSES.ACTIONS.LEARN)
-    buildArrayFromCollection (actionsLearn).forEach (action => {
-        action.onclick = (e) => {
-            const button = e.target as HTMLButtonElement
-            const parameter = button.getAttribute ('parameter')
-            enableLearningMode (parameter)
-        }
-    })
-
     const actionsUnlearn = document.getElementsByClassName (CLASSES.ACTIONS.UNLEARN)
-    buildArrayFromCollection (actionsUnlearn).forEach (action => {
+
+    const actions = [
+        ...buildArrayFromCollection (actionsLearn),
+        ...buildArrayFromCollection (actionsUnlearn),
+    ]
+
+    actions.forEach (action => {
         action.onclick = (e) => {
             const button = e.target as HTMLButtonElement
             const parameter = button.getAttribute ('parameter')
-            unlearnControl ({parameter})
+            const action = button.getAttribute ('class')
+
+            switch (action) {
+                case CLASSES.ACTIONS.LEARN:
+                    enableLearningMode (parameter)
+                    break
+                case CLASSES.ACTIONS.UNLEARN:
+                    unlearnControl ({parameter})
+                    break
+                default:
+                    break
+            }
         }
     })
 }
