@@ -3,7 +3,7 @@ import { buildArrayFromCollection } from './build-array-from-collection'
 
 export function getSettings () {
     const content = getContent ()
-    const children = buildArrayFromCollection (content)
+    const children = buildArrayFromCollection (content.children)
 
     // remove table header
     children.shift ()
