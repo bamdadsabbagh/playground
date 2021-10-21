@@ -14,6 +14,8 @@ export enum State {
     IsLearning = 'isLearning',
     LearningParameter = 'learningParameter',
     Devices = 'devices',
+    ControlByParameter = 'controlByParameter',
+    ParametersByControl = 'parametersByControl',
 }
 
 export enum Parameters {

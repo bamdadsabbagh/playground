@@ -34,4 +34,7 @@ export const SETTINGS = {
 export const STATE = {
     isLearning: false,
     learningParameter: null,
+    devices: [],
+    controlByParameter: {},
+    parametersByControl: {},
 }
