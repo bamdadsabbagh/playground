@@ -1,11 +1,14 @@
-import { hideModal } from './hide-modal'
-import { MODAL_CONTAINER, MODAL_CONTENT } from '../settings.constants'
+import { hideSettings } from './hide-settings'
+import { CLASSES } from '../constants'
 
-export function createModal () {
+export function createSettings () {
+
     const container = document.createElement ('div')
     const content = document.createElement ('div')
 
-    container.id = MODAL_CONTAINER
+    // styles
+    container.id = CLASSES.settings.container
+    container.classList.add (CLASSES.settings.container)
     container.style.display = 'none'
     container.style.position = 'fixed'
     container.style.justifyContent = 'center'
@@ -16,18 +19,20 @@ export function createModal () {
     container.style.overflow = 'auto'
     container.style.backgroundColor = 'rgba(0, 0, 0, 0.4)'
 
-    content.id = MODAL_CONTENT
+    content.id = CLASSES.settings.content
+    content.classList.add (CLASSES.settings.content)
     content.style.backgroundColor = '#fefefe'
     content.style.margin = '30vh auto'
     content.style.padding = '20px'
     content.style.border = '1px solid #888'
     content.style.width = '80vw'
 
+    // listeners
     container.addEventListener ('click', (e) => {
         //@ts-ignore
-        const isModal = e.target.id === MODAL_CONTAINER
+        const isModal = e.target.id === CLASSES.settings.container
         if (!isModal) return
-        hideModal ()
+        hideSettings ()
     })
 
     container.appendChild (content)

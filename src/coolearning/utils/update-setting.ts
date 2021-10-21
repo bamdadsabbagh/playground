@@ -1,6 +1,6 @@
 import { getSetting } from './get-setting'
 import { buildArrayFromCollection } from './build-array-from-collection'
-import { createSettingActionButton } from './create-setting-action-button'
+import { createSettingsActionButton } from './create-settings-action-button'
 import { Actions, Settings } from '../enums'
 import { SETTINGS } from '../constants'
 import { unlearnControl } from './unlearn-control'
@@ -41,7 +41,7 @@ export function updateSetting (
                     : SETTINGS.none
                 break
             case Settings.Action:
-                child.innerHTML = createSettingActionButton ({
+                child.innerHTML = createSettingsActionButton ({
                     type: learned ? Actions.Unlearn : Actions.Learn,
                     parameter,
                 })

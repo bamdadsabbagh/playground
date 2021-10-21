@@ -1,7 +1,7 @@
 import { CLASSES } from '../constants'
 import { Actions } from '../enums'
 
-export function createSettingActionButton (
+export function createSettingsActionButton (
     {
         type = Actions.Learn,
         parameter,
@@ -16,10 +16,10 @@ export function createSettingActionButton (
 
     switch (type) {
         case Actions.Learn:
-            button = `<button class="${CLASSES.ACTIONS.LEARN}" parameter="${parameter}">Learn</button>`
+            button = `<button class="${CLASSES.actions.learn}" parameter="${parameter}">Learn</button>`
             break
         case Actions.Unlearn:
-            button = `<button class="${CLASSES.ACTIONS.UNLEARN}" parameter="${parameter}">x</button>`
+            button = `<button class="${CLASSES.actions.unlearn}" parameter="${parameter}">x</button>`
             break
         default:
             break

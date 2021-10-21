@@ -16,10 +16,14 @@ export const TYPES = {
 }
 
 export const CLASSES = {
-    ACTION: 'cool-action',
-    ACTIONS: {
-        LEARN: 'cool-actions--learn',
-        UNLEARN: 'cool-actions--unlearn',
+    action: 'cool-action',
+    actions: {
+        learn: 'cool-actions--learn',
+        unlearn: 'cool-actions--unlearn',
+    },
+    settings: {
+        container: 'cool-settings--container',
+        content: 'cool-settings--content',
     },
 }
 

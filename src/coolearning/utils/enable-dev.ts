@@ -1,12 +1,12 @@
 import { learnControl } from './learn-control'
-import { showModal } from '../settings/utils/show-modal'
+import { showSettings } from './show-settings'
 import { isDev } from './is-dev'
 
 export function enableDev () {
 
     if (!isDev ()) return
 
-    showModal ()
+    showSettings ()
 
     learnControl ({
         parameter: 'playPauseButton',

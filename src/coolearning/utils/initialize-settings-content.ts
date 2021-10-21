@@ -1,4 +1,4 @@
-import { getContent } from '../settings/utils/get-content'
+import { getSettingsContent } from './get-settings-content'
 import { CLASSES, PARAMETERS } from '../constants'
 import { isControlled } from './is-controlled'
 import { getControlId } from './get-control-id'
@@ -7,7 +7,10 @@ import { buildArrayFromCollection } from './build-array-from-collection'
 import { updateSetting } from './update-setting'
 
 export function initializeSettingsContent () {
-    const content = getContent ()
+
+    const content = getSettingsContent ()
+
+    // styles
     content.style.display = 'flex'
     content.style.flexDirection = 'column'
     content.style.justifyContent = 'center'
@@ -34,7 +37,7 @@ export function initializeSettingsContent () {
     // skeleton only
     Object.keys (PARAMETERS).forEach ((parameter) => {
         content.innerHTML += `
-            <div class="${CLASSES.ACTION}" style="
+            <div class="${CLASSES.action}" style="
                 display: grid;
                 grid-template-columns: repeat(4, 20vw);
             ">
@@ -46,8 +49,8 @@ export function initializeSettingsContent () {
         `
     })
 
-    // attach onClick listeners
-    const actions = buildArrayFromCollection (document.getElementsByClassName (CLASSES.ACTION))
+    // actions listeners
+    const actions = buildArrayFromCollection (document.getElementsByClassName (CLASSES.action))
 
     actions.forEach (action => {
         const parameter = action.firstElementChild.innerText

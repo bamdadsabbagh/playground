@@ -1,6 +1,6 @@
-import { showModal } from './show-modal'
+import { showSettings } from './show-settings'
 
-export function createButton () {
+export function createSettingsShowButton () {
     const button = document.createElement ('button')
 
     button.style.display = 'block'
@@ -10,7 +10,7 @@ export function createButton () {
     button.innerText = 'settings'
 
     button.addEventListener ('click', () => {
-        showModal ()
+        showSettings ()
     })
 
     document.body.insertBefore (button, document.body.firstChild)
