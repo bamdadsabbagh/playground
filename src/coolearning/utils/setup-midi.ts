@@ -3,6 +3,8 @@
 
 import { PARAMETERS, TYPES } from '../constants'
 import { getState } from './get-state'
+import { State } from '../enums'
+import { learnControl } from './learn-control'
 
 export function setupMidi () {
     const log = console.log.bind (console)
@@ -137,27 +139,13 @@ export function setupMidi () {
 
         const state = getState ()
 
-        if (state.isLearning && state.learningParameter) {
+        if (state[State.IsLearning] && state[State.LearningParameter]) {
 
-            const id = state.learningParameter
+            const control = note
+            const parameter = state[State.LearningParameter]
             const myType = type === 128 || type === 144 ? 'button' : 'range'
 
-            // update state
-            state.controlByParameter[id] = {
-                type: myType,
-                note,
-            }
-
-            // todo allow SELECT to only be mapped to ranges and BUTTON to buttons
-            // todo add many parameters
-            state.parametersByControl[note] = [id]
-
-            // todo update settings
-
-            state.isLearning = false
-            state.learningParameter = undefined
-
-            console.log (`learning note ${note} as type ${myType} for parameter ${id}`)
+            learnControl ({parameter, control, type: myType})
 
         } else if (state.parametersByControl[note]) {
 

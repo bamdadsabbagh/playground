@@ -1,14 +1,15 @@
 import { STATE_ID } from '../constants'
+import { State } from '../enums'
 
 export function setState (action, payload) {
     const state = window[STATE_ID]
     switch (action) {
-        case 'isLearning':
+        case State.IsLearning:
             if (typeof payload === 'boolean') {
                 state.isLearning = payload
             }
             break
-        case 'learningParameter':
+        case State.LearningParameter:
             if (
                 typeof payload === 'string'
                 || payload === null

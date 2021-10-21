@@ -5,6 +5,7 @@ import { removeFooter } from './utils/remove-footer'
 import { initializeState } from './utils/initialize-state'
 import { learnControl } from './utils/learn-control'
 import { setupMidi } from './utils/setup-midi'
+import { showModal } from './settings/utils/show-modal'
 
 export function Coolearning () {
 
@@ -17,6 +18,14 @@ export function Coolearning () {
 
         // state
         initializeState ()
+
+        // set up settings
+        Settings ()
+
+        // setup midi
+        setupMidi ()
+
+        showModal ()
 
         // dummy controls for dev
         learnControl ({
@@ -42,11 +51,5 @@ export function Coolearning () {
             control: '49',
             type: 'range',
         })
-
-        // set up settings
-        Settings ()
-
-        // setup midi
-        setupMidi ()
     })
 }

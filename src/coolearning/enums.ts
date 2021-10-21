@@ -9,3 +9,8 @@ export enum Actions {
     Learn = 'learn',
     Unlearn = 'unlearn',
 }
+
+export enum State {
+    IsLearning = 'isLearning',
+    LearningParameter = 'learningParameter'
+}

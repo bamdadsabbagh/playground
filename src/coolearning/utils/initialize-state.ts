@@ -1,9 +1,9 @@
-import { STATE_ID } from '../constants'
+import { STATE, STATE_ID } from '../constants'
 
 export function initializeState () {
     const state = {
-        isLearning: false,
-        learningParameter: null,
+        isLearning: STATE.isLearning,
+        learningParameter: STATE.learningParameter,
         devices: [],
         // one control to many parameters
         controlByParameter: {},

@@ -1,6 +1,7 @@
 import { setState } from './set-state'
+import { State } from '../enums'
 
-export function enableLearningMode (learningParameter) {
-    setState ('isLearning', true)
-    setState ('learningParameter', learningParameter)
+export function enableLearningMode ({parameter}) {
+    setState (State.IsLearning, true)
+    setState (State.LearningParameter, parameter)
 }

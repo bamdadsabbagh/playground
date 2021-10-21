@@ -17,6 +17,7 @@ export const TYPES = {
 }
 
 export const CLASSES = {
+    ACTION: 'cool-action',
     ACTIONS: {
         LEARN: 'cool-actions--learn',
         UNLEARN: 'cool-actions--unlearn',
@@ -25,4 +26,9 @@ export const CLASSES = {
 
 export const SETTINGS = {
     none: 'N/A',
+}
+
+export const STATE = {
+    isLearning: false,
+    learningParameter: null,
 }

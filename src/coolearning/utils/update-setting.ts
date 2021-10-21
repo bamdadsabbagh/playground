@@ -3,6 +3,8 @@ import { buildArrayFromCollection } from './build-array-from-collection'
 import { createSettingActionButton } from './create-setting-action-button'
 import { Actions, Settings } from '../enums'
 import { SETTINGS } from '../constants'
+import { unlearnControl } from './unlearn-control'
+import { enableLearningMode } from './enable-learning-mode'
 
 export function updateSetting (
     {
@@ -19,27 +21,34 @@ export function updateSetting (
     if (!setting) throw new Error ('error getting setting')
 
     const children = buildArrayFromCollection (setting.children)
-    const enabled = control && type
+    const learned = control && type
 
     children.forEach ((child, key) => {
         switch (key) {
             case Settings.Parameter:
                 break
             case Settings.Control:
-                child.innerText = enabled
+                child.innerText = learned
                     ? control
                     : SETTINGS.none
                 break
             case Settings.Type:
-                child.innerText = enabled
+                child.innerText = learned
                     ? type
                     : SETTINGS.none
                 break
             case Settings.Action:
                 child.innerHTML = createSettingActionButton ({
-                    type: enabled ? Actions.Unlearn : Actions.Learn,
+                    type: learned ? Actions.Unlearn : Actions.Learn,
                     parameter,
                 })
+                child.onclick = () => {
+                    if (learned) {
+                        unlearnControl ({parameter})
+                    } else {
+                        enableLearningMode ({parameter})
+                    }
+                }
                 break
             default:
                 break
