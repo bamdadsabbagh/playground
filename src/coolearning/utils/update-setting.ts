@@ -5,6 +5,7 @@ import { Actions, Settings } from '../enums'
 import { SETTINGS } from '../constants'
 import { unlearnControl } from './unlearn-control'
 import { enableLearningMode } from './enable-learning-mode'
+import { isTabActive } from './is-tab-active'
 
 export function updateSetting (
     {
@@ -13,6 +14,8 @@ export function updateSetting (
         type = undefined,
     },
 ) {
+    if (!isTabActive ()) return
+
     if (!parameter) throw new Error ('parameter is not defined')
     if (typeof parameter !== 'string') throw new Error ('parameter is not a string')
 

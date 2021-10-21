@@ -1,8 +1,11 @@
 import { getState } from './get-state'
 import { updateSetting } from './update-setting'
 import { getControlId } from './get-control-id'
+import { isTabActive } from './is-tab-active'
 
 export function unlearnControl ({parameter}) {
+    if (!isTabActive ()) return
+
     const state = getState ()
     const control = getControlId (parameter)
 

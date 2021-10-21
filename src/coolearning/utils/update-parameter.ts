@@ -1,6 +1,7 @@
 import { getParameter } from './get-parameter'
 import { rangeMap } from './range-map'
 import { Parameters, Types } from '../enums'
+import { isTabActive } from './is-tab-active'
 
 export function updateParameter (
     {
@@ -10,6 +11,8 @@ export function updateParameter (
     },
 ) {
     const element = getParameter ({parameter})
+
+    if (!isTabActive ()) return
 
     switch (element.tagName) {
         case Parameters.Select:

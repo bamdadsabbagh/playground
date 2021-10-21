@@ -1,8 +1,11 @@
 import { getState } from './get-state'
 import { updateSetting } from './update-setting'
 import { disableLearningMode } from './disable-learning-mode'
+import { isTabActive } from './is-tab-active'
 
 export function learnControl ({parameter, control, type}) {
+    if (!isTabActive ()) return
+    
     const state = getState ()
 
     // control by parameter
