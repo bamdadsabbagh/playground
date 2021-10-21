@@ -15,3 +15,8 @@ export const TYPES = {
     buttonOn: 144,
     buttonOff: 128,
 }
+
+export const CLASSES = {
+    LEARN: 'cool-actions--learn',
+    UNLEARN: 'cool-actions--unlearn'
+}

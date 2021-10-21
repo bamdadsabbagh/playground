@@ -1,6 +1,6 @@
 import { getState } from './get-state'
 
-export function removeControl ({parameter}) {
+export function unlearnControl ({parameter}) {
     const state = getState ()
     const control = state.controlByParameter[parameter] && state.controlByParameter[parameter].control
 

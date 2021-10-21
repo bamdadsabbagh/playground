@@ -1,6 +1,6 @@
 import { getState } from './get-state'
 
-export function addControl ({parameter, control, type}) {
+export function learnControl ({parameter, control, type}) {
     const state = getState ()
 
     state.controlByParameter[parameter] = {

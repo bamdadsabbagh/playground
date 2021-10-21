@@ -1,8 +1,10 @@
 import { getContent } from './get-content'
-import { PARAMETERS } from '../../constants'
+import { CLASSES, PARAMETERS } from '../../constants'
 import { isControlled } from '../../utils/is-controlled'
 import { getControlId } from '../../utils/get-control-id'
 import { getControlType } from '../../utils/get-control-type'
+import { enableLearningMode } from '../../utils/enable-learning-mode'
+import { unlearnControl } from '../../utils/unlearn-control'
 
 export function initializeContent () {
     const content = getContent ()
@@ -13,6 +15,7 @@ export function initializeContent () {
     content.style.textAlign = 'center'
     content.style.gridGap = '0.5em'
 
+    // first row
     content.innerHTML = `
         <div style="
             display: grid;
@@ -27,24 +30,18 @@ export function initializeContent () {
         </div>
     `
 
+    // next rows with parameters and controls
     Object.keys (PARAMETERS).forEach ((parameter) => {
         let control, type, actions
 
         if (isControlled (parameter)) {
             control = getControlId (parameter)
             type = getControlType (parameter)
-            actions = `<button>x</button>`
+            actions = `<button class="${CLASSES.UNLEARN}" parameter="${parameter}">x</button>`
         } else {
             control = 'N/A'
             type = 'N/A'
-            actions = `
-                <button onclick="
-                    window.coolState.isLearning = true
-                    window.coolState.learningParameter = this.parentElement.parentElement.firstElementChild.innerText
-                ">
-                    Learn
-                </button>
-            `
+            actions = `<button class="${CLASSES.LEARN}" parameter="${parameter}">Learn</button>`
         }
 
         content.innerHTML += `
@@ -59,4 +56,23 @@ export function initializeContent () {
             </div>
         `
     })
+
+    // attach onClick listeners
+    const actionsLearn = document.getElementsByClassName (CLASSES.LEARN)
+    for (let i = 0; i < actionsLearn.length; ++i) {
+        actionsLearn[i].addEventListener ('click', (e) => {
+            const button = e.target as HTMLButtonElement
+            const parameter = button.getAttribute ('parameter')
+            enableLearningMode (parameter)
+        })
+    }
+
+    const actionsUnlearn = document.getElementsByClassName (CLASSES.UNLEARN)
+    for (let i = 0; i < actionsUnlearn.length; ++i) {
+        actionsUnlearn[i].addEventListener ('click', (e) => {
+            const button = e.target as HTMLButtonElement
+            const parameter = button.getAttribute ('parameter')
+            unlearnControl ({parameter})
+        })
+    }
 }
