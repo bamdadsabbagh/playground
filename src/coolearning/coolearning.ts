@@ -3,9 +3,8 @@ import { removeHeader } from './utils/remove-header'
 import { removeArticle } from './utils/remove-article'
 import { removeFooter } from './utils/remove-footer'
 import { initializeState } from './utils/initialize-state'
-import { learnControl } from './utils/learn-control'
 import { setupMidi } from './utils/setup-midi'
-import { showModal } from './settings/utils/show-modal'
+import { enableDev } from './utils/enable-dev'
 
 export function Coolearning () {
 
@@ -25,31 +24,6 @@ export function Coolearning () {
         // setup midi
         setupMidi ()
 
-        showModal ()
-
-        // dummy controls for dev
-        learnControl ({
-            parameter: 'playPauseButton',
-            control: '41',
-            type: 'button',
-        })
-
-        learnControl ({
-            parameter: 'resetButton',
-            control: '73',
-            type: 'button',
-        })
-
-        learnControl ({
-            parameter: 'learningRate',
-            control: '77',
-            type: 'range',
-        })
-
-        learnControl ({
-            parameter: 'activation',
-            control: '49',
-            type: 'range',
-        })
+        enableDev ()
     })
 }
