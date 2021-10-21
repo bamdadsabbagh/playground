@@ -1,13 +1,14 @@
 import { hideSettings } from './hide-settings'
 import { CLASSES } from '../constants'
 
+/**
+ * @description create settings UI
+ */
 export function createSettings () {
-
     const container = document.createElement ('div')
     const content = document.createElement ('div')
 
     // styles
-    container.id = CLASSES.settings.container
     container.classList.add (CLASSES.settings.container)
     container.style.display = 'none'
     container.style.position = 'fixed'
@@ -19,7 +20,6 @@ export function createSettings () {
     container.style.overflow = 'auto'
     container.style.backgroundColor = 'rgba(0, 0, 0, 0.4)'
 
-    content.id = CLASSES.settings.content
     content.classList.add (CLASSES.settings.content)
     content.style.backgroundColor = '#fefefe'
     content.style.margin = '30vh auto'
@@ -30,8 +30,8 @@ export function createSettings () {
     // listeners
     container.addEventListener ('click', (e) => {
         //@ts-ignore
-        const isModal = e.target.id === CLASSES.settings.container
-        if (!isModal) return
+        const isOutside = e.target.id === CLASSES.settings.container
+        if (!isOutside) return
         hideSettings ()
     })
 

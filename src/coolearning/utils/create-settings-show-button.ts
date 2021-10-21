@@ -1,5 +1,8 @@
 import { showSettings } from './show-settings'
 
+/**
+ * @description create button on main interface to show/hide settings UI
+ */
 export function createSettingsShowButton () {
     const button = document.createElement ('button')
 

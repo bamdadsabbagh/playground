@@ -1,6 +1,10 @@
 import { CLASSES } from '../constants'
 import { Actions } from '../enums'
 
+/**
+ * @description create action button for given parameter
+ * appears inside settings UI
+ */
 export function createSettingsActionButton (
     {
         type = Actions.Learn,
@@ -8,8 +12,8 @@ export function createSettingsActionButton (
     },
 ) {
     if (!type) throw new Error ('type is not defined')
-    if (typeof type !== 'string') throw new Error ('type should is not a string')
     if (!parameter) throw new Error ('parameter is not defined')
+    if (typeof type !== 'string') throw new Error ('type is not a string')
     if (typeof parameter !== 'string') throw new Error ('parameter is not a string')
 
     let button = null
@@ -22,10 +26,8 @@ export function createSettingsActionButton (
             button = `<button class="${CLASSES.actions.unlearn}" parameter="${parameter}">x</button>`
             break
         default:
-            break
+            throw new Error ('action type not found')
     }
-
-    if (!button) return
 
     return button
 }

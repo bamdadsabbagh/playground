@@ -1,10 +1,12 @@
 import { learnControl } from './learn-control'
 import { showSettings } from './show-settings'
-import { isDev } from './is-dev'
+import { isDevEnv } from './is-dev-env'
 
+/**
+ * @description enable statements only in development environment
+ */
 export function enableDev () {
-
-    if (!isDev ()) return
+    if (!isDevEnv ()) return
 
     showSettings ()
 
