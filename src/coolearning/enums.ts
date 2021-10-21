@@ -13,6 +13,7 @@ export enum Actions {
 export enum State {
     IsLearning = 'isLearning',
     LearningParameter = 'learningParameter',
+    Devices = 'devices',
 }
 
 export enum Parameters {

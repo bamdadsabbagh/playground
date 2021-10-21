@@ -6,7 +6,7 @@ export function setState (action, payload) {
     switch (action) {
         case State.IsLearning:
             if (typeof payload === 'boolean') {
-                state.isLearning = payload
+                state[State.IsLearning] = payload
             }
             break
         case State.LearningParameter:
@@ -14,8 +14,14 @@ export function setState (action, payload) {
                 typeof payload === 'string'
                 || payload === null
             ) {
-                state.learningParameter = payload
+                state[State.LearningParameter] = payload
             }
+            break
+        case State.Devices:
+            state[State.Devices] = [
+                ...state[State.Devices],
+                payload,
+            ]
             break
         default:
             throw new Error ('action not found')

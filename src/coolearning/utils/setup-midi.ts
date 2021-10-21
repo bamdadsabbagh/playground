@@ -7,6 +7,7 @@ import { State } from '../enums'
 import { learnControl } from './learn-control'
 import { updateParameter } from './update-parameter'
 import { TYPES } from '../constants'
+import { watchDevices } from './watch-devices'
 
 export function setupMidi () {
     const log = console.log.bind (console)
@@ -174,21 +175,7 @@ export function setupMidi () {
         //     log('name', name, 'port', port, 'state', state)
         // }
 
-        const {port} = event
-
-        if (!port) return
-
-        const {connection, id, type} = port
-        if (!connection) return
-        if (type !== 'input') return
-
-        const state = getState ()
-        state.devices = [
-            ...state.devices,
-            {id},
-        ]
-
-        console.log (state)
+        watchDevices (event)
     }
 
     function listInputs (inputs) {
