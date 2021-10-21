@@ -2,9 +2,9 @@ import { removeHeader } from './utils/remove-header'
 import { removeArticle } from './utils/remove-article'
 import { removeFooter } from './utils/remove-footer'
 import { initializeState } from './utils/initialize-state'
-import { setupMidi } from './utils/setup-midi'
-import { enableDev } from './utils/enable-dev'
 import { initializeSettings } from './utils/initialize-settings'
+import { initializeMidi } from './utils/initialize-midi'
+import { enableDev } from './utils/enable-dev'
 
 export function Coolearning () {
 
@@ -22,7 +22,7 @@ export function Coolearning () {
         initializeSettings ()
 
         // midi
-        setupMidi ()
+        initializeMidi ()
 
         enableDev ()
     })
