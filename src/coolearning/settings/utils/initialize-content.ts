@@ -1,11 +1,13 @@
 import { getContent } from './get-content'
-import { CLASSES, PARAMETERS } from '../../constants'
+import { CLASSES, PARAMETERS, SETTINGS } from '../../constants'
 import { isControlled } from '../../utils/is-controlled'
 import { getControlId } from '../../utils/get-control-id'
 import { getControlType } from '../../utils/get-control-type'
 import { enableLearningMode } from '../../utils/enable-learning-mode'
 import { unlearnControl } from '../../utils/unlearn-control'
 import { buildArrayFromCollection } from '../../utils/build-array-from-collection'
+import { createSettingActionButton } from '../../utils/create-setting-action-button'
+import { Actions } from '../../enums'
 
 export function initializeContent () {
     const content = getContent ()
@@ -38,11 +40,17 @@ export function initializeContent () {
         if (isControlled (parameter)) {
             control = getControlId (parameter)
             type = getControlType (parameter)
-            actions = `<button class="${CLASSES.ACTIONS.UNLEARN}" parameter="${parameter}">x</button>`
+            actions = createSettingActionButton ({
+                type: Actions.Unlearn,
+                parameter,
+            })
         } else {
-            control = 'N/A'
-            type = 'N/A'
-            actions = `<button class="${CLASSES.ACTIONS.LEARN}" parameter="${parameter}">Learn</button>`
+            control = SETTINGS.none
+            type = SETTINGS.none
+            actions = createSettingActionButton ({
+                type: Actions.Learn,
+                parameter,
+            })
         }
 
         content.innerHTML += `

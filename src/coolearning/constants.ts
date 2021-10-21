@@ -22,3 +22,7 @@ export const CLASSES = {
         UNLEARN: 'cool-actions--unlearn',
     },
 }
+
+export const SETTINGS = {
+    none: 'N/A',
+}
