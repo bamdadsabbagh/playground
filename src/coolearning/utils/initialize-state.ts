@@ -1,6 +1,8 @@
 import { STATE, STATE_ID } from '../constants'
 
 export function initializeState () {
+    if (window[STATE_ID]) return
+
     const state = {
         isLearning: STATE.isLearning,
         learningParameter: STATE.learningParameter,
