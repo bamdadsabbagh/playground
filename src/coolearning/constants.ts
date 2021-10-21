@@ -17,6 +17,8 @@ export const TYPES = {
 }
 
 export const CLASSES = {
-    LEARN: 'cool-actions--learn',
-    UNLEARN: 'cool-actions--unlearn'
+    ACTIONS: {
+        LEARN: 'cool-actions--learn',
+        UNLEARN: 'cool-actions--unlearn',
+    },
 }
