@@ -11,9 +11,8 @@ export const PARAMETERS = {
 }
 
 export const TYPES = {
-    range: 176,
-    buttonOn: 144,
-    buttonOff: 128,
+    range: 'range',
+    button: 'button',
 }
 
 export const CLASSES = {

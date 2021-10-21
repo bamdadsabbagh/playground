@@ -1,10 +1,12 @@
 // https://raw.githubusercontent.com/erictherobot/react-web-midi/master/src/lib/MidiScript.js
 // todo lot of cleaning and logic extraction
 
-import { PARAMETERS, TYPES } from '../constants'
+import { Types } from '../enums'
 import { getState } from './get-state'
 import { State } from '../enums'
 import { learnControl } from './learn-control'
+import { updateParameter } from './update-parameter'
+import { TYPES } from '../constants'
 
 export function setupMidi () {
     const log = console.log.bind (console)
@@ -138,41 +140,27 @@ export function setupMidi () {
         })
 
         const state = getState ()
+        const control = note
 
         if (state[State.IsLearning] && state[State.LearningParameter]) {
 
-            const control = note
             const parameter = state[State.LearningParameter]
-            const myType = type === 128 || type === 144 ? 'button' : 'range'
+            const myType = type === Types.ButtonOn || type === Types.ButtonOff
+                ? TYPES.button
+                : TYPES.range
 
             learnControl ({parameter, control, type: myType})
 
-        } else if (state.parametersByControl[note]) {
+        } else if (state.parametersByControl[control]) {
 
-            state.parametersByControl[note].forEach (parameter => {
-                const element = PARAMETERS[parameter]
-
-                switch (element.tagName) {
-                    case 'SELECT':
-                        if (type === TYPES.range) {
-                            const length = element.children.length - 1
-                            const v = rangeMap (velocity, 0, 127, 0, length)
-                            const n = parseInt (v)
-                            if (n !== element.selectedIndex) {
-                                element.selectedIndex = n
-                                element.dispatchEvent (new Event ('change'))
-                            }
-                        }
-                        break
-                    case 'BUTTON':
-                        if (type === TYPES.buttonOn) {
-                            element.click ()
-                        }
-                        break
-                    default:
-                        throw new Error (`${element.tagName} target not handled`)
-                }
+            state.parametersByControl[control].forEach (parameter => {
+                updateParameter ({
+                    parameter,
+                    type,
+                    value: velocity,
+                })
             })
+
         }
     }
 

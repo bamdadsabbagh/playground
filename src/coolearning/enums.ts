@@ -12,5 +12,16 @@ export enum Actions {
 
 export enum State {
     IsLearning = 'isLearning',
-    LearningParameter = 'learningParameter'
+    LearningParameter = 'learningParameter',
+}
+
+export enum Parameters {
+    Select = 'SELECT',
+    Button = 'BUTTON',
+}
+
+export enum Types {
+    Range = 176,
+    ButtonOn = 144,
+    ButtonOff = 128,
 }
