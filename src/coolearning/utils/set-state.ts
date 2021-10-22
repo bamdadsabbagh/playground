@@ -1,6 +1,8 @@
-import { STATE_ID } from '../constants'
+import { STATE, STATE_ID } from '../constants'
 import { State, StateExtended } from '../enums'
-import { setStorage } from './set-storage'
+import { setLocalStorage } from './set-local-storage'
+import { reloadWindow } from './reload-window'
+import { removeLocalStorage } from './remove-local-storage'
 
 /**
  * @description set state
@@ -8,8 +10,8 @@ import { setStorage } from './set-storage'
  * @param {string} action
  * @param {*} payload
  */
-export function setState (action, payload) {
-    const state = window[STATE_ID]
+export function setState (action, payload = undefined) {
+    let state = window[STATE_ID]
 
     let hasWritten = true
 
@@ -84,10 +86,16 @@ export function setState (action, payload) {
 
             break
 
+        case StateExtended.Reset:
+            state = STATE
+            removeLocalStorage ()
+            reloadWindow ()
+            break
+
         default:
             hasWritten = false
             throw new Error ('action not found')
     }
 
-    if (hasWritten) setStorage (state)
+    if (hasWritten) setLocalStorage (state)
 }
