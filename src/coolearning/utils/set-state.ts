@@ -1,4 +1,4 @@
-import { STATE, STATE_ID } from '../constants'
+import { INITIAL_STATE, STATE_ID } from '../constants'
 import { State, StateActions } from '../enums'
 import { setLocalStorage } from './set-local-storage'
 import { reloadWindow } from './reload-window'
@@ -85,7 +85,7 @@ export function setState (action: State | StateActions, payload: any = undefined
             break
 
         case StateActions.Reset:
-            state = STATE
+            state = INITIAL_STATE
             removeLocalStorage ()
             reloadWindow ()
             break

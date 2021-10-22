@@ -26,6 +26,7 @@ export function learnControl (
     if (!isTabActive ()) return
 
     // stop if parameter already controlled
+    // todo add unit test
     if (isControlled (parameter)) return
 
     // set state

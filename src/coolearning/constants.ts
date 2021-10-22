@@ -28,10 +28,10 @@ export const SETTINGS = {
     range: 'range',
 }
 
-export const STATE = {
+export const INITIAL_STATE = Object.freeze ({
     isLearning: false,
     learningParameter: null,
     devices: [],
     controlByParameter: {},
     parametersByControl: {},
-}
+})
