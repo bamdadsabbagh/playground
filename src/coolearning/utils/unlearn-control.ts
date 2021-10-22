@@ -2,7 +2,7 @@ import { updateSetting } from './update-setting'
 import { getControlId } from './get-control-id'
 import { isTabActive } from './is-tab-active'
 import { setState } from './set-state'
-import { StateExtended } from '../enums'
+import { StateActions } from '../enums'
 import { Parameter } from '../types'
 
 type UnlearnControlProps = {
@@ -18,7 +18,7 @@ export function unlearnControl ({parameter}: UnlearnControlProps): void {
     const control = getControlId (parameter)
 
     // set state
-    setState (StateExtended.UnlearnControl, {
+    setState (StateActions.UnlearnControl, {
         parameter,
         control,
     })

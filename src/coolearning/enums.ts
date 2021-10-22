@@ -18,18 +18,13 @@ export enum State {
     ParametersByControl = 'parametersByControl',
 }
 
-export enum StateExtended {
+export enum StateActions {
     LearnControl = 'learn-control',
     UnlearnControl = 'unlearn-control',
     Reset = 'reset',
 }
 
-export enum Parameters {
-    Select = 'SELECT',
-    Button = 'BUTTON',
-}
-
-export enum Types {
+export enum MIDITypes {
     Range = 176,
     ButtonOn = 144,
     ButtonOff = 128,

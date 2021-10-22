@@ -1,5 +1,5 @@
 import { setState } from './set-state'
-import { StateExtended } from '../enums'
+import { StateActions } from '../enums'
 
 /**
  * @description create button on main interface to reset settings state
@@ -15,7 +15,7 @@ export function createSettingsResetButton (): void {
     button.innerText = 'reset'
 
     button.addEventListener ('click', () => {
-        setState (StateExtended.Reset)
+        setState (StateActions.Reset)
     })
 
     document.body.insertBefore (button, document.body.firstChild.nextSibling)

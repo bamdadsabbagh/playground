@@ -1,5 +1,5 @@
 import { STATE, STATE_ID } from '../constants'
-import { State, StateExtended } from '../enums'
+import { State, StateActions } from '../enums'
 import { setLocalStorage } from './set-local-storage'
 import { reloadWindow } from './reload-window'
 import { removeLocalStorage } from './remove-local-storage'
@@ -8,7 +8,7 @@ import { removeLocalStorage } from './remove-local-storage'
  * @description set state
  * @todo add clean up functions when learning/unlearning
  */
-export function setState (action: State | StateExtended, payload: any = undefined): void {
+export function setState (action: State | StateActions, payload: any = undefined): void {
     let state = window[STATE_ID]
 
     let hasWritten = true
@@ -39,7 +39,7 @@ export function setState (action: State | StateExtended, payload: any = undefine
 
             break
 
-        case StateExtended.LearnControl:
+        case StateActions.LearnControl:
             if (!payload.parameter) throw new Error ('parameter not defined')
             if (!payload.control) throw new Error ('control not defined')
             if (!payload.type) throw new Error ('type not defined')
@@ -62,7 +62,7 @@ export function setState (action: State | StateExtended, payload: any = undefine
 
             break
 
-        case StateExtended.UnlearnControl:
+        case StateActions.UnlearnControl:
             if (!payload.parameter) throw new Error ('parameter not defined')
             if (!payload.control) throw new Error ('control not defined')
 
@@ -84,7 +84,7 @@ export function setState (action: State | StateExtended, payload: any = undefine
 
             break
 
-        case StateExtended.Reset:
+        case StateActions.Reset:
             state = STATE
             removeLocalStorage ()
             reloadWindow ()

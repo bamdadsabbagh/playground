@@ -2,7 +2,7 @@ import { updateSetting } from './update-setting'
 import { disableLearningMode } from './disable-learning-mode'
 import { isTabActive } from './is-tab-active'
 import { setState } from './set-state'
-import { StateExtended } from '../enums'
+import { StateActions } from '../enums'
 import { isControlled } from './is-controlled'
 import { ControlIdentifier, ControlType, Parameter } from '../types'
 
@@ -29,7 +29,7 @@ export function learnControl (
     if (isControlled (parameter)) return
 
     // set state
-    setState (StateExtended.LearnControl, {
+    setState (StateActions.LearnControl, {
         parameter,
         control,
         type,

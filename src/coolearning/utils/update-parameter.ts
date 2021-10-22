@@ -1,13 +1,13 @@
 import { getParameterElement } from './get-parameter-element'
 import { rangeMap } from './range-map'
-import { Parameters, Types } from '../enums'
+import { MIDITypes } from '../enums'
 import { isTabActive } from './is-tab-active'
 import { Parameter } from '../types'
 
 type UpdateParameterProps = {
     parameter: Parameter,
     value: number,
-    type: Types,
+    type: MIDITypes,
 }
 
 /**
@@ -25,8 +25,8 @@ export function updateParameter (
     if (!isTabActive ()) return
 
     switch (element.tagName) {
-        case Parameters.Select:
-            if (type === Types.Range) {
+        case 'SELECT':
+            if (type === MIDITypes.Range) {
                 const length = element.children.length - 1
                 const v = rangeMap (value, 0, 127, 0, length)
                 const n = parseInt (v.toString ())
@@ -36,8 +36,8 @@ export function updateParameter (
                 }
             }
             break
-        case Parameters.Button:
-            if (type === Types.ButtonOn) {
+        case 'BUTTON':
+            if (type === MIDITypes.ButtonOn) {
                 element.click ()
             }
             break

@@ -1,4 +1,4 @@
-import { Types } from '../enums'
+import { MIDITypes } from '../enums'
 import { getState } from './get-state'
 import { State } from '../enums'
 import { learnControl } from './learn-control'
@@ -75,7 +75,7 @@ export function initializeMidi (): void {
         if (state[State.IsLearning] && state[State.LearningParameter]) {
 
             const parameter = state[State.LearningParameter]
-            const myType = type === Types.ButtonOn || type === Types.ButtonOff
+            const myType = type === MIDITypes.ButtonOn || type === MIDITypes.ButtonOff
                 ? TYPES.button
                 : TYPES.range
 
