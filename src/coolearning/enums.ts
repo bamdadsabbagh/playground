@@ -20,7 +20,8 @@ export enum State {
 
 export enum StateExtended {
     LearnControl = 'learn-control',
-    UnlearnControl = 'unlearn-control'
+    UnlearnControl = 'unlearn-control',
+    Reset = 'reset',
 }
 
 export enum Parameters {
