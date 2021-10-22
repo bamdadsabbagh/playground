@@ -14,7 +14,7 @@ export function initializeState (): State {
     if (storage) return window[STATE_ID] = storage
 
     // very first initialization
-    window[STATE_ID] = INITIAL_STATE
-    setLocalStorage (INITIAL_STATE)
-    return INITIAL_STATE
+    window[STATE_ID] = {...INITIAL_STATE}
+    setLocalStorage (window[STATE_ID])
+    return window[STATE_ID]
 }

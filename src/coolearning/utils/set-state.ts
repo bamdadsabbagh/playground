@@ -85,7 +85,7 @@ export function setState (action: State | StateActions, payload: any = undefined
             break
 
         case StateActions.Reset:
-            state = INITIAL_STATE
+            state = {...INITIAL_STATE}
             removeLocalStorage ()
             reloadWindow ()
             break
