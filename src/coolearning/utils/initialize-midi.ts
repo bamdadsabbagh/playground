@@ -3,8 +3,8 @@ import { getState } from './get-state'
 import { State } from '../enums'
 import { learnControl } from './learn-control'
 import { updateParameter } from './update-parameter'
-import { TYPES } from '../constants'
 import { watchDevices } from './watch-devices'
+import { SETTINGS } from '../constants'
 
 /**
  * @description initialize MIDI handler
@@ -76,8 +76,8 @@ export function initializeMidi (): void {
 
             const parameter = state[State.LearningParameter]
             const myType = type === MIDITypes.ButtonOn || type === MIDITypes.ButtonOff
-                ? TYPES.button
-                : TYPES.range
+                ? SETTINGS.button
+                : SETTINGS.range
 
             learnControl ({parameter, control, type: myType})
 

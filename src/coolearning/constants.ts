@@ -10,11 +10,6 @@ export const PARAMETERS = {
     removeLayers: document.getElementById ('remove-layers'),
 }
 
-export const TYPES = {
-    range: 'range',
-    button: 'button',
-}
-
 export const CLASSES = {
     action: 'cool-action',
     actions: {
@@ -29,6 +24,8 @@ export const CLASSES = {
 
 export const SETTINGS = {
     none: 'N/A',
+    button: 'button',
+    range: 'range',
 }
 
 export const STATE = {
