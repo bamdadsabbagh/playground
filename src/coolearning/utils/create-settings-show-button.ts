@@ -3,7 +3,7 @@ import { showSettings } from './show-settings'
 /**
  * @description create button on main interface to show/hide settings UI
  */
-export function createSettingsShowButton () {
+export function createSettingsShowButton (): void {
     const button = document.createElement ('button')
 
     button.style.display = 'block'

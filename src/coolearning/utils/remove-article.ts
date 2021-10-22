@@ -1,4 +1,7 @@
-export function removeArticle () {
+/**
+ * @description remove playground article
+ */
+export function removeArticle (): void {
     const article = document.querySelector ('article')
     article.remove ()
 

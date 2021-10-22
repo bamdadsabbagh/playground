@@ -6,7 +6,10 @@ import { initializeSettings } from './utils/initialize-settings'
 import { initializeMidi } from './utils/initialize-midi'
 import { enableDev } from './utils/enable-dev'
 
-export function Coolearning () {
+/**
+ * @description entry point for CooLearning playground extension
+ */
+export function Coolearning (): void {
 
     window.addEventListener ('load', () => {
 

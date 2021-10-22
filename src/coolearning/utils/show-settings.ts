@@ -1,6 +1,9 @@
 import { getSettingsContainer } from './get-settings-container'
 
-export function showSettings () {
+/**
+ * @description show settings UI
+ */
+export function showSettings (): void {
     const container = getSettingsContainer ()
     container.style.display = 'block'
 }

@@ -1,9 +1,10 @@
 import { getSettings } from './get-settings'
+import { Parameter } from '../types'
 
 /**
- * @description get a single setting element
+ * @description get a single setting element by parsing settings UI
  */
-export function getSetting (parameter) {
+export function getSetting (parameter: Parameter): HTMLDivElement {
     const settings = getSettings ()
 
     // todo might want to write the setting in an HTML attribute instead

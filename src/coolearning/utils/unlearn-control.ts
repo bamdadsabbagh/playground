@@ -3,11 +3,16 @@ import { getControlId } from './get-control-id'
 import { isTabActive } from './is-tab-active'
 import { setState } from './set-state'
 import { StateExtended } from '../enums'
+import { Parameter } from '../types'
+
+type UnlearnControlProps = {
+    parameter: Parameter,
+}
 
 /**
  * @description unlearn a control given a parameter
  */
-export function unlearnControl ({parameter}) {
+export function unlearnControl ({parameter}: UnlearnControlProps): void {
     if (!isTabActive ()) return
 
     const control = getControlId (parameter)

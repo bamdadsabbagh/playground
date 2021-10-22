@@ -1,6 +1,10 @@
 import { STATE_ID } from '../constants'
+import { State } from '../types'
 
-export function getLocalStorage () {
+/**
+ * @description retrieve string state from local storage, parse and return
+ */
+export function getLocalStorage (): State {
     if (!window.localStorage) throw new Error ('localStorage not defined')
     if (!window.localStorage[STATE_ID]) return
 

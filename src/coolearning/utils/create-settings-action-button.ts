@@ -1,5 +1,11 @@
 import { CLASSES } from '../constants'
 import { Actions } from '../enums'
+import { Parameter } from '../types'
+
+type CreateSettingsActionButtonProps = {
+    type: Actions,
+    parameter: Parameter,
+}
 
 /**
  * @description create action button for given parameter
@@ -9,8 +15,8 @@ export function createSettingsActionButton (
     {
         type = Actions.Learn,
         parameter,
-    },
-) {
+    }: CreateSettingsActionButtonProps,
+): HTMLButtonElement {
     if (!type) throw new Error ('type is not defined')
     if (!parameter) throw new Error ('parameter is not defined')
     if (typeof type !== 'string') throw new Error ('type is not a string')

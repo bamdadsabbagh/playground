@@ -1,9 +1,8 @@
 /**
  * @description converts an HTML collection into a pure javascript array
  * use this to access Array methods
- * @param collection
  */
-export function buildArrayFromCollection (collection) {
+export function buildArrayFromCollection (collection: HTMLCollection): Array<any> {
     if (!collection) throw new Error ('collection is not defined')
     if (collection.length === 0) throw new Error ('collection is empty')
 

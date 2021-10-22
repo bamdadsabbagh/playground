@@ -4,8 +4,25 @@ import { isTabActive } from './is-tab-active'
 import { setState } from './set-state'
 import { StateExtended } from '../enums'
 import { isControlled } from './is-controlled'
+import { ControlIdentifier, ControlType, Parameter } from '../types'
 
-export function learnControl ({parameter, control, type}) {
+type LearnControlProps = {
+    parameter: Parameter,
+    control: ControlIdentifier,
+    type: ControlType,
+}
+
+/**
+ * @description learn control
+ */
+export function learnControl (
+    {
+        parameter,
+        control,
+        type,
+    }: LearnControlProps,
+): void {
+
     if (!isTabActive ()) return
 
     // stop if parameter already controlled

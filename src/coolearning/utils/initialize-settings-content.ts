@@ -6,7 +6,10 @@ import { getControlType } from './get-control-type'
 import { buildArrayFromCollection } from './build-array-from-collection'
 import { updateSetting } from './update-setting'
 
-export function initializeSettingsContent () {
+/**
+ * @description initialize settings UI content
+ */
+export function initializeSettingsContent (): void {
 
     const content = getSettingsContent ()
 

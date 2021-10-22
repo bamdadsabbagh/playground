@@ -6,14 +6,24 @@ import { SETTINGS } from '../constants'
 import { unlearnControl } from './unlearn-control'
 import { enableLearningMode } from './enable-learning-mode'
 import { isTabActive } from './is-tab-active'
+import { ControlIdentifier, ControlType, Parameter } from '../types'
 
+type UpdateSettingProps = {
+    parameter: Parameter,
+    control?: ControlIdentifier,
+    type?: ControlType,
+}
+
+/**
+ * @description update setting in settings UI
+ */
 export function updateSetting (
     {
         parameter,
         control = undefined,
         type = undefined,
-    },
-) {
+    }: UpdateSettingProps,
+): void {
     if (!isTabActive ()) return
 
     if (!parameter) throw new Error ('parameter is not defined')

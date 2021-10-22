@@ -1,5 +1,8 @@
 import { CLASSES } from '../constants'
 
-export function getSettingsContainer () {
+/**
+ * @description get settings container DOM element
+ */
+export function getSettingsContainer (): HTMLDivElement {
     return document.getElementsByClassName (CLASSES.settings.container)[0] as HTMLDivElement
 }

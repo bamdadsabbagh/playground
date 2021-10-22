@@ -5,7 +5,7 @@ import { buildArrayFromCollection } from './build-array-from-collection'
 /**
  * @description create settings UI
  */
-export function createSettings () {
+export function createSettings (): void {
     const container = document.createElement ('div')
     const content = document.createElement ('div')
 

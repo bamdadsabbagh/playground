@@ -3,7 +3,10 @@ import { createSettings } from './create-settings'
 import { initializeSettingsContent } from './initialize-settings-content'
 import { createSettingsResetButton } from './create-settings-reset-button'
 
-export function initializeSettings () {
+/**
+ * @description initialize settings UI
+ */
+export function initializeSettings (): void {
 
     createSettingsShowButton ()
 

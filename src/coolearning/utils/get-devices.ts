@@ -1,7 +1,11 @@
 import { getState } from './get-state'
 import { State } from '../enums'
 
-export function getDevices () {
+/**
+ * @description get devices from state
+ * @todo not used anywhere else => not worth?
+ */
+export function getDevices (): Array<any> {
     const state = getState ()
     const devices = state[State.Devices]
 

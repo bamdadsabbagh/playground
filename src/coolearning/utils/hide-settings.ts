@@ -1,6 +1,9 @@
 import { getSettingsContainer } from './get-settings-container'
 
-export function hideSettings () {
+/**
+ * @description hide settings UI
+ */
+export function hideSettings (): void {
     const container = getSettingsContainer ()
     container.style.display = 'none'
 }

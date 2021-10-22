@@ -7,10 +7,8 @@ import { removeLocalStorage } from './remove-local-storage'
 /**
  * @description set state
  * @todo add clean up functions when learning/unlearning
- * @param {string} action
- * @param {*} payload
  */
-export function setState (action, payload = undefined) {
+export function setState (action: State | StateExtended, payload: any = undefined): void {
     let state = window[STATE_ID]
 
     let hasWritten = true

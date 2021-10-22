@@ -2,7 +2,10 @@ import { setState } from './set-state'
 import { State } from '../enums'
 import { getDevices } from './get-devices'
 
-export function watchDevices (event) {
+/**
+ * @description devices parser for midi events
+ */
+export function watchDevices (event: any): void {
     const {port} = event
 
     if (!port) return

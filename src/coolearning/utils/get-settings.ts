@@ -1,7 +1,10 @@
 import { getSettingsContent } from './get-settings-content'
 import { buildArrayFromCollection } from './build-array-from-collection'
 
-export function getSettings () {
+/**
+ * @description get all elements from settings UI
+ */
+export function getSettings (): any[] {
     const content = getSettingsContent ()
     const children = buildArrayFromCollection (content.children)
 

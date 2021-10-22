@@ -5,7 +5,7 @@ import { StateExtended } from '../enums'
  * @description create button on main interface to reset settings state
  * @todo merge duplicate code with action button
  */
-export function createSettingsResetButton () {
+export function createSettingsResetButton (): void {
     const button = document.createElement ('button')
 
     button.style.display = 'block'

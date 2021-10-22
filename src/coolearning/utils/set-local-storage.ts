@@ -1,16 +1,17 @@
 import { STATE_ID } from '../constants'
+import { State } from '../types'
 
 /**
  * @description save state in local storage
  */
-export function setLocalStorage (payload) {
-    if (!payload) throw new Error ('payload is not defined')
+export function setLocalStorage (state: State): void {
+    if (!state) throw new Error ('state not defined')
     if (!window.localStorage) throw new Error ('localStorage not defined')
 
     let string
 
     try {
-        string = JSON.stringify (payload)
+        string = JSON.stringify (state)
     } catch (error) {
         throw new Error ('error while payload stringification' + error)
     }

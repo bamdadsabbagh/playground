@@ -11,8 +11,7 @@ import { watchDevices } from './watch-devices'
  * @see https://raw.githubusercontent.com/erictherobot/react-web-midi/master/src/lib/MidiScript.js
  * @todo clean and extract
  */
-export function initializeMidi () {
-    const log = console.log.bind (console)
+export function initializeMidi (): void {
     let midi
     const ua = navigator.userAgent.toLowerCase ()
     if (ua.indexOf ('safari') !== -1) {
@@ -101,7 +100,7 @@ export function initializeMidi () {
 
     function listInputs (inputs) {
         const input = inputs.value
-        log ('Input port : [ type:\'' + input.type + '\' id: \'' + input.id + '\' manufacturer: \'' + input.manufacturer + '\' name: \'' + input.name + '\' version: \'' + input.version + '\']')
+        console.log ('Input port : [ type:\'' + input.type + '\' id: \'' + input.id + '\' manufacturer: \'' + input.manufacturer + '\' name: \'' + input.name + '\' version: \'' + input.version + '\']')
     }
 
     function onMIDIFailure () {

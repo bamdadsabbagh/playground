@@ -1,8 +1,12 @@
 import { STATE, STATE_ID } from '../constants'
 import { setLocalStorage } from './set-local-storage'
 import { getLocalStorage } from './get-local-storage'
+import { State } from '../types'
 
-export function initializeState () {
+/**
+ * @description initialize global state object
+ */
+export function initializeState (): State {
     if (window[STATE_ID]) return
 
     // storage?

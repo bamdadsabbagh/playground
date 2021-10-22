@@ -5,7 +5,7 @@ import { isDevEnv } from './is-dev-env'
 /**
  * @description enable statements only in development environment
  */
-export function enableDev () {
+export function enableDev (): void {
     if (!isDevEnv ()) return
 
     showSettings ()

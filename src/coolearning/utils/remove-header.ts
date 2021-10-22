@@ -1,4 +1,7 @@
-export function removeHeader () {
+/**
+ * @description remove playground header
+ */
+export function removeHeader (): void {
     const header = document.querySelector ('header')
     header.remove ()
 
