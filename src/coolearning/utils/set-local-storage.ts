@@ -3,7 +3,7 @@ import { STATE_ID } from '../constants'
 /**
  * @description save state in local storage
  */
-export function setStorage (payload) {
+export function setLocalStorage (payload) {
     if (!payload) throw new Error ('payload is not defined')
     if (!window.localStorage) throw new Error ('localStorage not defined')
 
