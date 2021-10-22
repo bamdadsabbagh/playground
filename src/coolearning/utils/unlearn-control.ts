@@ -4,6 +4,9 @@ import { isTabActive } from './is-tab-active'
 import { setState } from './set-state'
 import { StateExtended } from '../enums'
 
+/**
+ * @description unlearn a control given a parameter
+ */
 export function unlearnControl ({parameter}) {
     if (!isTabActive ()) return
 
