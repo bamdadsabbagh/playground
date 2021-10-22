@@ -12,25 +12,25 @@ export function enableDev () {
 
     learnControl ({
         parameter: 'playPauseButton',
-        control: '41',
+        control: 41,
         type: 'button',
     })
 
     learnControl ({
         parameter: 'resetButton',
-        control: '73',
+        control: 73,
         type: 'button',
     })
 
     learnControl ({
         parameter: 'learningRate',
-        control: '77',
+        control: 77,
         type: 'range',
     })
 
     learnControl ({
         parameter: 'activation',
-        control: '49',
+        control: 49,
         type: 'range',
     })
 }
