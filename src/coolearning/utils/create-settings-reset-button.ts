@@ -15,7 +15,6 @@ export function createSettingsResetButton (): void {
     button.innerText = 'reset'
 
     button.addEventListener ('click', () => {
-        // alert ('work in progress')
         setState (StateExtended.Reset)
     })
 
