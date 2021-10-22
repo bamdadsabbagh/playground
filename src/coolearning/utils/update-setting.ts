@@ -1,7 +1,7 @@
 import { getSetting } from './get-setting'
 import { buildArrayFromCollection } from './build-array-from-collection'
 import { createSettingsActionButton } from './create-settings-action-button'
-import { Actions, Settings } from '../enums'
+import { SettingsActions, SettingsPositions } from '../enums'
 import { SETTINGS } from '../constants'
 import { unlearnControl } from './unlearn-control'
 import { enableLearningMode } from './enable-learning-mode'
@@ -38,21 +38,21 @@ export function updateSetting (
 
     children.forEach ((child, key) => {
         switch (key) {
-            case Settings.Parameter:
+            case SettingsPositions.Parameter:
                 break
-            case Settings.Control:
+            case SettingsPositions.Control:
                 child.innerText = learned
                     ? control
                     : SETTINGS.none
                 break
-            case Settings.Type:
+            case SettingsPositions.Type:
                 child.innerText = learned
                     ? type
                     : SETTINGS.none
                 break
-            case Settings.Action:
+            case SettingsPositions.Action:
                 child.innerHTML = createSettingsActionButton ({
-                    type: learned ? Actions.Unlearn : Actions.Learn,
+                    action: learned ? SettingsActions.Unlearn : SettingsActions.Learn,
                     parameter,
                 })
                 child.onclick = () => {

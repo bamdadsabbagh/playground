@@ -1,9 +1,9 @@
 import { CLASSES } from '../constants'
-import { Actions } from '../enums'
+import { SettingsActions } from '../enums'
 import { Parameter } from '../types'
 
 type CreateSettingsActionButtonProps = {
-    type: Actions,
+    action: SettingsActions,
     parameter: Parameter,
 }
 
@@ -13,22 +13,22 @@ type CreateSettingsActionButtonProps = {
  */
 export function createSettingsActionButton (
     {
-        type = Actions.Learn,
+        action = SettingsActions.Learn,
         parameter,
     }: CreateSettingsActionButtonProps,
 ): HTMLButtonElement {
-    if (!type) throw new Error ('type is not defined')
+    if (!action) throw new Error ('action is not defined')
     if (!parameter) throw new Error ('parameter is not defined')
-    if (typeof type !== 'string') throw new Error ('type is not a string')
+    if (typeof action !== 'string') throw new Error ('type is not a string')
     if (typeof parameter !== 'string') throw new Error ('parameter is not a string')
 
     let button = null
 
-    switch (type) {
-        case Actions.Learn:
+    switch (action) {
+        case SettingsActions.Learn:
             button = `<button class="${CLASSES.actions.learn}" parameter="${parameter}">Learn</button>`
             break
-        case Actions.Unlearn:
+        case SettingsActions.Unlearn:
             button = `<button class="${CLASSES.actions.unlearn}" parameter="${parameter}">x</button>`
             break
         default:
