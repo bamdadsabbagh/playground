@@ -1,4 +1,4 @@
-import { getParameter } from './get-parameter'
+import { getParameterElement } from './get-parameter-element'
 import { rangeMap } from './range-map'
 import { Parameters, Types } from '../enums'
 import { isTabActive } from './is-tab-active'
@@ -10,7 +10,7 @@ export function updateParameter (
         type,
     },
 ) {
-    const element = getParameter ({parameter})
+    const element = getParameterElement ({parameter})
 
     if (!isTabActive ()) return
 
