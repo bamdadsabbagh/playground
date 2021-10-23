@@ -39,8 +39,8 @@ export function createSettingsContainer (): void {
         // to use .includes
         // see https://stackoverflow.com/questions/40545329/property-includes-does-not-exist-on-type-string
         // const isOutside = classes.includes (CLASSES.settings.container)
-        if (classes.length !== 1) throw new Error('Change source code to use .includes')
-        
+        if (classes.length !== 1) throw new Error ('Change source code to use .includes')
+
         const isOutside = classes[0] && classes[0] === CLASSES.settings.container
         if (!isOutside) return
 
