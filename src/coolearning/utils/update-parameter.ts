@@ -60,6 +60,11 @@ export function updateParameter (
                 }
             }
             break
+        case 'LABEL':
+            if (type === MIDITypes.ButtonOn) {
+                element.click ()
+            }
+            break
         default:
             throw new Error (`${element.tagName} target not handled`)
     }
