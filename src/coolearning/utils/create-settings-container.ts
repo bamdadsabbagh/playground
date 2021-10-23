@@ -3,7 +3,7 @@ import { CLASSES } from '../constants'
 import { buildArrayFromCollection } from './build-array-from-collection'
 
 /**
- * @description create settings container UI
+ * @description create container in settings UI
  */
 export function createSettingsContainer (): void {
     const container = document.createElement ('div')

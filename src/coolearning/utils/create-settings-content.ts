@@ -7,7 +7,7 @@ import { buildArrayFromCollection } from './build-array-from-collection'
 import { updateSetting } from './update-setting'
 
 /**
- * @description initialize settings UI content
+ * @description create content in settings UI
  */
 export function createSettingsContent (): void {
 

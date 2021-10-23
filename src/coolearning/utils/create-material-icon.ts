@@ -4,7 +4,6 @@ type CreateMaterialIconProps = {
 
 /**
  * @description create icon UI element with material-design-lite
- * @param icon
  */
 export function createMaterialIcon (
     {
