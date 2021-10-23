@@ -29,7 +29,7 @@ export function watchDevices (event: any): void {
 
         showSnack ({
             message: `device ${id} added`,
-            timeout: 2000,
+            timeout: 500,
         })
 
     } else {
@@ -40,6 +40,7 @@ export function watchDevices (event: any): void {
 
         showSnack ({
             message: `device ${id} removed`,
+            timeout: 500,
         })
 
     }
