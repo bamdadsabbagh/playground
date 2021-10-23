@@ -9,7 +9,7 @@ import { updateSetting } from './update-setting'
 /**
  * @description initialize settings UI content
  */
-export function initializeSettingsContent (): void {
+export function createSettingsContent (): void {
 
     const content = getSettingsContent ()
 
@@ -56,7 +56,7 @@ export function initializeSettingsContent (): void {
     const actions = buildArrayFromCollection (document.getElementsByClassName (CLASSES.action))
 
     actions.forEach (action => {
-        const parameter = action.firstElementChild.innerText
+        const parameter: string = action.firstElementChild.innerText
         if (isControlled (parameter)) {
             const control = getControlId (parameter)
             const type = getControlType (parameter)

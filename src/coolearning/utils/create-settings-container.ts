@@ -3,9 +3,9 @@ import { CLASSES } from '../constants'
 import { buildArrayFromCollection } from './build-array-from-collection'
 
 /**
- * @description create settings UI
+ * @description create settings container UI
  */
-export function createSettings (): void {
+export function createSettingsContainer (): void {
     const container = document.createElement ('div')
     const content = document.createElement ('div')
 
@@ -28,7 +28,7 @@ export function createSettings (): void {
     content.style.border = '1px solid #888'
     content.style.width = '80vw'
 
-    // listeners
+    // click event
     container.addEventListener ('click', (e) => {
         // @ts-ignore
         const list = e.target.classList
@@ -36,11 +36,12 @@ export function createSettings (): void {
 
         const classes = buildArrayFromCollection (list)
 
-        // todo to use .includes
+        // to use .includes
         // see https://stackoverflow.com/questions/40545329/property-includes-does-not-exist-on-type-string
         // const isOutside = classes.includes (CLASSES.settings.container)
-
-        const isOutside = classes[0] === CLASSES.settings.container
+        if (classes.length !== 1) throw new Error('Change source code to use .includes')
+        
+        const isOutside = classes[0] && classes[0] === CLASSES.settings.container
         if (!isOutside) return
 
         hideSettings ()
