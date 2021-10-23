@@ -5,6 +5,7 @@ type CreateMaterialButtonProps = {
 
 /**
  * @description create button UI element with material-design-lite
+ * @see https://getmdl.io/components/index.html#buttons-section
  */
 export function createMaterialButton (
     {
