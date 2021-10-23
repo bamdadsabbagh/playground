@@ -30,7 +30,9 @@ export function updateParameter (
                 const length = element.children.length - 1
                 const v = rangeMap (value, 0, 127, 0, length)
                 const n = parseInt (v.toString ())
-                if (n !== element.selectedIndex) {
+                const areDifferent = n !== element.selectedIndex
+
+                if (areDifferent) {
                     element.selectedIndex = n
                     element.dispatchEvent (new Event ('change'))
                 }
@@ -39,6 +41,23 @@ export function updateParameter (
         case 'BUTTON':
             if (type === MIDITypes.ButtonOn) {
                 element.click ()
+            }
+            break
+        case 'INPUT':
+            if (type === MIDITypes.Range) {
+                const min = parseInt (element.min)
+                const max = parseInt (element.max)
+                const step = parseInt (element.step)
+
+                const v = rangeMap (value, 0, 127, min, max)
+                const n = parseInt (v.toString ())
+                const isStep = (n % step) === 0
+                const areDifferent = n !== parseInt (element.value)
+
+                if (isStep && areDifferent) {
+                    element.value = n.toString ()
+                    element.dispatchEvent (new Event ('change'))
+                }
             }
             break
         default:
