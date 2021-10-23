@@ -5,6 +5,7 @@ import { learnControl } from './learn-control'
 import { updateParameter } from './update-parameter'
 import { watchDevices } from './watch-devices'
 import { SETTINGS } from '../constants'
+import { showSnack } from './show-snack'
 
 /**
  * @description initialize MIDI handler
@@ -104,7 +105,10 @@ export function initializeMidi (): void {
     }
 
     function onMIDIFailure () {
-        alert ('No MIDI support in your browser.')
+        showSnack ({
+            message: 'No MIDI support in your browser.',
+            timeout: 10000,
+        })
     }
 
     // MIDI utility functions
