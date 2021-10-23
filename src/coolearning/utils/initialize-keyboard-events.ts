@@ -1,9 +1,9 @@
 import { handleHighlightMode } from './handle-highlight-mode'
 
 /**
- * @description enable keyboard events
+ * @description initialize keyboard events
  */
-export function enableKeyboardEvents (): void {
+export function initializeKeyboardEvents (): void {
 
     // enable ableton mode
     document.addEventListener ('keydown', (e) => {
