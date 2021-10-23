@@ -4,9 +4,9 @@ import { State } from '../types'
 /**
  * @description retrieve string state from local storage, parse and return
  */
-export function getLocalStorage (): State {
+export function getLocalStorage (): State | null {
     if (!window.localStorage) throw new Error ('localStorage not defined')
-    if (!window.localStorage[STATE_ID]) return
+    if (!window.localStorage[STATE_ID]) return null
 
     let json
 

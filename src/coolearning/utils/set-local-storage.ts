@@ -8,7 +8,7 @@ export function setLocalStorage (state: State): void {
     if (!state) throw new Error ('state not defined')
     if (!window.localStorage) throw new Error ('localStorage not defined')
 
-    let string
+    let string: string
 
     try {
         string = JSON.stringify (state)
