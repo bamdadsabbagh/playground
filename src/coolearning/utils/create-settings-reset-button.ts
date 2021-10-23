@@ -17,8 +17,8 @@ export function createSettingsResetButton (): void {
 
     button.style.display = 'block'
     button.style.position = 'fixed'
-    button.style.top = '2px'
-    button.style.left = '35px'
+    button.style.bottom = '6px'
+    button.style.left = '52px'
 
     document.body.insertBefore (button, document.body.firstChild.nextSibling)
 }

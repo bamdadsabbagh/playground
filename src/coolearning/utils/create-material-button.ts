@@ -19,7 +19,9 @@ export function createMaterialButton (
 
     button.classList.add ('mdl-button')
     button.classList.add ('mdl-js-button')
-    button.classList.add ('mdl-button--icon')
+    button.classList.add ('mdl-button--fab')
+    button.classList.add ('mdl-button--mini-fab')
+    button.classList.add ('mdl-js-ripple-effect')
 
     button.appendChild (icon)
 

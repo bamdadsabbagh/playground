@@ -9,13 +9,13 @@ export function createSettingsShowButton (): void {
     const icon = createMaterialIcon ({icon: 'settings'})
     const button = createMaterialButton ({
         icon,
-        onClick: () => showSettings ()
+        onClick: () => showSettings (),
     })
 
     button.style.display = 'block'
     button.style.position = 'fixed'
-    button.style.top = '2px'
-    button.style.left = '2px'
+    button.style.bottom = '6px'
+    button.style.left = '6px'
 
     document.body.insertBefore (button, document.body.firstChild)
 }
