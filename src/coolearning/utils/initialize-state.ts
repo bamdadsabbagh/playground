@@ -8,10 +8,11 @@ import { getLocalStorage } from './get-local-storage'
 export function initializeState (): void {
     if (window[STATE_ID]) return
 
-    // storage?
+    // if storage, then apply it and return
     const storage = getLocalStorage ()
     if (storage) {
         window[STATE_ID] = storage
+        return
     }
 
     // very first initialization
