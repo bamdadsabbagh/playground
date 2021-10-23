@@ -1,6 +1,7 @@
 import { setState } from './set-state'
 import { State } from '../enums'
 import { getDevices } from './get-devices'
+import { showSnack } from './show-snack'
 
 /**
  * @description devices parser for midi events
@@ -26,7 +27,10 @@ export function watchDevices (event: any): void {
 
         setState (State.Devices, devices)
 
-        console.log (`device ${id} added`)
+        showSnack ({
+            message: `device ${id} added`,
+            timeout: 2000,
+        })
 
     } else {
 
@@ -34,7 +38,10 @@ export function watchDevices (event: any): void {
 
         setState (State.Devices, devices)
 
-        console.log (`device ${id} removed`)
+        showSnack ({
+            message: `device ${id} removed`,
+            timeout: 2000,
+        })
 
     }
 
