@@ -35,3 +35,7 @@ export const INITIAL_STATE = Object.freeze ({
     controlByParameter: {},
     parametersByControl: {},
 })
+
+export const TIMEOUT = 1000
+
+export const SNACKBAR_ID = 'cool-snackbar'
