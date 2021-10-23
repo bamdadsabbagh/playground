@@ -40,7 +40,6 @@ export function watchDevices (event: any): void {
 
         showSnack ({
             message: `device ${id} removed`,
-            timeout: 2000,
         })
 
     }
