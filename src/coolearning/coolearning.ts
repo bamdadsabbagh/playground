@@ -4,6 +4,7 @@ import { initializeMidi } from './utils/initialize-midi'
 import { enableDev } from './utils/enable-dev'
 import { initializeKeyboardEvents } from './utils/initialize-keyboard-events'
 import { initializePlayground } from './utils/initialize-playground'
+import { showSnack } from './utils/show-snack'
 
 /**
  * @description entry point for CooLearning playground extension
@@ -11,22 +12,34 @@ import { initializePlayground } from './utils/initialize-playground'
 export function Coolearning (): void {
 
     window.addEventListener ('load', () => {
+        try {
 
-        // playground
-        initializePlayground ()
+            // playground
+            initializePlayground ()
 
-        // state
-        initializeState ()
+            // state
+            initializeState ()
 
-        // settings
-        initializeSettings ()
+            // settings
+            initializeSettings ()
 
-        // midi
-        initializeMidi ()
+            // midi
+            initializeMidi ()
 
-        // keyboard events
-        initializeKeyboardEvents ()
+            // keyboard events
+            initializeKeyboardEvents ()
 
-        enableDev ()
+            enableDev ()
+
+        } catch (error) {
+
+            console.error (error)
+
+            showSnack ({
+                message: error.toString (),
+                timeout: 5000,
+            })
+
+        }
     })
 }
