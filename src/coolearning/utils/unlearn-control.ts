@@ -29,6 +29,6 @@ export function unlearnControl ({parameter}: UnlearnControlProps): void {
 
     // log
     showSnack ({
-        message: `unlearning control ${control} for parameter ${parameter}`,
+        message: `Unlearn: control ${control} for ${parameter}`,
     })
 }

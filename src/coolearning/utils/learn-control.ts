@@ -49,6 +49,6 @@ export function learnControl (
 
     // log
     showSnack ({
-        message: `learning control ${control} as ${type} type for parameter ${parameter}`,
+        message: `Learn: control ${control} for ${parameter} (${type})`,
     })
 }
