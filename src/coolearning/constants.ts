@@ -6,8 +6,15 @@ export const PARAMETERS = {
     learningRate: document.getElementById ('learningRate'),
     activation: document.getElementById ('activations'),
     regularizations: document.getElementById ('regularizations'),
+    regularizationRate: document.getElementById ('regularRate'),
+    problemType: document.getElementById ('problem'),
     addLayers: document.getElementById ('add-layers'),
     removeLayers: document.getElementById ('remove-layers'),
+    ratioOfTrainingToTest: document.getElementById ('percTrainData'),
+    noise: document.getElementById ('noise'),
+    batchSize: document.getElementById ('batchSize'),
+    showTestData: document.getElementById ('show-test-data').parentNode,
+    discretize: document.getElementById ('discretize').parentNode,
 }
 
 export const CLASSES = {
