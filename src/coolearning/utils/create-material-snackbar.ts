@@ -1,6 +1,10 @@
 import { SNACKBAR_ID } from '../constants'
 
-export function createSettingsSnackbar (): void {
+/**
+ * @description create snackbar UI element with material-design-lite
+ * @see https://getmdl.io/components/index.html#snackbar-section
+ */
+export function createMaterialSnackbar (): HTMLDivElement {
     const snackbar = document.createElement ('div')
     snackbar.id = SNACKBAR_ID
     snackbar.classList.add ('mdl-js-snackbar')
@@ -15,5 +19,5 @@ export function createSettingsSnackbar (): void {
     action.type = 'button'
     snackbar.appendChild (action)
 
-    document.body.appendChild (snackbar)
+    return snackbar
 }
