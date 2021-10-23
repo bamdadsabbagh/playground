@@ -5,6 +5,7 @@ import { setState } from './set-state'
 import { StateActions } from '../enums'
 import { isControlled } from './is-controlled'
 import { ControlIdentifier, ControlType, Parameter } from '../types'
+import { showSnack } from './show-snack'
 
 type LearnControlProps = {
     parameter: Parameter,
@@ -47,5 +48,7 @@ export function learnControl (
     })
 
     // log
-    console.log (`learning control ${control} as ${type} type for parameter ${parameter}`)
+    showSnack ({
+        message: `learning control ${control} as ${type} type for parameter ${parameter}`,
+    })
 }

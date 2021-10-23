@@ -4,6 +4,7 @@ import { isTabActive } from './is-tab-active'
 import { setState } from './set-state'
 import { StateActions } from '../enums'
 import { Parameter } from '../types'
+import { showSnack } from './show-snack'
 
 type UnlearnControlProps = {
     parameter: Parameter,
@@ -27,5 +28,7 @@ export function unlearnControl ({parameter}: UnlearnControlProps): void {
     updateSetting ({parameter})
 
     // log
-    console.log (`unlearning control ${control} for parameter ${parameter}`)
+    showSnack ({
+        message: `unlearning control ${control} for parameter ${parameter}`,
+    })
 }
