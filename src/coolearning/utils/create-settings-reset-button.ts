@@ -1,22 +1,24 @@
 import { setState } from './set-state'
 import { StateActions } from '../enums'
+import { createMaterialButton } from './create-material-button'
+import { createMaterialIcon } from './create-material-icon'
 
 /**
  * @description create button on main interface to reset settings state
- * @todo merge duplicate code with action button
  */
 export function createSettingsResetButton (): void {
-    const button = document.createElement ('button')
+    const icon = createMaterialIcon ({icon: 'eject'})
+    icon.style.marginTop = '-1px'
+
+    const button = createMaterialButton ({
+        icon,
+        onClick: () => setState (StateActions.Reset),
+    })
 
     button.style.display = 'block'
     button.style.position = 'fixed'
-    button.style.top = '5px'
-    button.style.left = '72px'
-    button.innerText = 'reset'
-
-    button.addEventListener ('click', () => {
-        setState (StateActions.Reset)
-    })
+    button.style.top = '2px'
+    button.style.left = '35px'
 
     document.body.insertBefore (button, document.body.firstChild.nextSibling)
 }

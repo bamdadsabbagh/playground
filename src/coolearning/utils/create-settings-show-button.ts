@@ -1,20 +1,21 @@
 import { showSettings } from './show-settings'
+import { createMaterialIcon } from './create-material-icon'
+import { createMaterialButton } from './create-material-button'
 
 /**
  * @description create button on main interface to show/hide settings UI
  */
 export function createSettingsShowButton (): void {
-    const button = document.createElement ('button')
+    const icon = createMaterialIcon ({icon: 'settings'})
+    const button = createMaterialButton ({
+        icon,
+        onClick: () => showSettings ()
+    })
 
     button.style.display = 'block'
     button.style.position = 'fixed'
-    button.style.top = '5px'
-    button.style.left = '5px'
-    button.innerText = 'settings'
-
-    button.addEventListener ('click', () => {
-        showSettings ()
-    })
+    button.style.top = '2px'
+    button.style.left = '2px'
 
     document.body.insertBefore (button, document.body.firstChild)
 }
