@@ -12,7 +12,7 @@ export function showSnack (
         message,
         actionHandler,
         actionText,
-        timeout = 1000,
+        timeout = 2000,
     }: ShowSnackbarProps,
 ): void {
 
