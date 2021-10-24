@@ -1,6 +1,5 @@
 import { getSettingsContainer } from './get-settings-container'
-
-// import { getSettingsDialogElement } from './get-settings-dialog-element'
+import { getSettingsDialogElement } from './get-settings-dialog-element'
 
 /**
  * @description show settings UI

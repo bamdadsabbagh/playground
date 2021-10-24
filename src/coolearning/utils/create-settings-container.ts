@@ -30,7 +30,6 @@ export function createSettingsContainer (): void {
 
     // click event
     container.addEventListener ('click', (e) => {
-        // @ts-ignore
         const list = e.target.classList
         if (list.length === 0) return
 
@@ -47,6 +46,6 @@ export function createSettingsContainer (): void {
         hideSettings ()
     })
 
-    container.appendChild (content)
-    document.body.insertBefore (container, document.body.firstChild)
+    content.appendTo (container)
+    container.prependTo (document.body)
 }

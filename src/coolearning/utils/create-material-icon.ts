@@ -13,6 +13,5 @@ export function createMaterialIcon (
     const element = document.createElement ('i')
     element.classList.add ('material-icons')
     element.innerText = icon
-
     return element
 }

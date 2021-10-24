@@ -30,9 +30,7 @@ export function initializeMidi (): void {
     let velocity
 
     // request MIDI access
-    // @ts-ignore
     if (navigator.requestMIDIAccess) {
-        // @ts-ignore
         navigator.requestMIDIAccess ({
             sysex: false,
         }).then (onMIDISuccess, onMIDIFailure)

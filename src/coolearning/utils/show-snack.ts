@@ -29,12 +29,10 @@ export function showSnack (
     }
 
     // if material JS not yet loaded, then recurse
-    // @ts-ignore
     if (typeof notification.MaterialSnackbar === 'undefined') {
         setTimeout (() => showSnack (options), TIMEOUT)
         return
     }
 
-    // @ts-ignore
     notification.MaterialSnackbar.showSnackbar (options)
 }

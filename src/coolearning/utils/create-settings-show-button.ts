@@ -17,5 +17,5 @@ export function createSettingsShowButton (): void {
     button.style.bottom = '6px'
     button.style.left = '6px'
 
-    document.body.insertBefore (button, document.body.firstChild)
+    button.prependTo (document.body)
 }

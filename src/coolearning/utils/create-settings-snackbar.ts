@@ -5,5 +5,5 @@ import { createMaterialSnackbar } from './create-material-snackbar'
  */
 export function createSettingsSnackbar (): void {
     const snackbar = createMaterialSnackbar ()
-    document.body.appendChild (snackbar)
+    snackbar.appendTo (document.body)
 }

@@ -19,24 +19,24 @@ export function createMaterialList ({items}: CreateMaterialListProps): HTMLUList
 
         const li = document.createElement ('li')
         li.classList.add ('mdl-list__item')
+        li.appendTo (ul)
 
-        ul.appendChild (li)
         const content = document.createElement ('span')
         content.classList.add ('mdl-list__item-primary-content')
-        li.appendChild (content)
+        content.appendTo (li)
 
         const icon = document.createElement ('i')
         icon.classList.add ('material-icons')
         icon.classList.add ('mdl-list__item-icon')
         icon.innerText = 'person'
-        content.appendChild (icon)
+        icon.appendTo (content)
 
         if (item instanceof HTMLElement) {
-            content.appendChild (item)
+            item.appendTo (content)
         } else if (typeof item === 'string') {
             const span = document.createElement ('span')
             span.innerText = item
-            content.appendChild (span)
+            span.appendTo (content)
         }
     }
 

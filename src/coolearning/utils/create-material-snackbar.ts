@@ -12,12 +12,12 @@ export function createMaterialSnackbar (): HTMLDivElement {
 
     const message = document.createElement ('div')
     message.classList.add ('mdl-snackbar__text')
-    snackbar.appendChild (message)
+    message.appendTo (snackbar)
 
     const action = document.createElement ('button')
     action.classList.add ('mdl-snackbar__action')
     action.type = 'button'
-    snackbar.appendChild (action)
+    action.appendTo (snackbar)
 
     return snackbar
 }

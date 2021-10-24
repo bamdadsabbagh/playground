@@ -2,6 +2,5 @@
  * @description is the current environment assignable to development?
  */
 export function isDevEnv (): boolean {
-    // @ts-ignore
     return window.location.href.includes ('localhost')
 }

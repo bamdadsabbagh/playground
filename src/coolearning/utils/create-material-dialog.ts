@@ -32,64 +32,50 @@ export function createMaterialDialog (
     if (typeof width !== 'number') throw new Error ('width is not a number')
 
     // container
-    const dialog = document.createElement ('dialog')
+    const dialog = document.createElement ('dialog') as HTMLDialogElement
     dialog.classList.add ('mdl-dialog')
     dialog.style.width = `${width}px`
 
     // title
     const titleElement = document.createElement ('h4')
     titleElement.classList.add ('mdl-dialog__title')
-
     titleElement.innerText = title
-
-    dialog.appendChild (titleElement)
+    titleElement.appendTo (dialog)
 
     // content
     const contentElement = document.createElement ('div')
     contentElement.classList.add ('mdl-dialog__content')
 
     if (content instanceof HTMLElement) {
-        contentElement.appendChild (content)
+        content.appendTo (contentElement)
     } else if (typeof content === 'string') {
         const paragraph = document.createElement ('p')
-        paragraph.innerHTML = content
-        contentElement.appendChild (paragraph)
+        paragraph.innerText = content
+        paragraph.appendTo (contentElement)
     }
 
-    dialog.appendChild (contentElement)
+    contentElement.appendTo (dialog)
 
     // actions
     const actions = document.createElement ('div')
     actions.classList.add ('mdl-dialog__actions')
     fullWidth && actions.classList.add ('mdl-dialog__actions--full-width')
-
-    dialog.appendChild (actions)
+    actions.appendTo (dialog)
 
     // action: close button
     const closeButton = document.createElement ('button')
     closeButton.type = 'button'
     closeButton.classList.add ('mdl-button')
-
     closeButton.innerText = closeText
-
-    closeButton.onclick = () => {
-        // @ts-ignore
-        dialog.close ()
-    }
-
-    actions.appendChild (closeButton)
+    closeButton.onclick = () => dialog.close ()
+    closeButton.appendTo (actions)
 
     // outside event
     dialog.onclick = (e) => {
-        // MDL adds an `open` HTML attribute
-        // to the dialog container only
-
-        // @ts-ignore
+        // MDL adds `open` HTML attribute to the dialog container (outside) only
         if (!e.target.open) return
-
-        // @ts-ignore
         dialog.close ()
     }
 
-    return dialog as HTMLDialogElement
+    return dialog
 }

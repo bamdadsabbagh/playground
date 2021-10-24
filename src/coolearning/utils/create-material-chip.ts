@@ -23,7 +23,6 @@ export function createMaterialChip (
 
     // container
     const chip = document.createElement ('span')
-
     chip.classList.add ('mdl-chip')
     chip.classList.add ('mdl-chip--contact')
     chip.classList.add ('mdl-chip--deletable')
@@ -31,7 +30,6 @@ export function createMaterialChip (
     // icon
     // default image https://getmdl.io/templates/dashboard/images/user.jpg
     const icon = document.createElement ('img')
-
     icon.classList.add ('mdl-chip__contact')
 
     if (type === 'button') {
@@ -44,28 +42,21 @@ export function createMaterialChip (
         throw new Error ('type not found')
     }
 
-    chip.appendChild (icon)
+    icon.appendTo (chip)
 
     // text
     const text = document.createElement ('span')
-
     text.classList.add ('mdl-chip__text')
     text.style.userSelect = 'none'
-
     text.innerHTML = content
-
-    chip.appendChild (text)
+    text.appendTo (chip)
 
     // action
     const action = document.createElement ('a')
-
     action.classList.add ('mdl-chip__action')
-
     action.appendChild (createMaterialIcon ({icon: 'cancel'}))
-
     action.onclick = onActionClick
-
-    chip.appendChild (action)
+    action.appendTo (chip)
 
     return chip
 }

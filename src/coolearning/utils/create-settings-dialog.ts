@@ -29,5 +29,5 @@ export function createSettingsDialog () {
         width: 650,
     })
 
-    document.body.appendChild (dialog)
+    dialog.appendTo (document.body)
 }
