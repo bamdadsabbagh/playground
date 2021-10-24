@@ -1,3 +1,5 @@
+import './interfaces'
+import './prototypes'
 import { initializeState } from './utils/initialize-state'
 import { initializeSettings } from './utils/initialize-settings'
 import { initializeMidi } from './utils/initialize-midi'
