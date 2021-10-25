@@ -32,3 +32,7 @@ interface String {
 interface Navigator {
     requestMIDIAccess (options: any): Promise<any>
 }
+
+interface HTMLDialogElement {
+    close (): void
+}
