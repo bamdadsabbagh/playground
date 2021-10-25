@@ -16,7 +16,8 @@
     "build": "npm run prep && npm run build-js && npm run build-css && npm run build-html",
     "watch": "npm run prep && concurrently \"npm run watch-js\" \"npm run watch-css\" \"npm run watch-html\"",
     "serve": "npx serve dist/",
-    "serve-watch": "concurrently \"npx serve dist/\" \"npm run watch\""
+    "serve-watch": "concurrently \"npx serve dist/\" \"npm run watch\"",
+    "test": "cypress open"
   },
   "devDependencies": {
     "@types/d3": "^3.5.34",
