@@ -61,6 +61,13 @@ export function initializeMidi (): void {
         note = data[1]
         velocity = data[2]
 
+        // we don't want any aftertouch to be handled
+        if (type === MIDITypes.Aftertouch) return
+
+        // define MIDI input nature
+        const isButton = type === MIDITypes.ButtonOn || type === MIDITypes.ButtonOff
+
+        // todo to remove after dev
         console.log ({
             channel,
             note,
@@ -72,6 +79,7 @@ export function initializeMidi (): void {
         const control = note
 
         if (state[State.IsLearning] && state[State.LearningParameter]) {
+            // learning mode
 
             const parameter = state[State.LearningParameter]
             const myType = type === MIDITypes.ButtonOn || type === MIDITypes.ButtonOff
@@ -81,6 +89,17 @@ export function initializeMidi (): void {
             learnControl ({parameter, control, type: myType})
 
         } else if (state.parametersByControl[control]) {
+            // interactive mode (updating interface values)
+
+            if (isButton) {
+                state.parametersByControl[control].forEach (parameter => {
+                    updateParameter ({
+                        parameter,
+                        type: 144, // todo obsolete
+                        value: velocity,
+                    })
+                })
+            }
 
             state.parametersByControl[control].forEach (parameter => {
                 updateParameter ({
