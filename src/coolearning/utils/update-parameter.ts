@@ -25,6 +25,7 @@ export function updateParameter (
     if (!isTabActive ()) return
 
     switch (element.tagName) {
+
         case 'SELECT':
             if (type === MIDITypes.Range) {
                 const length = element.children.length - 1
@@ -38,11 +39,12 @@ export function updateParameter (
                 }
             }
             break
+
         case 'BUTTON':
-            if (type === MIDITypes.ButtonOn) {
-                element.click ()
-            }
+            if (value === 0) return
+            element.click ()
             break
+
         case 'INPUT':
             if (type === MIDITypes.Range) {
                 const min = parseInt (element.min)
@@ -60,11 +62,13 @@ export function updateParameter (
                 }
             }
             break
+
         case 'LABEL':
             if (type === MIDITypes.ButtonOn) {
                 element.click ()
             }
             break
+
         default:
             throw new Error (`${element.tagName} target not handled`)
     }
