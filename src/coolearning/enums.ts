@@ -28,4 +28,5 @@ export enum MIDITypes {
     Range = 176,
     ButtonOn = 144,
     ButtonOff = 128,
+    Aftertouch = 160,
 }
