@@ -101,14 +101,6 @@ export function initializeMidi (): void {
                 })
             }
 
-            state.parametersByControl[control].forEach (parameter => {
-                updateParameter ({
-                    parameter,
-                    type,
-                    value: velocity,
-                })
-            })
-
         }
     }
 
