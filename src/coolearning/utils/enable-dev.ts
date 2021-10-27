@@ -1,7 +1,7 @@
-import { learnControl } from './learn-control'
 import { showSettings } from './show-settings'
 import { isDevEnv } from './is-dev-env'
 import { getNeurons } from './get-neurons'
+import { state } from '../state/state'
 
 /**
  * @description enable statements only in development environment
@@ -11,25 +11,25 @@ export function enableDev (): void {
 
     showSettings ()
 
-    learnControl ({
+    state.learn ({
         parameter: 'playPauseButton',
         control: 41,
         type: 'button',
     })
 
-    learnControl ({
+    state.learn ({
         parameter: 'resetButton',
         control: 73,
         type: 'button',
     })
 
-    learnControl ({
+    state.learn ({
         parameter: 'learningRate',
         control: 77,
         type: 'range',
     })
 
-    learnControl ({
+    state.learn ({
         parameter: 'activation',
         control: 49,
         type: 'range',

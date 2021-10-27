@@ -3,10 +3,9 @@ import { buildArrayFromCollection } from './build-array-from-collection'
 import { createSettingsActionButton } from './create-settings-action-button'
 import { SettingsActions, SettingsPositions } from '../enums'
 import { SETTINGS } from '../constants'
-import { unlearnControl } from './unlearn-control'
-import { enableLearningMode } from './enable-learning-mode'
 import { isTabActive } from './is-tab-active'
 import { ControlIdentifier, ControlType, Parameter } from '../types'
+import { state } from '../state/state'
 
 type UpdateSettingProps = {
     parameter: Parameter,
@@ -15,9 +14,9 @@ type UpdateSettingProps = {
 }
 
 /**
- * @description update setting in settings UI
+ * @description render setting
  */
-export function updateSetting (
+export function renderSetting (
     {
         parameter,
         control = undefined,
@@ -57,9 +56,9 @@ export function updateSetting (
                 })
                 child.onclick = () => {
                     if (learned) {
-                        unlearnControl ({parameter})
+                        state.unlearn (parameter)
                     } else {
-                        enableLearningMode ({parameter})
+                        state.enableLearningMode (parameter)
                     }
                 }
                 break

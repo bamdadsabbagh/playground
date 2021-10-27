@@ -1,7 +1,6 @@
-import { setState } from './set-state'
-import { StateActions } from '../enums'
 import { createMaterialButton } from './create-material-button'
 import { createMaterialIcon } from './create-material-icon'
+import { state } from '../state/state'
 
 /**
  * @description create button on main interface to reset settings state
@@ -12,7 +11,7 @@ export function createSettingsResetButton (): void {
 
     const button = createMaterialButton ({
         icon,
-        onClick: () => setState (StateActions.Reset),
+        onClick: () => state.reset (),
     })
 
     button.style.display = 'block'

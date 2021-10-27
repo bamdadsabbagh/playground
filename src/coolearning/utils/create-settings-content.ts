@@ -1,10 +1,7 @@
 import { getSettingsContent } from './get-settings-content'
 import { CLASSES, PARAMETERS } from '../constants'
-import { isControlled } from './is-controlled'
-import { getControlId } from './get-control-id'
-import { getControlType } from './get-control-type'
 import { buildArrayFromCollection } from './build-array-from-collection'
-import { updateSetting } from './update-setting'
+import { state } from '../state/state'
 
 /**
  * @description create content in settings UI
@@ -57,12 +54,6 @@ export function createSettingsContent (): void {
 
     actions.forEach (action => {
         const parameter: string = action.firstElementChild.innerText
-        if (isControlled (parameter)) {
-            const control = getControlId (parameter)
-            const type = getControlType (parameter)
-            updateSetting ({parameter, control, type})
-        } else {
-            updateSetting ({parameter})
-        }
+        state.render (parameter)
     })
 }

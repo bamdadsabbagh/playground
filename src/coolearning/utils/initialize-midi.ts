@@ -1,12 +1,9 @@
 import { MIDITypes } from '../enums'
-import { learnControl } from './learn-control'
 import { updateParameter } from './update-parameter'
 import { watchDevices } from './watch-devices'
 import { SETTINGS } from '../constants'
 import { showSnack } from './show-snack'
-import { getParametersByControl } from './get-parameters-by-control'
-import { isLearning } from './is-learning'
-import { getLearningParameter } from './get-learning-parameter'
+import { state } from '../state/state'
 
 /**
  * @description initialize MIDI handler
@@ -78,16 +75,16 @@ export function initializeMidi (): void {
         })
 
         const control = note
-        const learningParameter = getLearningParameter ()
-        const parameters = getParametersByControl (control)
+        const {isLearning, learningParameter} = state
+        const parameters = state.getParametersByControl (control)
 
-        if (isLearning () && getLearningParameter ()) {
+        if (isLearning && learningParameter) {
 
             const myType = type === MIDITypes.ButtonOn || type === MIDITypes.ButtonOff
                 ? SETTINGS.button
                 : SETTINGS.range
 
-            learnControl ({
+            state.learn ({
                 parameter: learningParameter,
                 control,
                 type: myType,
