@@ -66,6 +66,7 @@ export function initializeMidi (): void {
 
         // define MIDI input nature
         const isButton = type === MIDITypes.ButtonOn || type === MIDITypes.ButtonOff
+        const isRange = type === MIDITypes.Range
 
         // todo to remove after dev
         console.log ({
@@ -91,11 +92,10 @@ export function initializeMidi (): void {
         } else if (state.parametersByControl[control]) {
             // interactive mode (updating interface values)
 
-            if (isButton) {
+            if (isButton || isRange) {
                 state.parametersByControl[control].forEach (parameter => {
                     updateParameter ({
                         parameter,
-                        type: 144, // todo obsolete
                         value: velocity,
                     })
                 })
