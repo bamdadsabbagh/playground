@@ -46,3 +46,15 @@ export const INITIAL_STATE = Object.freeze ({
 export const TIMEOUT = 1000
 
 export const SNACKBAR_ID = 'cool-snackbar'
+
+export const FEATURES_KEYS = [
+    'x',
+    'y', // x2
+    'xTimesY', // x1 * x2
+    'xSquared',
+    'ySquared',
+    'cosX',
+    'sinX',
+    'cosY',
+    'sinY',
+]
