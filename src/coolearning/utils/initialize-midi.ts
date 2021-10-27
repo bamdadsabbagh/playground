@@ -1,11 +1,12 @@
 import { MIDITypes } from '../enums'
-import { getState } from './get-state'
-import { State } from '../enums'
 import { learnControl } from './learn-control'
 import { updateParameter } from './update-parameter'
 import { watchDevices } from './watch-devices'
 import { SETTINGS } from '../constants'
 import { showSnack } from './show-snack'
+import { getParametersByControl } from './get-parameters-by-control'
+import { isLearning } from './is-learning'
+import { getLearningParameter } from './get-learning-parameter'
 
 /**
  * @description initialize MIDI handler
@@ -76,24 +77,26 @@ export function initializeMidi (): void {
             type,
         })
 
-        const state = getState ()
         const control = note
+        const learningParameter = getLearningParameter ()
+        const parameters = getParametersByControl (control)
 
-        if (state[State.IsLearning] && state[State.LearningParameter]) {
-            // learning mode
+        if (isLearning () && getLearningParameter ()) {
 
-            const parameter = state[State.LearningParameter]
             const myType = type === MIDITypes.ButtonOn || type === MIDITypes.ButtonOff
                 ? SETTINGS.button
                 : SETTINGS.range
 
-            learnControl ({parameter, control, type: myType})
+            learnControl ({
+                parameter: learningParameter,
+                control,
+                type: myType,
+            })
 
-        } else if (state.parametersByControl[control]) {
-            // interactive mode (updating interface values)
+        } else if (parameters) {
 
             if (isButton || isRange) {
-                state.parametersByControl[control].forEach (parameter => {
+                parameters.forEach (parameter => {
                     updateParameter ({
                         parameter,
                         value: velocity,
