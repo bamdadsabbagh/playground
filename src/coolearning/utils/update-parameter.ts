@@ -56,7 +56,7 @@ export function updateParameter (
 
             if (isStep && areDifferent) {
                 element.value = n.toString ()
-                element.dispatchEvent (new Event ('change'))
+                element.dispatchEvent (new Event ('input'))
             }
 
             break
