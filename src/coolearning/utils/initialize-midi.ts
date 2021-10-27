@@ -9,7 +9,7 @@ import { showSnack } from './show-snack'
 
 /**
  * @description initialize MIDI handler
- * @see https://raw.githubusercontent.com/erictherobot/react-web-midi/master/src/lib/MidiScript.js
+ * @see https://github.com/erictherobot/react-web-midi/blob/master/src/lib/MidiScript.js
  * @todo clean and extract
  */
 export function initializeMidi (): void {

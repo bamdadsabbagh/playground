@@ -1,5 +1,6 @@
 /**
  * @description add missing MDL script to document HEAD
+ * @todo this should be a local resource for offline usage
  */
 export function addMaterialScript (): void {
     const script = document.createElement ('script')
