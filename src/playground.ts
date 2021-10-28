@@ -28,6 +28,7 @@ import {
 import { Example2D, shuffle } from './dataset'
 import { AppendingLineChart } from './linechart'
 import * as d3 from 'd3'
+import { toggleNode } from './utils/toggle-node'
 // import { Coolearning } from './coolearning/coolearning'
 //
 // Coolearning ()
@@ -180,6 +181,7 @@ let player = new Player ()
 let lineChart = new AppendingLineChart (d3.select ('#linechart'),
     ['#777', 'black'])
 let selectedNodes = []
+let mouseTimer = null
 
 function makeGUI () {
     d3.select ('#reset-button').on ('click', () => {
@@ -525,7 +527,26 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
             heatMap.updateBackground (boundary[nn.getOutputNode (network).id],
                 state.discretize)
         })
-        .on ('click', () => {
+        .on ('mousedown', () => {
+            mouseTimer = setTimeout (() => {
+                toggleNode (parseInt (selectedNodeId))
+
+                // clear mouseTimer so we prevent short action on mouse up
+                mouseTimer = null
+            }, 1000)
+        })
+        .on ('mouseup', () => {
+
+            // do nothing if mouseTimer is null
+            // this means the mouse has been pressed long enough
+            // and the long action has been triggered
+            if (mouseTimer === null) return
+
+            // mouse has not been pressed long enough
+            // we don't want the long action to trigger
+            // we want the short action below to trigger instead
+            clearTimeout (mouseTimer)
+
             if (!div.classed ('selected')) {
                 // select
                 div.classed ('selected', true)

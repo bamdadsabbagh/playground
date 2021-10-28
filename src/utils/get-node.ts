@@ -1,6 +1,8 @@
-export function getNode (layer: number, neuron: number) {
+import { getNeuronAndLayerIndexes } from './get-neuron-and-layer-indexes'
+
+export function getNode (nodeIndex: number) {
     // @ts-ignore
     const network = window.nn
-    const selectedLayer = network[layer]
-    return selectedLayer[neuron - 1]
+    const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (nodeIndex)
+    return network[layerIndex][neuronIndex - 1]
 }
