@@ -28,6 +28,8 @@ import {
 import { Example2D, shuffle } from './dataset'
 import { AppendingLineChart } from './linechart'
 import * as d3 from 'd3'
+import { disableNodeWeights } from './utils/disable-node-weights'
+import { enableNodeWeights } from './utils/enable-node-weights'
 // import { Coolearning } from './coolearning/coolearning'
 //
 // Coolearning ()
@@ -583,7 +585,34 @@ function drawNetwork (network: nn.Node[][]): void {
     })
 
     // Draw the intermediate layers.
-    console.log (network)
+    window['nn'] = network
+
+    disableNodeWeights (1, 1)
+    disableNodeWeights (1, 2)
+    disableNodeWeights (1, 3)
+    disableNodeWeights (1, 4)
+    disableNodeWeights (1, 5)
+    disableNodeWeights (1, 6)
+    disableNodeWeights (1, 7)
+    disableNodeWeights (1, 8)
+    disableNodeWeights (2, 1)
+    disableNodeWeights (2, 2)
+    disableNodeWeights (2, 3)
+    disableNodeWeights (2, 4)
+    disableNodeWeights (2, 5)
+    disableNodeWeights (2, 6)
+    disableNodeWeights (2, 7)
+    disableNodeWeights (2, 8)
+
+    setTimeout (() => enableNodeWeights (1, 1), 2000)
+    setTimeout (() => enableNodeWeights (1, 2), 4000)
+    setTimeout (() => enableNodeWeights (1, 3), 6000)
+    setTimeout (() => enableNodeWeights (2, 1), 8000)
+    setTimeout (() => enableNodeWeights (2, 2), 10000)
+    setTimeout (() => disableNodeWeights (1, 1), 12000)
+    setTimeout (() => disableNodeWeights (1, 2), 14000)
+    setTimeout (() => disableNodeWeights (1, 3), 16000)
+
     for (let layerIdx = 1; layerIdx < numLayers - 1; layerIdx++) {
         let numNodes = network[layerIdx].length
         let cx = layerScale (layerIdx) + RECT_SIZE / 2
@@ -612,8 +641,7 @@ function drawNetwork (network: nn.Node[][]): void {
             // Draw links.
             for (let j = 0; j < node.inputLinks.length; j++) {
                 let link = node.inputLinks[j]
-                let path: SVGPathElement = drawLink (link, node2coord, network,
-                    container, j === 0, j, node.inputLinks.length).node () as any
+                let path: SVGPathElement = drawLink (link, node2coord, network, container, j === 0, j, node.inputLinks.length).node () as any
                 // Show callout to weights.
                 let prevLayer = network[layerIdx - 1]
                 let lastNodePrevLayer = prevLayer[prevLayer.length - 1]
@@ -643,8 +671,7 @@ function drawNetwork (network: nn.Node[][]): void {
     // Draw links.
     for (let i = 0; i < node.inputLinks.length; i++) {
         let link = node.inputLinks[i]
-        drawLink (link, node2coord, network, container, i === 0, i,
-            node.inputLinks.length)
+        drawLink (link, node2coord, network, container, i === 0, i, node.inputLinks.length)
     }
     // Adjust the height of the svg.
     svg.attr ('height', maxY)
@@ -757,6 +784,7 @@ function drawLink (
     input: nn.Link, node2coord: { [id: string]: { cx: number, cy: number } },
     network: nn.Node[][], container,
     isFirst: boolean, index: number, length: number) {
+
     let line = container.insert ('path', ':first-child')
     let source = node2coord[input.source.id]
     let dest = node2coord[input.dest.id]
@@ -764,10 +792,14 @@ function drawLink (
         source: {
             y: source.cx + RECT_SIZE / 2 + 2,
             x: source.cy,
+            // y: 0,
+            // x: 0,
         },
         target: {
             y: dest.cx - RECT_SIZE / 2,
             x: dest.cy + ((index - (length - 1) / 2) / length) * 12,
+            // y: 0,
+            // x: 0,
         },
     }
     let diagonal = d3.svg.diagonal ().projection (d => [d.y, d.x])
@@ -785,9 +817,10 @@ function drawLink (
         .attr ('class', 'link-hover')
         .on ('mouseenter', function () {
             updateHoverCard (HoverType.WEIGHT, input, d3.mouse (this))
-        }).on ('mouseleave', function () {
-        updateHoverCard (null)
-    })
+        })
+        .on ('mouseleave', function () {
+            updateHoverCard (null)
+        })
     return line
 }
 
