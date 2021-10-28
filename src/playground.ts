@@ -179,6 +179,7 @@ let lossTest = 0
 let player = new Player ()
 let lineChart = new AppendingLineChart (d3.select ('#linechart'),
     ['#777', 'black'])
+let selectedNodes = []
 
 function makeGUI () {
     d3.select ('#reset-button').on ('click', () => {
@@ -525,8 +526,19 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
                 state.discretize)
         })
         .on ('click', () => {
-            div.classed ('selected', !div.classed ('selected'))
-            console.log ('test', div)
+            if (!div.classed ('selected')) {
+                // select
+                div.classed ('selected', true)
+                selectedNodes = [
+                    ...selectedNodes,
+                    selectedNodeId,
+                ]
+            } else {
+                // unselect
+                div.classed ('selected', false)
+                selectedNodes = selectedNodes.filter (n => n !== selectedNodeId)
+            }
+            console.log (selectedNodes)
             // todo show all weights to edit
         })
     if (isInput) {
