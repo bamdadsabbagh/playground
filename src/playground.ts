@@ -518,6 +518,9 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
             heatMap.updateBackground (boundary[nn.getOutputNode (network).id],
                 state.discretize)
         })
+        .on ('click', () => {
+            // todo show all weights to edit
+        })
     if (isInput) {
         div.on ('click', function () {
             state[nodeId] = !state[nodeId]
