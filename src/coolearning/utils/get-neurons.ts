@@ -1,35 +1,42 @@
 import { NeuronElement, Neurons } from '../types'
 
+const getWeightsHovers = (elementD3) => {
+    const weights = {}
+    let index = 1
+    let currentElement = elementD3
+
+    while (
+        currentElement.nextElementSibling
+        && currentElement.nextElementSibling.tagName === 'path'
+        ) {
+        weights[index] = currentElement.nextElementSibling
+        currentElement = currentElement.nextElementSibling
+        ++index
+    }
+
+    return weights
+}
+
 /**
  * @description get all neurons currently in the playground
  * @todo call this for each DOM render
  */
-export function getNeurons (): Neurons {
-    const neuronsAndFeatures = document.querySelectorAll ('[id ^= \'canvas-\']')
+export function getNeurons (): any {
+    const featuresCount = 7
+    const heatmaps = Array.from (document.querySelectorAll ('[id ^= \'canvas-\']')).reverse ().slice (featuresCount)
+    const nodes = Array.from (document.querySelectorAll ('[id ^= \'node\']')).slice (featuresCount)
     const getNeuronIndex = (n: NeuronElement): number => parseInt (n.id.split ('-')[1])
-
-    // select only neurons
-    let neuronsArray = Array.from (neuronsAndFeatures).filter ((neuronOrFeature: NeuronElement) => {
-        const index = getNeuronIndex (neuronOrFeature)
-        // if index is not a number, the element is not a neuron
-        if (isNaN (index)) return
-
-        return neuronOrFeature
-    })
-
-    // playground appends DOM in reverse order
-    neuronsArray = neuronsArray.reverse ()
 
     // initialize object to return
     const neurons = {}
 
     // build first iteration of the object
-    neuronsArray.forEach ((neuron: NeuronElement) => {
-        const index = getNeuronIndex (neuron)
-        const left = parseFloat (neuron.style.left.replace ('px', ''))
+    heatmaps.forEach ((h: HTMLDivElement) => {
+        const index = getNeuronIndex (h)
+        const left = parseFloat (h.style.left.replace ('px', ''))
 
         neurons[index] = {
-            element: neuron,
+            heatmap: h,
             layerPosition: left,
         }
     })
@@ -40,17 +47,22 @@ export function getNeurons (): Neurons {
 
     Object.keys (neurons).forEach ((index) => {
         const {layerPosition} = neurons[index]
+
         if (layerPosition !== savedLayerPosition) {
             savedLayerPosition = layerPosition
             savedLayerIndex += 1
         }
+
+        const node = nodes[parseInt (index) - 1]
+        const weights = getWeightsHovers (node)
+
         neurons[index] = {
             ...neurons[index],
             layerIndex: savedLayerIndex,
+            node,
+            weights,
         }
     })
-
-    console.log (neurons)
 
     return neurons
 }
