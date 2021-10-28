@@ -340,12 +340,16 @@ function makeGUI () {
         state.serialize ()
         userHasInteracted ()
         parametersChanged = true
+        state.serialize ()
+        userHasInteracted ()
     })
     learningRate.property ('value', state.learningRate)
 
     let regularDropdown = d3.select ('#regularizations').on ('change', function () {
         state.regularization = regularizations[this.value]
         parametersChanged = true
+        state.serialize ()
+        userHasInteracted ()
     })
     regularDropdown.property ('value',
         getKeyFromValue (regularizations, state.regularization))
@@ -353,6 +357,8 @@ function makeGUI () {
     let regularRate = d3.select ('#regularRate').on ('change', function () {
         state.regularizationRate = +this.value
         parametersChanged = true
+        state.serialize ()
+        userHasInteracted ()
     })
     regularRate.property ('value', state.regularizationRate)
 
