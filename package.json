@@ -16,15 +16,13 @@
     "build": "npm run prep && npm run build-js && npm run build-css && npm run build-html",
     "watch": "npm run prep && concurrently \"npm run watch-js\" \"npm run watch-css\" \"npm run watch-html\"",
     "serve": "npx serve dist/",
-    "serve-watch": "concurrently \"npx serve dist/\" \"npm run watch\"",
-    "test": "cypress open"
+    "serve-watch": "concurrently \"npx serve dist/\" \"npm run watch\""
   },
   "devDependencies": {
     "@types/d3": "^3.5.34",
     "concat": "^1.0.3",
     "concurrently": "6.3.0",
     "copyfiles": "2.4.1",
-    "cypress": "^8.6.0",
     "rimraf": "3.0.2",
     "serve": "^12.0.1",
     "tsify": "^5.0.4",
