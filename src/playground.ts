@@ -341,12 +341,10 @@ function makeGUI () {
     })
     learningRate.property ('value', state.learningRate)
 
-    let regularDropdown = d3.select ('#regularizations').on ('change',
-        function () {
-            state.regularization = regularizations[this.value]
-            parametersChanged = true
-            reset ()
-        })
+    let regularDropdown = d3.select ('#regularizations').on ('change', function () {
+        state.regularization = regularizations[this.value]
+        parametersChanged = true
+    })
     regularDropdown.property ('value',
         getKeyFromValue (regularizations, state.regularization))
 
