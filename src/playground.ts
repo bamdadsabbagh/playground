@@ -583,6 +583,7 @@ function drawNetwork (network: nn.Node[][]): void {
     })
 
     // Draw the intermediate layers.
+    console.log (network)
     for (let layerIdx = 1; layerIdx < numLayers - 1; layerIdx++) {
         let numNodes = network[layerIdx].length
         let cx = layerScale (layerIdx) + RECT_SIZE / 2
