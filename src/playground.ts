@@ -950,7 +950,12 @@ function oneStep (): void {
         nn.forwardProp (network, input)
         nn.backProp (network, point.label, nn.Errors.SQUARE)
         if ((i + 1) % state.batchSize === 0) {
-            nn.updateWeights (network, state.learningRate, state.regularizationRate)
+            nn.updateWeights ({
+                network,
+                learningRate: state.learningRate,
+                regularization: state.regularization,
+                regularizationRate: state.regularizationRate,
+            })
         }
     })
     // Compute the loss.
@@ -992,8 +997,7 @@ function reset (onStartup = false) {
     let shape = [numInputs].concat (state.networkShape).concat ([1])
     let outputActivation = (state.problem === Problem.REGRESSION) ?
         nn.Activations.LINEAR : nn.Activations.TANH
-    network = nn.buildNetwork (shape, state.activation, outputActivation,
-        state.regularization, constructInputIds (), state.initZero)
+    network = nn.buildNetwork (shape, state.activation, outputActivation, constructInputIds (), state.initZero)
     lossTrain = getLoss (network, trainData)
     lossTest = getLoss (network, testData)
     drawNetwork (network)
