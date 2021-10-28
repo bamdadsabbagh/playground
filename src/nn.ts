@@ -321,7 +321,7 @@ export function backProp (network: Node[][], target: number,
     }
 }
 
-type UpdateWeights = {
+type UpdateWeightsProps = {
     network: Node[][],
     learningRate: number,
     regularization: RegularizationFunction,
@@ -338,7 +338,7 @@ export function updateWeights (
         learningRate,
         regularization,
         regularizationRate,
-    }: UpdateWeights,
+    }: UpdateWeightsProps,
 ) {
     for (let layerIdx = 1; layerIdx < network.length; layerIdx++) {
         let currentLayer = network[layerIdx]
