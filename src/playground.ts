@@ -525,6 +525,8 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
                 state.discretize)
         })
         .on ('click', () => {
+            div.classed ('selected', !div.classed ('selected'))
+            console.log ('test', div)
             // todo show all weights to edit
         })
     if (isInput) {

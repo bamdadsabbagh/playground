@@ -743,8 +743,11 @@ g.column rect {
     left: -2px;
 }
 
-/* Hidden layers column */
+#network .canvas.selected canvas {
+    border: 2px solid red;
+}
 
+/* Hidden layers column */
 .hidden-layers.column {
     width: 40%;
 }
