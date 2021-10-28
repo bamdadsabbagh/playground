@@ -207,7 +207,7 @@ export class State {
                     break
                 case Type.BOOLEAN:
                     if (hasKey (name)) {
-                        state[name] = (map[name] === 'false' ? false : true)
+                        state[name] = (map[name] !== 'false')
                     }
                     break
                 case Type.ARRAY_NUMBER:
@@ -227,7 +227,7 @@ export class State {
 
         // Deserialize state properties that correspond to hiding UI controls.
         getHideProps (map).forEach (prop => {
-            state[prop] = (map[prop] === 'true') ? true : false
+            state[prop] = (map[prop] === 'true')
         })
         state.numHiddenLayers = state.networkShape.length
         if (state.seed == null) {
