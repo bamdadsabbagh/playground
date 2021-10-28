@@ -19,4 +19,6 @@ export function toggleNode (nodeIndex: number) {
     })
 
     console.log (node)
+
+    return needsToDie
 }

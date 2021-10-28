@@ -529,8 +529,8 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
         })
         .on ('mousedown', () => {
             mouseTimer = setTimeout (() => {
-                toggleNode (parseInt (selectedNodeId))
-
+                const died = toggleNode (parseInt (selectedNodeId))
+                div.classed ('disabled', died)
                 // clear mouseTimer so we prevent short action on mouse up
                 mouseTimer = null
             }, 1000)
@@ -546,6 +546,8 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
             // we don't want the long action to trigger
             // we want the short action below to trigger instead
             clearTimeout (mouseTimer)
+
+            if (div.classed ('disabled')) return
 
             if (!div.classed ('selected')) {
                 // select

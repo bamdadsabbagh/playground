@@ -747,6 +747,11 @@ g.column rect {
     border: 2px solid red;
 }
 
+#network .canvas.disabled canvas {
+    border: 2px solid rgba(204, 204, 204, 0.9);
+    opacity: 0.9;
+}
+
 /* Hidden layers column */
 .hidden-layers.column {
     width: 40%;
