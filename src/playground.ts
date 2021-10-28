@@ -28,8 +28,6 @@ import {
 import { Example2D, shuffle } from './dataset'
 import { AppendingLineChart } from './linechart'
 import * as d3 from 'd3'
-import { disableNode } from './utils/disable-node'
-import { enableNode } from './utils/enable-node'
 // import { Coolearning } from './coolearning/coolearning'
 //
 // Coolearning ()
@@ -548,6 +546,7 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
 
 // Draw network
 function drawNetwork (network: nn.Node[][]): void {
+    window['nn'] = network
     let svg = d3.select ('#svg')
     // Remove all svg elements.
     svg.select ('g.core').remove ()
@@ -591,34 +590,6 @@ function drawNetwork (network: nn.Node[][]): void {
     })
 
     // Draw the intermediate layers.
-    window['nn'] = network
-
-    disableNode (1, 1)
-    disableNode (1, 2)
-    disableNode (1, 3)
-    disableNode (1, 4)
-    disableNode (1, 5)
-    disableNode (1, 6)
-    disableNode (1, 7)
-    disableNode (1, 8)
-    disableNode (2, 1)
-    disableNode (2, 2)
-    disableNode (2, 3)
-    disableNode (2, 4)
-    disableNode (2, 5)
-    disableNode (2, 6)
-    disableNode (2, 7)
-    disableNode (2, 8)
-
-    setTimeout (() => enableNode (1, 1), 2000)
-    setTimeout (() => enableNode (1, 2), 4000)
-    setTimeout (() => enableNode (1, 3), 6000)
-    setTimeout (() => enableNode (2, 1), 8000)
-    setTimeout (() => enableNode (2, 2), 10000)
-    setTimeout (() => disableNode (1, 1), 12000)
-    setTimeout (() => disableNode (1, 2), 14000)
-    setTimeout (() => disableNode (1, 3), 16000)
-
     for (let layerIdx = 1; layerIdx < numLayers - 1; layerIdx++) {
         let numNodes = network[layerIdx].length
         let cx = layerScale (layerIdx) + RECT_SIZE / 2
