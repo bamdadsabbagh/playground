@@ -145,7 +145,7 @@ export class State {
     regularization: nn.RegularizationFunction = null
     problem = Problem.CLASSIFICATION
     initZero = false
-    hideText = false
+    hideText = true
     collectStats = false
     numHiddenLayers = 1
     hiddenLayerControls: any[] = []
