@@ -351,7 +351,6 @@ function makeGUI () {
     let regularRate = d3.select ('#regularRate').on ('change', function () {
         state.regularizationRate = +this.value
         parametersChanged = true
-        reset ()
     })
     regularRate.property ('value', state.regularizationRate)
 
