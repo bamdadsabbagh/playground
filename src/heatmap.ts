@@ -48,10 +48,11 @@ export class HeatMap {
         yDomain: [number, number], container,
         userSettings?: HeatMapSettings) {
         this.numSamples = numSamples
+        // noinspection JSSuspiciousNameCombination
         let height = width
         let padding = userSettings.showAxes ? 20 : 0
 
-        if (userSettings != null) {
+        if (userSettings) {
             // overwrite the defaults with the user-specified settings.
             for (let prop in userSettings) {
                 this.settings[prop] = userSettings[prop]
