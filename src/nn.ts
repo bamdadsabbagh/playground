@@ -132,7 +132,7 @@ export class Activations {
     }
     public static LINEAR: ActivationFunction = {
         output: x => x,
-        der: x => 1,
+        der: _x => 1,
     }
 }
 
@@ -175,6 +175,7 @@ export class Link {
      * @param dest The destination node.
      * @param regularization The regularization function that computes the
      *     penalty for this weight. If null, there will be no regularization.
+     * @param initZero
      */
     constructor (source: Node, dest: Node,
                  regularization: RegularizationFunction, initZero?: boolean) {
@@ -200,6 +201,7 @@ export class Link {
  *     for a given weight (parameter) in the network. If null, there will be
  *     no regularization.
  * @param inputIds List of ids for the input nodes.
+ * @param initZero
  */
 export function buildNetwork (
     networkShape: number[], activation: ActivationFunction,
