@@ -329,7 +329,6 @@ function makeGUI () {
     let activationDropdown = d3.select ('#activations').on ('change', function () {
         state.activation = activations[this.value]
         parametersChanged = true
-        reset ()
     })
     activationDropdown.property ('value',
         getKeyFromValue (activations, state.activation))
