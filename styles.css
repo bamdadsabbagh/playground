@@ -378,8 +378,8 @@ header h1 .optional {
     background: #fff;
     cursor: default;
     border-radius: 5px;
-    left: -170px;
-    width: 150px;
+    left: -203px;
+    width: 170px;
     top: 72px;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -390,7 +390,7 @@ header h1 .optional {
 }
 
 #neuron-card input {
-    width: 60px;
+    width: 80px;
 }
 
 /* Main Part*/

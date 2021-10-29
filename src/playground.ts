@@ -837,17 +837,19 @@ function updateNeuronCard (
     )
 
     const node = getNode (nodeId)
-    const multipleSelectionPlaceholder = 'multi.'
+    const inputPlaceholder = 'ø or multi.'
 
     const biasInput = inputs[0] as HTMLInputElement
-    biasInput.value = selectedNodes.length > 1
-        ? multipleSelectionPlaceholder
-        : node.bias.toPrecision (2)
+    biasInput.placeholder = inputPlaceholder
+    biasInput.value = selectedNodes.length === 1
+        ? node.bias.toPrecision (2)
+        : null
 
     const {inputLinks} = node
     inputs.slice (1).forEach ((input: HTMLInputElement, k) => {
         if (typeof inputLinks[k] === 'undefined') {
-            input.value = 'none'
+            input.value = null
+            input.placeholder = inputPlaceholder
             input.disabled = true
             return
         }
@@ -855,7 +857,8 @@ function updateNeuronCard (
         input.disabled = false
 
         if (selectedNodes.length > 1) {
-            input.value = multipleSelectionPlaceholder
+            input.value = null
+            input.placeholder = inputPlaceholder
             return
         }
 
