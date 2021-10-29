@@ -495,11 +495,13 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
                 y: RECT_SIZE - BIAS_SIZE + 3,
                 width: BIAS_SIZE,
                 height: BIAS_SIZE,
-            }).on ('mouseenter', function () {
-            updateHoverCard (HoverType.BIAS, node, d3.mouse (container.node ()))
-        }).on ('mouseleave', function () {
-            updateHoverCard (null)
-        })
+            })
+        // .on ('mouseenter', function () {
+        //     updateHoverCard (HoverType.BIAS, node, d3.mouse (container.node ()))
+        // })
+        // .on ('mouseleave', function () {
+        //     updateHoverCard (null)
+        // })
     }
 
     // Draw the node's canvas.
@@ -514,24 +516,23 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
             top: `${y + 3}px`,
         })
         .style ('cursor', 'pointer')
-        .on ('mouseenter', function () {
-            selectedNodeId = nodeId
-            div.classed ('hovered', true)
-            nodeGroup.classed ('hovered', true)
-            updateDecisionBoundary (network, false)
-            heatMap.updateBackground (boundary[nodeId], state.discretize)
-        })
-        .on ('mouseleave', function () {
-            selectedNodeId = null
-            div.classed ('hovered', false)
-            nodeGroup.classed ('hovered', false)
-            updateDecisionBoundary (network, false)
-            heatMap.updateBackground (boundary[nn.getOutputNode (network).id],
-                state.discretize)
-        })
+        // .on ('mouseenter', function () {
+        //     selectedNodeId = nodeId
+        //     div.classed ('hovered', true)
+        //     nodeGroup.classed ('hovered', true)
+        //     updateDecisionBoundary (network, false)
+        //     heatMap.updateBackground (boundary[nodeId], state.discretize)
+        // })
+        // .on ('mouseleave', function () {
+        //     selectedNodeId = null
+        //     div.classed ('hovered', false)
+        //     nodeGroup.classed ('hovered', false)
+        //     updateDecisionBoundary (network, false)
+        //     heatMap.updateBackground (boundary[nn.getOutputNode (network).id], state.discretize)
+        // })
         .on ('mousedown', () => {
             mouseTimer = setTimeout (() => {
-                const died = toggleNode (parseInt (selectedNodeId))
+                const died = toggleNode (parseInt (nodeId))
                 div.classed ('disabled', died)
                 // clear mouseTimer so we prevent short action on mouse up
                 mouseTimer = null
@@ -553,22 +554,22 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
 
             if (!div.classed ('selected')) {
                 // if not a number, the node is an input
-                if (Number.isNaN (parseInt (selectedNodeId))) return
+                if (Number.isNaN (parseInt (nodeId))) return
                 // select
                 div.classed ('selected', true)
                 selectedNodes = [
                     ...selectedNodes,
-                    parseInt (selectedNodeId),
+                    parseInt (nodeId),
                 ]
                 // selectedNodes.forEach (nodeIndex => {
                 //     console.log (nodeIndex, getNode (nodeIndex).inputLinks)
                 // })
-                updateNeuronCard ()
+                updateNeuronCard ({nodeId: parseInt (nodeId)})
             } else {
                 // unselect
                 div.classed ('selected', false)
-                selectedNodes = selectedNodes.filter (n => n !== parseInt (selectedNodeId))
-                updateNeuronCard ()
+                selectedNodes = selectedNodes.filter (n => n !== parseInt (nodeId))
+                updateNeuronCard ({nodeId: parseInt (nodeId)})
             }
             // console.log (selectedNodes)
             // todo show all weights to edit
@@ -803,7 +804,15 @@ function updateHoverCard (type: HoverType, nodeOrLink?: nn.Node | nn.Link,
         .style ('display', 'none')
 }
 
-function updateNeuronCard () {
+type UpdateNeuronCardProps = {
+    nodeId: number,
+}
+
+function updateNeuronCard (
+    {
+        nodeId,
+    }: UpdateNeuronCardProps,
+) {
     let neuronCard = d3.select ('#neuron-card')
 
     if (selectedNodes.length === 0) {
@@ -827,7 +836,7 @@ function updateNeuronCard () {
             }`,
     )
 
-    const node = getNode (parseInt (selectedNodeId))
+    const node = getNode (nodeId)
     const multipleSelectionPlaceholder = 'multi.'
 
     const biasInput = inputs[0] as HTMLInputElement
@@ -891,12 +900,12 @@ function drawLink (
     container.append ('path')
         .attr ('d', diagonal (datum, 0))
         .attr ('class', 'link-hover')
-        .on ('mouseenter', function () {
-            updateHoverCard (HoverType.WEIGHT, input, d3.mouse (this))
-        })
-        .on ('mouseleave', function () {
-            updateHoverCard (null)
-        })
+    // .on ('mouseenter', function () {
+    //     updateHoverCard (HoverType.WEIGHT, input, d3.mouse (this))
+    // })
+    // .on ('mouseleave', function () {
+    //     updateHoverCard (null)
+    // })
     return line
 }
 
@@ -962,15 +971,22 @@ function getLoss (network: nn.Node[][], dataPoints: Example2D[]): number {
 }
 
 function updateUI (firstStep = false) {
+
     // Update the links visually.
     updateWeightsUI (network, d3.select ('g.core'))
+
     // Update the bias values visually.
     updateBiasesUI (network)
+
     // Get the decision boundary of the network.
     updateDecisionBoundary (network, firstStep)
-    let selectedId = selectedNodeId != null ?
-        selectedNodeId : nn.getOutputNode (network).id
-    heatMap.updateBackground (boundary[selectedId], state.discretize)
+
+    // use this to update heatmap on click
+    // let selectedId = selectedNodeId !== null
+    //     ? selectedNodeId
+    //     : nn.getOutputNode (network).id
+
+    heatMap.updateBackground (boundary[nn.getOutputNode (network).id], state.discretize)
 
     // Update all decision boundaries.
     d3.select ('#network').selectAll ('div.canvas')
