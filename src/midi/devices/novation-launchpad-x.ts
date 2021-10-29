@@ -6,7 +6,7 @@ export const novationLaunchpadX = {
     firstPad: 11,
     lastPad: 98,
     grid: [
-        // top down, left to right
+        // top down then left to right
         [81, 71, 61, 51, 41, 31, 21, 11],
         [82, 72, 62, 52, 42, 32, 22, 12],
         [83, 73, 63, 53, 43, 33, 23, 13],
