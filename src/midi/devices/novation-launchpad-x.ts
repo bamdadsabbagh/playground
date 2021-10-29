@@ -1,10 +1,16 @@
 export const novationLaunchpadX = {
     manufacturer: 'Focusrite - Novation',
     name: 'Launchpad X',
-    firstLight: 11,
-    lastLight: 99,
-    firstPad: 11,
-    lastPad: 98,
+    cc: {
+        all: {
+            first: 11,
+            last: 99,
+        },
+        pads: {
+            first: 11,
+            last: 98,
+        },
+    },
     grid: [
         // top down then left to right
         [81, 71, 61, 51, 41, 31, 21, 11],

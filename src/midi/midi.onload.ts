@@ -6,8 +6,17 @@ type MidiOnloadProps = {
     outputs: any[],
     device: {
         colors: any,
-        firstPad: number,
-        lastPad: number,
+        cc: {
+            all: {
+                first: number,
+                last: number,
+            },
+            pads?: {
+                first: number,
+                last: number,
+            }
+        },
+        grid: number[][],
     },
 }
 
@@ -27,7 +36,7 @@ export function midiOnload (
             console.log ('WebMidi enabled!')
         }
 
-        const {colors, firstPad, lastPad} = device
+        const {colors, cc} = device
 
         wm.addListener ('connected', (e) => console.log (e))
         wm.addListener ('disconnected', (e) => console.log (e))
@@ -47,7 +56,7 @@ export function midiOnload (
         const colorKeys = Object.keys (colors)
         const randomKey = (array) => array[Math.floor (Math.random () * array.length)]
 
-        for (let i = firstPad; i <= lastPad; ++i) {
+        for (let i = cc.all.first; i <= cc.all.last; ++i) {
             output.playNote (i, 1, {
                 duration: 2000,
                 rawVelocity: true,
