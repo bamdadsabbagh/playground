@@ -29,6 +29,7 @@ import { Example2D, shuffle } from './dataset'
 import { AppendingLineChart } from './linechart'
 import * as d3 from 'd3'
 import { toggleNode } from './utils/toggle-node'
+import { getNode } from './utils/get-node'
 // import { Coolearning } from './coolearning/coolearning'
 //
 // Coolearning ()
@@ -180,7 +181,7 @@ let lossTest = 0
 let player = new Player ()
 let lineChart = new AppendingLineChart (d3.select ('#linechart'),
     ['#777', 'black'])
-let selectedNodes = []
+let selectedNodes: number[] = []
 let mouseTimer = null
 
 function makeGUI () {
@@ -332,14 +333,14 @@ function makeGUI () {
     let activationDropdown = d3.select ('#activations').on ('change', function () {
         state.activation = activations[this.value]
         parametersChanged = true
+        state.serialize ()
+        userHasInteracted ()
     })
     activationDropdown.property ('value',
         getKeyFromValue (activations, state.activation))
 
     let learningRate = d3.select ('#learningRate').on ('change', function () {
         state.learningRate = +this.value
-        state.serialize ()
-        userHasInteracted ()
         parametersChanged = true
         state.serialize ()
         userHasInteracted ()
@@ -550,16 +551,21 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
             if (div.classed ('disabled')) return
 
             if (!div.classed ('selected')) {
+                // if not a number, the node is an input
+                if (Number.isNaN (parseInt (selectedNodeId))) return
                 // select
                 div.classed ('selected', true)
                 selectedNodes = [
                     ...selectedNodes,
-                    selectedNodeId,
+                    parseInt (selectedNodeId),
                 ]
+                selectedNodes.forEach (nodeIndex => {
+                    console.log (nodeIndex, getNode (nodeIndex).inputLinks)
+                })
             } else {
                 // unselect
                 div.classed ('selected', false)
-                selectedNodes = selectedNodes.filter (n => n !== selectedNodeId)
+                selectedNodes = selectedNodes.filter (n => n !== parseInt (selectedNodeId))
             }
             console.log (selectedNodes)
             // todo show all weights to edit
