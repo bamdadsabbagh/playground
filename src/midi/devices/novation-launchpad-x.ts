@@ -16,6 +16,7 @@ export const novationLaunchpadX = {
         [87, 77, 67, 57, 47, 37, 27, 17],
         [88, 78, 68, 58, 48, 38, 28, 18],
     ],
+    // "function" keys
     firstRow: [91, 92, 93, 94, 95, 96, 97, 98],
     lastColumn: [89, 79, 69, 59, 49, 39, 29, 19],
     colors: {
