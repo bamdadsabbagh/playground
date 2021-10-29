@@ -1,11 +1,10 @@
 import './interfaces'
 import './prototypes'
 import { initializeSettings } from './utils/initialize-settings'
-import { initializeMidi } from './utils/initialize-midi'
 import { initializeKeyboardEvents } from './utils/initialize-keyboard-events'
 import { initializePlayground } from './utils/initialize-playground'
 import { showSnack } from './utils/show-snack'
-import { initializeWebMidi } from './utils/initialize-web-midi'
+import { midi } from '../midi/midi'
 
 /**
  * @description entry point for CooLearning playground extension
@@ -16,8 +15,7 @@ export function Coolearning (): void {
         try {
             initializePlayground ()
             initializeSettings ()
-            // initializeMidi ()
-            initializeWebMidi ()
+            midi ()
             initializeKeyboardEvents ()
         } catch (error) {
             console.error (error)
