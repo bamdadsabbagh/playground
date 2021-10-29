@@ -513,6 +513,7 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
             left: `${x + 3}px`,
             top: `${y + 3}px`,
         })
+        .style ('cursor', 'pointer')
         .on ('mouseenter', function () {
             selectedNodeId = nodeId
             div.classed ('hovered', true)
@@ -559,15 +560,17 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
                     ...selectedNodes,
                     parseInt (selectedNodeId),
                 ]
-                selectedNodes.forEach (nodeIndex => {
-                    console.log (nodeIndex, getNode (nodeIndex).inputLinks)
-                })
+                // selectedNodes.forEach (nodeIndex => {
+                //     console.log (nodeIndex, getNode (nodeIndex).inputLinks)
+                // })
+                updateNeuronCard ()
             } else {
                 // unselect
                 div.classed ('selected', false)
                 selectedNodes = selectedNodes.filter (n => n !== parseInt (selectedNodeId))
+                updateNeuronCard ()
             }
-            console.log (selectedNodes)
+            // console.log (selectedNodes)
             // todo show all weights to edit
         })
     if (isInput) {
@@ -576,7 +579,6 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
             parametersChanged = true
             reset ()
         })
-        div.style ('cursor', 'pointer')
     }
     if (isInput) {
         div.classed (activeOrNotClass, true)
@@ -609,6 +611,7 @@ function drawNetwork (network: nn.Node[][]): void {
     let container = svg.append ('g')
         .classed ('core', true)
         .attr ('transform', `translate(${padding},${padding})`)
+
     // Draw the network layer by layer.
     let numLayers = network.length
     let featureWidth = 118
@@ -798,6 +801,59 @@ function updateHoverCard (type: HoverType, nodeOrLink?: nn.Node | nn.Link,
     hovercard.select ('input')
         .property ('value', value.toPrecision (2))
         .style ('display', 'none')
+}
+
+function updateNeuronCard () {
+    let neuronCard = d3.select ('#neuron-card')
+
+    if (selectedNodes.length === 0) {
+        neuronCard.style ('display', 'none')
+        return
+    }
+
+    neuronCard.style ('display', 'flex')
+
+    const nodeTitle = neuronCard.select ('.node')
+    const titlesText = neuronCard.selectAll ('.title.text')[0]
+    const inputs = neuronCard.selectAll ('input')[0]
+
+    nodeTitle.text (
+        selectedNodes.length === 1
+            ? `Node: ${selectedNodes[0]}`
+            : `Nodes: ${
+                selectedNodes
+                    .sort ((a, b) => a - b)
+                    .join (', ')
+            }`,
+    )
+
+    const node = getNode (parseInt (selectedNodeId))
+    const multipleSelectionPlaceholder = 'multi.'
+
+    const biasInput = inputs[0] as HTMLInputElement
+    biasInput.value = selectedNodes.length > 1
+        ? multipleSelectionPlaceholder
+        : node.bias.toPrecision (2)
+
+    const {inputLinks} = node
+    inputs.slice (1).forEach ((input: HTMLInputElement, k) => {
+        if (typeof inputLinks[k] === 'undefined') {
+            input.value = 'none'
+            input.disabled = true
+            return
+        }
+
+        input.disabled = false
+
+        if (selectedNodes.length > 1) {
+            input.value = multipleSelectionPlaceholder
+            return
+        }
+
+        input.value = inputLinks[k].weight.toPrecision (2)
+    })
+
+    // todo add to state and serialize
 }
 
 function drawLink (

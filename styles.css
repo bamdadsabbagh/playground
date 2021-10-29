@@ -368,6 +368,31 @@ header h1 .optional {
     width: 60px;
 }
 
+/* Neuron Card */
+#neuron-card {
+    display: none;
+    position: absolute;
+    padding: 5px;
+    border: 1px solid #aaa;
+    z-index: 1000;
+    background: #fff;
+    cursor: default;
+    border-radius: 5px;
+    left: -170px;
+    width: 150px;
+    top: 72px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#neuron-card div {
+    padding: 2px;
+}
+
+#neuron-card input {
+    width: 60px;
+}
+
 /* Main Part*/
 
 #main-part {
