@@ -1,22 +1,21 @@
-import { novationLaunchpadX } from '../devices/novation-launchpad-x'
+import { getAllowedDeviceManufacturers } from './get-allowed-device-manufacturers'
+import { getAllowedDeviceNames } from './get-allowed-device-names'
 
+/**
+ * @param device - input/output
+ * @param {Array} whitelist
+ */
 export function authorizeDevice (device, whitelist): void {
-    // device = input or output
-    const allowedManufacturers = [
-        novationLaunchpadX.manufacturer,
-    ]
-    const allowedDevices = [
-        novationLaunchpadX.name,
-    ]
-    // device is an input or output
-    const manufacturerIsAllowed = allowedManufacturers
+    const allowedDeviceManufacturers = getAllowedDeviceManufacturers ()
+    const allowedDeviceNames = getAllowedDeviceNames ()
+
+    const manufacturerIsAllowed = allowedDeviceManufacturers
         .filter (m => m === device.manufacturer)
         .length !== 0
 
     if (!manufacturerIsAllowed) return
 
-    // device is allowed?
-    const deviceIsAllowed = allowedDevices
+    const deviceIsAllowed = allowedDeviceNames
         .filter (d => device.name.includes (d))
         .length !== 0
 

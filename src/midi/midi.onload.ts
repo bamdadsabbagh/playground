@@ -1,31 +1,13 @@
 import { authorizeDevice } from './utils/authorize-device'
+import { novationLaunchpadX } from './allowed-devices/novation-launchpad-x/novation-launchpad-x'
 
 type MidiOnloadProps = {
     wm: any,
-    inputs: any[],
-    outputs: any[],
-    device: {
-        colors: any,
-        cc: {
-            all: {
-                first: number,
-                last: number,
-            },
-            pads?: {
-                first: number,
-                last: number,
-            }
-        },
-        grid: number[][],
-    },
 }
 
 export function midiOnload (
     {
         wm,
-        inputs,
-        outputs,
-        device,
     }: MidiOnloadProps,
 ) {
     return (err) => {
@@ -36,10 +18,12 @@ export function midiOnload (
             console.log ('WebMidi enabled!')
         }
 
-        const {colors, cc} = device
+        let inputs = []
+        let outputs = []
 
         wm.addListener ('connected', (e) => console.log (e))
         wm.addListener ('disconnected', (e) => console.log (e))
+
         console.log (wm.time)
 
         wm.inputs.forEach (input => authorizeDevice (input, inputs))
@@ -51,17 +35,22 @@ export function midiOnload (
 
         console.log ({inputs, outputs})
 
-        input.on ('noteon', 1, (e) => console.log ('note', e))
-
-        const colorKeys = Object.keys (colors)
-        const randomKey = (array) => array[Math.floor (Math.random () * array.length)]
-
-        for (let i = cc.all.first; i <= cc.all.last; ++i) {
-            output.playNote (i, 1, {
-                duration: 2000,
+        input.on ('noteon', 1, (e) => {
+            console.log ('note', e, input)
+            output.playNote (e.note.number, 1, {
+                duration: 500,
                 rawVelocity: true,
-                velocity: colors[randomKey (colorKeys)],
+                velocity: novationLaunchpadX.colors.fuchsia,
             })
-        }
+        })
+
+        input.on ('controlchange', 1, (e) => {
+            console.log ('control', e, input)
+            output.playNote (e.controller.number, 1, {
+                duration: 500,
+                rawVelocity: true,
+                velocity: novationLaunchpadX.colors.fuchsia,
+            })
+        })
     }
 }
