@@ -1,10 +1,10 @@
-export enum AllowedDeviceType {
+export enum DeviceCategory {
     select = 'select',
     control = 'control',
 }
 
-export type AllowedDevice = {
-    type: AllowedDeviceType,
+export type Device = {
+    category: DeviceCategory,
     manufacturer: string,
     name: string,
     indexes?: {
@@ -27,4 +27,4 @@ export type AllowedDevice = {
     }
 }
 
-export type AllowedDevices = AllowedDevice[]
+export type Devices = Device[]

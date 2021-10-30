@@ -1,4 +1,4 @@
-import { AllowedDevice, AllowedDeviceType } from '../allowed-devices.types'
+import { Device, DeviceCategory } from '../devices.types'
 
 /**
  * @description description for Novation Launchpad X
@@ -6,8 +6,8 @@ import { AllowedDevice, AllowedDeviceType } from '../allowed-devices.types'
  * @see Programmer's Reference Manual https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/Launchpad%20X%20-%20Programmers%20Reference%20Manual.pdf
  * @see User Guide https://www.kraftmusic.com/media/ownersmanual/Novation_Launchpad_X_User_Guide.pdf
  */
-export const novationLaunchpadX: AllowedDevice = {
-    type: AllowedDeviceType.select,
+export const novationLaunchpadX: Device = {
+    category: DeviceCategory.select,
     manufacturer: 'Focusrite - Novation',
     name: 'Launchpad X MIDI',
     indexes: {

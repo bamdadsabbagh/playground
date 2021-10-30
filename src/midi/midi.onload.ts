@@ -1,15 +1,6 @@
-import { authorizeDevice } from './utils/authorize-device'
-import { novationLaunchpadX } from './allowed-devices/novation-launchpad-x/novation-launchpad-x'
+import { midiState } from './midi.state'
 
-type MidiOnloadProps = {
-    wm: any,
-}
-
-export function midiOnload (
-    {
-        wm,
-    }: MidiOnloadProps,
-) {
+export function midiOnload (wm) {
     return (err) => {
 
         if (err) {
@@ -18,39 +9,16 @@ export function midiOnload (
             console.log ('WebMidi enabled!')
         }
 
-        let inputs = []
-        let outputs = []
+        const {
+            connectDevice,
+            disconnectDevice,
+        } = midiState
 
-        wm.addListener ('connected', (e) => console.log (e))
-        wm.addListener ('disconnected', (e) => console.log (e))
+        wm.addListener ('connected', connectDevice)
+        wm.addListener ('disconnected', disconnectDevice)
 
-        console.log (wm.time)
-
-        wm.inputs.forEach (input => authorizeDevice (input, inputs))
-
-        wm.outputs.forEach (output => authorizeDevice (output, outputs))
-
-        const input = inputs[1]
-        const output = outputs[1]
-
-        console.log ({inputs, outputs})
-
-        input.on ('noteon', 1, (e) => {
-            console.log ('note', e, input)
-            output.playNote (e.note.number, 1, {
-                duration: 500,
-                rawVelocity: true,
-                velocity: novationLaunchpadX.colors.fuchsia,
-            })
-        })
-
-        input.on ('controlchange', 1, (e) => {
-            console.log ('control', e, input)
-            output.playNote (e.controller.number, 1, {
-                duration: 500,
-                rawVelocity: true,
-                velocity: novationLaunchpadX.colors.fuchsia,
-            })
-        })
+        console.log (wm)
+        wm.getInputByName ('Launchpad X MIDI 1').on ('noteon', 1, (e) => console.log ('1', e))
+        wm.getInputByName ('Launchpad X MIDI 2').on ('noteon', 1, (e) => console.log ('2', e))
     }
 }
