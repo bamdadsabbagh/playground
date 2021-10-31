@@ -63,6 +63,8 @@ export const novationLaunchpadX: Device = {
         const input = wm.getInputByName (device.name)
         const output = wm.getOutputByName (device.name)
 
+        input.removeListener ()
+
         input.addListener (
             'noteon',
             'all',
@@ -80,12 +82,14 @@ export const novationLaunchpadX: Device = {
             },
         )
 
-        for (let i = device.all.start; i <= device.all.end; i++) {
-            output.playNote (i, 1, {
-                duration: 1000,
-                rawVelocity: true,
-                velocity: device.colors.red,
-            })
+        if (output) {
+            for (let i = device.all.start; i <= device.all.end; i++) {
+                output.playNote (i, 1, {
+                    duration: 1000,
+                    rawVelocity: true,
+                    velocity: device.colors.red,
+                })
+            }
         }
     },
 }
