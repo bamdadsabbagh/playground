@@ -124,13 +124,15 @@ export const novationLaunchControlXl: Device = {
 
         // flash red on init
         if (output) {
-            for (let i = device.all.start; i <= device.all.end; ++i) {
-                output.playNote (i, 'all', {
-                    duration: 1000,
-                    rawVelocity: true,
-                    velocity: device.colors.red,
-                })
-            }
+            setTimeout (() => {
+                for (let i = device.all.start; i <= device.all.end; ++i) {
+                    output.playNote (i, 'all', {
+                        duration: 1000,
+                        rawVelocity: true,
+                        velocity: device.colors.red,
+                    })
+                }
+            }, 2000)
         }
 
     },
