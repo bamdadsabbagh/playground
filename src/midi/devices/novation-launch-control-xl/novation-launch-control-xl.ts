@@ -1,4 +1,5 @@
 import { Device, DeviceCategory } from '../devices.types'
+import { MidiType } from '../../midi.types'
 
 export const novationLaunchControlXl: Device = {
     category: DeviceCategory.control,
@@ -68,11 +69,18 @@ export const novationLaunchControlXl: Device = {
         // 84: 127,
     },
     onAttach: (wm, device) => {
+
+        // avoid double notes
+        if (device.type === MidiType.output) return
+
+        // get i/o instances
         const input = wm.getInputByName (device.name)
         const output = wm.getOutputByName (device.name)
 
+        // remove all current listeners
         input.removeListener ()
 
+        // listen to notes
         input.addListener (
             'noteon',
             'all',
@@ -91,6 +99,7 @@ export const novationLaunchControlXl: Device = {
             },
         )
 
+        // listen to controls
         input.addListener (
             'controlchange',
             'all',
@@ -113,6 +122,7 @@ export const novationLaunchControlXl: Device = {
             },
         )
 
+        // flash red on init
         if (output) {
             for (let i = device.all.start; i <= device.all.end; ++i) {
                 output.playNote (i, 'all', {
