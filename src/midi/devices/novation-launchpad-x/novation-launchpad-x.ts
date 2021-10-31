@@ -57,14 +57,21 @@ export const novationLaunchpadX: Device = {
         aqua: 37,
     },
     onAttach: (wm, device) => {
+
         // avoid double notes
         if (device.type === MidiType.output) return
 
+        // get i/o instances
         const input = wm.getInputByName (device.name)
         const output = wm.getOutputByName (device.name)
 
+        // switch to programmer mode
+        output && output.sendSysex (0, [32, 41, 2, 12, 14, 1])
+
+        // remove all current listeners
         input.removeListener ()
 
+        // listen to notes
         input.addListener (
             'noteon',
             'all',
@@ -82,6 +89,7 @@ export const novationLaunchpadX: Device = {
             },
         )
 
+        // flash red on init
         if (output) {
             for (let i = device.all.start; i <= device.all.end; i++) {
                 output.playNote (i, 1, {
