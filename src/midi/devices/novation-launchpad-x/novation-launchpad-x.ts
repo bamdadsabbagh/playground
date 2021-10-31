@@ -1,4 +1,5 @@
 import { Device, DeviceCategory } from '../devices.types'
+import { MidiType } from '../../midi.types'
 
 /**
  * @description description for Novation Launchpad X
@@ -10,15 +11,16 @@ export const novationLaunchpadX: Device = {
     category: DeviceCategory.select,
     manufacturer: 'Focusrite - Novation',
     name: 'Launchpad X MIDI',
+    all: {
+        start: 11,
+        end: 99,
+    },
     indexes: {
-        all: {
-            first: 11,
-            last: 99,
-        },
         notes: {
             first: 11,
             last: 98,
             grid: [
+                // describe columns
                 // top down then left to right
                 [81, 71, 61, 51, 41, 31, 21, 11],
                 [82, 72, 62, 52, 42, 32, 22, 12],
@@ -53,5 +55,37 @@ export const novationLaunchpadX: Device = {
         teal: 35,
         turquoise: 38,
         aqua: 37,
+    },
+    onAttach: (wm, device) => {
+        // avoid double notes
+        if (device.type === MidiType.output) return
+
+        const input = wm.getInputByName (device.name)
+        const output = wm.getOutputByName (device.name)
+
+        input.addListener (
+            'noteon',
+            'all',
+            (e) => {
+                console.log (e)
+                output.playNote (
+                    e.note.number,
+                    1,
+                    {
+                        duration: 1000,
+                        rawVelocity: true,
+                        velocity: device.colors.fuchsia,
+                    },
+                )
+            },
+        )
+
+        for (let i = device.all.start; i <= device.all.end; i++) {
+            output.playNote (i, 1, {
+                duration: 1000,
+                rawVelocity: true,
+                velocity: device.colors.red,
+            })
+        }
     },
 }

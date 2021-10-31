@@ -48,23 +48,76 @@ export const novationLaunchControlXl: Device = {
         54: 95,
         55: 111,
         56: 127,
-        // // fader to "track focus" line
-        // 77: 41,
-        // 78: 42,
-        // 79: 43,
-        // 80: 44,
-        // 81: 57,
-        // 82: 58,
-        // 83: 59,
-        // 84: 60,
         // fader to "track focus" line
-        77: 15,
-        78: 31,
-        79: 47,
-        80: 63,
-        81: 79,
-        82: 95,
-        83: 111,
-        84: 127,
+        77: 41,
+        78: 42,
+        79: 43,
+        80: 44,
+        81: 57,
+        82: 58,
+        83: 59,
+        84: 60,
+        // // fader to "track focus" line
+        // 77: 15,
+        // 78: 31,
+        // 79: 47,
+        // 80: 63,
+        // 81: 79,
+        // 82: 95,
+        // 83: 111,
+        // 84: 127,
+    },
+    onAttach: (wm, device) => {
+        const input = wm.getInputByName (device.name)
+        const output = wm.getOutputByName (device.name)
+
+        input.addListener (
+            'noteon',
+            'all',
+            (e) => {
+                wm
+                    .getOutputByName (device.name)
+                    .playNote (
+                        e.note.number,
+                        'all',
+                        {
+                            duration: 1000,
+                            rawVelocity: true,
+                            velocity: device.colors.green,
+                        },
+                    )
+            },
+        )
+
+        input.addListener (
+            'controlchange',
+            'all',
+            (e) => {
+
+                const color = e.controller.number >= device.fader.start && e.controller.number <= device.fader.end
+                    ? device.colors.amber
+                    : device.colors.green
+
+                wm
+                    .getOutputByName (device.name)
+                    .playNote (
+                        device.outputByInput[e.controller.number],
+                        'all',
+                        {
+                            duration: 1000,
+                            rawVelocity: true,
+                            velocity: color,
+                        })
+            },
+        )
+
+        for (let i = device.all.start; i <= device.all.end; ++i) {
+            output.playNote (i, 'all', {
+                duration: 1000,
+                rawVelocity: true,
+                velocity: device.colors.red,
+            })
+        }
+
     },
 }

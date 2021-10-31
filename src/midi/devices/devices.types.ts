@@ -16,8 +16,9 @@ export type Device = {
         start: number,
         end: number,
     },
+    onAttach: (wm: any, device: any) => void,
     indexes?: {
-        all: {
+        all?: {
             first: number,
             last: number,
         },
