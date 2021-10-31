@@ -3,7 +3,7 @@ import { midiState } from './midi.state'
 
 export function midi () {
     const wm = WebMidi as any
-    const sysexEnabled = false // if true, will ask browser permission
+    const sysexEnabled = true // if true, will ask browser permission
 
     wm.enable ((err) => {
 
