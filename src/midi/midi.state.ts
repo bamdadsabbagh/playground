@@ -1,45 +1,28 @@
-import { devices } from './devices/devices'
 import { DeviceCategory } from './devices/devices.types'
 import { WebMidiEventConnected, WebMidiEventDisconnected } from 'webmidi'
 import { findDevice } from './utils/find-device'
-import { MidiType } from './midi.types'
 
-type ConnectedDevice = {
-    id: string,
-    type: MidiType,
-    category: DeviceCategory,
-}
-
-export const midiState = (function () {
-
-    const allowedDeviceManufacturers = devices.map (d => d.manufacturer)
-    const allowedDeviceNames = devices.map (d => d.name)
+export const midiState = (wm) => (function (wm) {
 
     // on connect, on disconnect
-    let connectedDevices: ConnectedDevice[] = []
+    let connectedDevices: WebMidiEventConnected['port'][] = []
 
-    function connectDevice (device: WebMidiEventConnected): void {
-        console.log (device)
+    function connectDevice (d: WebMidiEventConnected): void {
         const {
             isFound,
-            category,
-        } = findDevice (device.port.manufacturer, device.port.name)
+            device,
+        } = findDevice (d.port.manufacturer, d.port.name)
 
         if (!isFound) return
 
-        // do not add outputs of 'control' devices
-        if (
-            category === DeviceCategory.control
-            && device.port.type === MidiType.output
-        ) return
+        const newDevice = {
+            ...device,
+            ...d.port,
+        }
 
-        connectedDevices.push ({
-            id: device.port.id,
-            type: device.port.type as MidiType,
-            category,
-        })
+        connectedDevices.push (newDevice)
 
-        console.log (connectedDevices)
+        attachEvents (newDevice)
     }
 
     function disconnectDevice (device: WebMidiEventDisconnected): void {
@@ -49,12 +32,70 @@ export const midiState = (function () {
         console.log (connectedDevices)
     }
 
+    function attachEvents (d) {
+        if (d.category === DeviceCategory.control) {
+            const input = wm.getInputByName (d.name)
+            const output = wm.getOutputByName (d.name)
+            const delay = 800
+
+            if (input) {
+
+                input.addListener (
+                    'noteon',
+                    'all',
+                    (e) => {
+                        wm.getOutputByName (d.name).playNote (
+                            e.note.number,
+                            'all',
+                            {
+                                duration: delay,
+                                rawVelocity: true,
+                                velocity: d.colors.green,
+                            },
+                        )
+                    },
+                )
+
+                input.addListener (
+                    'controlchange',
+                    'all',
+                    (e) => {
+
+                        const color = e.controller.number >= d.fader.start && e.controller.number <= d.fader.end
+                            ? d.colors.amber
+                            : d.colors.green
+
+                        wm.getOutputByName (d.name).playNote (
+                            d.outputByInput[e.controller.number],
+                            'all',
+                            {
+                                duration: delay,
+                                rawVelocity: true,
+                                velocity: color,
+                            })
+                    },
+                )
+
+            }
+
+            if (output) {
+                for (let i = d.all.first; i <= d.all.last; ++i) {
+                    output.playNote (i, 'all', {
+                        duration: delay,
+                        rawVelocity: true,
+                        velocity: d.colors.red,
+                    })
+                }
+            }
+        }
+    }
+
     return {
         // getters
-        allowedDeviceManufacturers,
-        allowedDeviceNames,
+        connectedDevices,
         // methods
         connectDevice,
         disconnectDevice,
     }
-}) ()
+})
+(wm)

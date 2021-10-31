@@ -1,27 +1,28 @@
-import { DeviceCategory } from '../devices/devices.types'
+import { Device } from '../devices/devices.types'
 import { devices } from '../devices/devices'
 
 type SearchDevice = {
     isFound: boolean,
-    category: DeviceCategory,
+    device: Device,
 }
 
 export function findDevice (manufacturer, name): SearchDevice {
 
-    const response = {
-        isFound: false,
-        category: null,
-    }
-
-    const foundDevice = devices
+    const device = devices
         .filter (d => d.manufacturer === manufacturer)
+        // .filter (d => name === d.name)
         .filter (d => name.includes (d.name))
         [0]
 
-    if (!foundDevice) return response
+    if (!device) {
+        return {
+            isFound: false,
+            device: null,
+        }
+    }
 
-    response.isFound = true
-    response.category = foundDevice.category
-
-    return response
+    return {
+        isFound: true,
+        device,
+    }
 }
