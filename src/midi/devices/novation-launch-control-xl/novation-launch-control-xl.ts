@@ -1,10 +1,18 @@
 import { Device, DeviceCategory } from '../devices.types'
 import { MidiType } from '../../midi.types'
 
+/**
+ * @description Novation Launch Control XL
+ * @see Programmer's Reference https://resource.novationmusic.com/sites/default/files/novation/downloads/9922/launch-control-xl-programmers-reference-guide.pdf
+ */
 export const novationLaunchControlXl: Device = {
     category: DeviceCategory.control,
     manufacturer: 'Focusrite A.E. Ltd',
     name: 'Launch Control XL MIDI',
+    channels: {
+        input: 'all',
+        output: 'all',
+    },
     colors: {
         off: 12,
         black: 12,
@@ -77,63 +85,64 @@ export const novationLaunchControlXl: Device = {
         const input = wm.getInputByName (device.name)
         const output = wm.getOutputByName (device.name)
 
+        if (!output) return
+
         // remove all current listeners
         input.removeListener ()
 
         // listen to notes
         input.addListener (
             'noteon',
-            'all',
+            device.channels.input,
             (e) => {
-                wm
-                    .getOutputByName (device.name)
-                    .playNote (
-                        e.note.number,
-                        'all',
-                        {
-                            duration: 1000,
-                            rawVelocity: true,
-                            velocity: device.colors.green,
-                        },
-                    )
+                output.playNote (
+                    e.note.number,
+                    device.channels.output,
+                    {
+                        duration: 1000,
+                        rawVelocity: true,
+                        velocity: device.colors.green,
+                    },
+                )
             },
         )
 
         // listen to controls
         input.addListener (
             'controlchange',
-            'all',
+            device.channels.input,
             (e) => {
 
                 const color = e.controller.number >= device.fader.start && e.controller.number <= device.fader.end
                     ? device.colors.amber
                     : device.colors.green
 
-                wm
-                    .getOutputByName (device.name)
-                    .playNote (
-                        device.outputByInput[e.controller.number],
-                        'all',
-                        {
-                            duration: 1000,
-                            rawVelocity: true,
-                            velocity: color,
-                        })
+                output.playNote (
+                    device.outputByInput[e.controller.number],
+                    device.channels.output,
+                    {
+                        duration: 1000,
+                        rawVelocity: true,
+                        velocity: color,
+                    },
+                )
             },
         )
 
         // flash red on init
-        if (output) {
-            setTimeout (() => {
-                for (let i = device.all.start; i <= device.all.end; ++i) {
-                    output.playNote (i, 'all', {
+        setTimeout (() => {
+            for (let i = device.all.start; i <= device.all.end; ++i) {
+                output.playNote (
+                    i,
+                    device.channels.output,
+                    {
                         duration: 1000,
                         rawVelocity: true,
                         velocity: device.colors.red,
-                    })
-                }
-            }, 2000)
-        }
+                    },
+                )
+            }
+        }, 2000)
 
     },
 }

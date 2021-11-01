@@ -8,6 +8,10 @@ export type Device = {
     manufacturer: string,
     name: string,
     outputByInput?: any,
+    channels?: {
+        input: string | number,
+        output: string | number,
+    },
     all?: {
         start: number,
         end: number,

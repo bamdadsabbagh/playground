@@ -2,9 +2,8 @@ import { Device, DeviceCategory } from '../devices.types'
 import { MidiType } from '../../midi.types'
 
 /**
- * @description description for Novation Launchpad X
- *      the device NEEDS to be set to PROGRAMMER MODE
- * @see Programmer's Reference Manual https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/Launchpad%20X%20-%20Programmers%20Reference%20Manual.pdf
+ * @description Novation Launchpad X
+ * @see Programmer's Reference https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/Launchpad%20X%20-%20Programmers%20Reference%20Manual.pdf
  * @see User Guide https://www.kraftmusic.com/media/ownersmanual/Novation_Launchpad_X_User_Guide.pdf
  */
 export const novationLaunchpadX: Device = {
@@ -56,6 +55,10 @@ export const novationLaunchpadX: Device = {
         turquoise: 38,
         aqua: 37,
     },
+    channels: {
+        input: 'all',
+        output: 1,
+    },
     onAttach: (wm, device) => {
 
         // avoid double notes
@@ -65,8 +68,10 @@ export const novationLaunchpadX: Device = {
         const input = wm.getInputByName (device.name)
         const output = wm.getOutputByName (device.name)
 
+        if (!output) return
+
         // switch to programmer mode
-        output && output.sendSysex (0, [32, 41, 2, 12, 14, 1])
+        output.sendSysex (0, [32, 41, 2, 12, 14, 1])
 
         // remove all current listeners
         input.removeListener ()
@@ -74,12 +79,12 @@ export const novationLaunchpadX: Device = {
         // listen to notes
         input.addListener (
             'noteon',
-            'all',
+            device.channels.input,
             (e) => {
                 console.log (e)
                 output.playNote (
                     e.note.number,
-                    1,
+                    device.channels.output,
                     {
                         duration: 1000,
                         rawVelocity: true,
@@ -89,17 +94,36 @@ export const novationLaunchpadX: Device = {
             },
         )
 
+        // listen to controls
+        input.addListener (
+            'controlchange',
+            device.channels.input,
+            (e) => {
+                console.log (e.controller.number)
+                output.playNote (
+                    e.controller.number,
+                    device.channels.output,
+                    {
+                        duration: 1000,
+                        rawVelocity: true,
+                        velocity: device.colors.fuchsia,
+                    },
+                )
+            })
+
         // flash red on init
-        if (output) {
-            setTimeout (() => {
-                for (let i = device.all.start; i <= device.all.end; i++) {
-                    output.playNote (i, 1, {
+        setTimeout (() => {
+            for (let i = device.all.start; i <= device.all.end; i++) {
+                output.playNote (
+                    i,
+                    device.channels.output,
+                    {
                         duration: 1000,
                         rawVelocity: true,
                         velocity: device.colors.red,
-                    })
-                }
-            }, 2000)
-        }
+                    },
+                )
+            }
+        }, 2000)
     },
 }
