@@ -1,5 +1,6 @@
 import { Device, DeviceCategory } from '../devices.types'
 import { MidiType } from '../../midi.types'
+import { keepNote } from '../../utils/keep-note'
 
 /**
  * @description Novation Launchpad X
@@ -14,23 +15,23 @@ export const novationLaunchpadX: Device = {
         start: 11,
         end: 99,
     },
+    pads: {
+        start: 11,
+        end: 98,
+        grid: [
+            // describe columns
+            // top down then left to right
+            [81, 71, 61, 51, 41, 31, 21, 11],
+            [82, 72, 62, 52, 42, 32, 22, 12],
+            [83, 73, 63, 53, 43, 33, 23, 13],
+            [84, 74, 64, 54, 44, 34, 24, 14],
+            [85, 75, 65, 55, 45, 35, 25, 15],
+            [86, 76, 66, 56, 46, 36, 26, 16],
+            [87, 77, 67, 57, 47, 37, 27, 17],
+            [88, 78, 68, 58, 48, 38, 28, 18],
+        ],
+    },
     indexes: {
-        notes: {
-            first: 11,
-            last: 98,
-            grid: [
-                // describe columns
-                // top down then left to right
-                [81, 71, 61, 51, 41, 31, 21, 11],
-                [82, 72, 62, 52, 42, 32, 22, 12],
-                [83, 73, 63, 53, 43, 33, 23, 13],
-                [84, 74, 64, 54, 44, 34, 24, 14],
-                [85, 75, 65, 55, 45, 35, 25, 15],
-                [86, 76, 66, 56, 46, 36, 26, 16],
-                [87, 77, 67, 57, 47, 37, 27, 17],
-                [88, 78, 68, 58, 48, 38, 28, 18],
-            ],
-        },
         controls: {
             firstRow: [91, 92, 93, 94, 95, 96, 97, 98],
             lastColumn: [89, 79, 69, 59, 49, 39, 29, 19],
@@ -67,6 +68,9 @@ export const novationLaunchpadX: Device = {
         // get i/o instances
         const input = wm.getInputByName (device.name)
         const output = wm.getOutputByName (device.name)
+
+        // todo notice the dead instances for a same device, create a unique cherry picker
+        console.log (device.name, input, output)
 
         if (!output) return
 
@@ -125,5 +129,15 @@ export const novationLaunchpadX: Device = {
                 )
             }
         }, 2000)
+
+        // first pad
+        setTimeout (() => {
+            keepNote ({
+                output,
+                channel: device.channels.output,
+                note: device.pads.grid[0][0],
+                color: device.colors.aqua,
+            })
+        }, 4000)
     },
 }

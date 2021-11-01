@@ -25,7 +25,7 @@ export const novationLaunchControlXl: Device = {
         start: 1,
         end: 127,
     },
-    fader: {
+    controls: {
         start: 77,
         end: 84,
     },
@@ -85,6 +85,9 @@ export const novationLaunchControlXl: Device = {
         const input = wm.getInputByName (device.name)
         const output = wm.getOutputByName (device.name)
 
+        // todo notice the dead instances for a same device, create a unique cherry picker
+        console.log (device.name, input, output)
+
         if (!output) return
 
         // remove all current listeners
@@ -113,7 +116,7 @@ export const novationLaunchControlXl: Device = {
             device.channels.input,
             (e) => {
 
-                const color = e.controller.number >= device.fader.start && e.controller.number <= device.fader.end
+                const color = e.controller.number >= device.controls.start && e.controller.number <= device.controls.end
                     ? device.colors.amber
                     : device.colors.green
 
