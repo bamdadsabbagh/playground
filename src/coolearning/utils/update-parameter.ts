@@ -18,6 +18,9 @@ export function updateParameter (
     }: UpdateParameterProps,
 ): void {
 
+    if (typeof parameter === 'undefined') throw new Error ('parameter is not defined')
+    if (typeof value === 'undefined') throw new Error ('value is not defined')
+
     const element = getParameterElement ({parameter})
 
     if (!isTabActive ()) return
@@ -39,7 +42,6 @@ export function updateParameter (
         }
 
         case 'BUTTON': {
-            if (value === 0) return
             element.click ()
             break
         }
