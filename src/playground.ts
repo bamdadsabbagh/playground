@@ -30,9 +30,9 @@ import { AppendingLineChart } from './linechart'
 import * as d3 from 'd3'
 import { toggleNode } from './utils/toggle-node'
 import { getNode } from './utils/get-node'
-// import { Coolearning } from './coolearning/coolearning'
-//
-// Coolearning ()
+import { Coolearning } from './coolearning/coolearning'
+
+Coolearning ()
 
 let mainWidth
 
