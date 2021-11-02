@@ -1,5 +1,7 @@
 import { Device, DeviceCategory } from '../devices.types'
 import { MidiType } from '../../midi.types'
+import { state } from '../../../coolearning/state/state'
+import { updateParameter } from '../../../coolearning/utils/update-parameter'
 
 /**
  * @description Novation Launch Control XL
@@ -98,8 +100,30 @@ export const novationLaunchControlXl: Device = {
             'noteon',
             device.channels.input,
             (e) => {
+
+                const note = parseInt (e.note.number)
+                const {isLearning, learningParameter} = state
+                const parameters = state.getParametersByControl (note)
+
+                if (parameters) {
+                    parameters.forEach (parameter => {
+                        updateParameter ({
+                            parameter,
+                            value: 1,
+                        })
+                    })
+                }
+
+                if (isLearning && learningParameter) {
+                    state.learn ({
+                        parameter: learningParameter,
+                        control: note,
+                        type: 'button',
+                    })
+                }
+
                 output.playNote (
-                    e.note.number,
+                    note,
                     device.channels.output,
                     {
                         duration: 1000,
@@ -116,12 +140,33 @@ export const novationLaunchControlXl: Device = {
             device.channels.input,
             (e) => {
 
-                const color = e.controller.number >= device.controls.start && e.controller.number <= device.controls.end
+                const note = parseInt (e.controller.number)
+                const {isLearning, learningParameter} = state
+                const parameters = state.getParametersByControl (note)
+
+                if (parameters) {
+                    parameters.forEach (parameter => {
+                        updateParameter ({
+                            parameter,
+                            value: e.value,
+                        })
+                    })
+                }
+
+                if (isLearning && learningParameter) {
+                    state.learn ({
+                        parameter: learningParameter,
+                        control: note,
+                        type: 'range',
+                    })
+                }
+
+                const color = note >= device.controls.start && note <= device.controls.end
                     ? device.colors.amber
                     : device.colors.green
 
                 output.playNote (
-                    device.outputByInput[e.controller.number],
+                    device.outputByInput[note],
                     device.channels.output,
                     {
                         duration: 1000,
@@ -141,7 +186,7 @@ export const novationLaunchControlXl: Device = {
                     {
                         duration: 1000,
                         rawVelocity: true,
-                        velocity: device.colors.red,
+                        velocity: device.colors.green,
                     },
                 )
             }
