@@ -184,6 +184,8 @@ let lineChart = new AppendingLineChart (d3.select ('#linechart'),
 let selectedNodes: number[] = []
 let mouseTimer = null
 
+window['selectedNodes'] = selectedNodes
+
 function makeGUI () {
     d3.select ('#reset-button').on ('click', () => {
         reset ()
@@ -808,12 +810,14 @@ type UpdateNeuronCardProps = {
     nodeId: number,
 }
 
-function updateNeuronCard (
+export function updateNeuronCard (
     {
         nodeId,
     }: UpdateNeuronCardProps,
 ) {
     let neuronCard = d3.select ('#neuron-card')
+
+    selectedNodes = window['selectedNodes']
 
     if (selectedNodes.length === 0) {
         neuronCard.style ('display', 'none')
@@ -836,7 +840,7 @@ function updateNeuronCard (
             }`,
     )
 
-    const node = getNode (nodeId)
+    const {node} = getNode (nodeId)
     const inputPlaceholder = 'ø or multi.'
 
     const biasInput = inputs[0] as HTMLInputElement

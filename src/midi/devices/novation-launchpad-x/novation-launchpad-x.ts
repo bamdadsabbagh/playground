@@ -2,6 +2,10 @@ import { Device, DeviceCategory } from '../devices.types'
 import { MidiType } from '../../midi.types'
 import { getNetwork } from '../../../utils/get-network'
 import { getNeuronAndLayerIndexes } from '../../../utils/get-neuron-and-layer-indexes'
+import { getNode } from '../../../utils/get-node'
+import { toggleNode } from '../../../utils/toggle-node'
+import { updateNeuronCard } from '../../../playground'
+import * as d3 from 'd3'
 
 /**
  * @description Novation Launchpad X
@@ -126,84 +130,96 @@ export const novationLaunchpadX: Device = {
             }
         }, timers.boot)
 
+        const selectedNodes = {}
+
         // runtime
         setTimeout (() => {
-            let clickTimer = null
-
-            // network
-            const network = getNetwork ()
-            const networkLength = network.flat ().length
-            for (let n = 1; n <= networkLength; ++n) {
-                const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (n)
-                const shiftedIndex = (layerIndex - 1) + 1 // reset, then move to the right
-                const note = device.pads.grid[shiftedIndex][neuronIndex - 1]
-
-                output.playNote (
-                    note,
-                    device.channels.output,
-                    {
-                        duration: timers.infinite,
-                        rawVelocity: true,
-                        velocity: device.colors.red,
-                    },
-                )
-            }
-
-            // listen to notes
-            input.addListener (
-                'noteon',
-                device.channels.input,
-                (e) => {
-                    clickTimer = setTimeout (() => {
-
-                        clearTimeout (clickTimer)
-                        clickTimer = null
-
-                        output.playNote (
-                            e.note.number,
-                            device.channels.output,
-                            {
-                                duration: timers.infinite,
-                                rawVelocity: true,
-                                velocity: device.colors.lime,
-                            },
-                        )
-                    }, timers.clickDelay)
-                },
-            )
-
-            input.addListener (
-                'noteoff',
-                device.channels.input,
-                (e) => {
-
-                    if (clickTimer === null) return
-                    clearTimeout (clickTimer)
-                    clickTimer = null
+                // network
+                const network = getNetwork ()
+                const networkLength = network.flat ().length
+                for (let n = 1; n <= networkLength; ++n) {
+                    const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (n)
+                    const shiftedIndex = (layerIndex - 1) + 1 // reset, then move to the right
+                    const note = device.pads.grid[shiftedIndex][neuronIndex - 1]
+                    selectedNodes[note] = false
 
                     output.playNote (
-                        e.note.number,
+                        note,
                         device.channels.output,
                         {
-                            duration: timers.default,
+                            duration: timers.infinite,
                             rawVelocity: true,
-                            velocity: device.colors.aqua,
+                            velocity: device.colors.lime,
                         },
                     )
+                }
 
-                    setTimeout (() => {
-                        output.playNote (
-                            e.note.number,
-                            device.channels.output,
-                            {
-                                duration: timers.infinite,
-                                rawVelocity: true,
-                                velocity: device.colors.red,
-                            },
-                        )
-                    }, timers.default)
-                },
-            )
-        }, timers.boot + timers.default + timers.wait)
+                // listen to notes
+                input.addListener (
+                    'noteon',
+                    device.channels.input,
+                    (e) => {
+                        const nodeIndex = (device.pads.grid.flat ().indexOf (e.note.number) - 8) + 1
+                        const {isDead} = getNode (nodeIndex)
+                        let clickTimer = null
+                        const canvas = d3.select (`#canvas-${nodeIndex}`)
+
+                        // short click
+                        if (!isDead) {
+                            selectedNodes[e.note.number] = !selectedNodes[e.note.number]
+
+                            if (selectedNodes[e.note.number]) {
+                                window['selectedNodes'] = [...window['selectedNodes'], nodeIndex]
+                                canvas.classed ('selected', true)
+                            } else {
+                                window['selectedNodes'] = window['selectedNodes'].filter (n => n !== nodeIndex)
+                                canvas.classed ('selected', false)
+                            }
+
+                            updateNeuronCard ({nodeId: nodeIndex})
+
+                            output.playNote (
+                                e.note.number,
+                                device.channels.output,
+                                {
+                                    duration: timers.infinite,
+                                    rawVelocity: true,
+                                    velocity: selectedNodes[e.note.number] ? device.colors.aqua : device.colors.lime,
+                                },
+                            )
+                        }
+
+                        // long click
+                        clickTimer = setTimeout (() => {
+
+                            clearTimeout (clickTimer)
+                            clickTimer = null
+
+                            const hasDied = toggleNode (nodeIndex)
+                            selectedNodes[e.note.number] = false
+                            canvas.classed ('selected', false)
+                            updateNeuronCard ({nodeId: nodeIndex})
+
+                            output.playNote (
+                                e.note.number,
+                                device.channels.output,
+                                {
+                                    duration: timers.infinite,
+                                    rawVelocity: true,
+                                    velocity: hasDied ? device.colors.red : device.colors.lime,
+                                },
+                            )
+                        }, timers.clickDelay)
+
+                        input.addListener ('noteoff', device.channels.input, () => {
+                            if (clickTimer === null) return
+                            clearTimeout (clickTimer)
+                            clickTimer = null
+                        })
+
+                    },
+                )
+            }, timers.boot + timers.default + timers.wait,
+        )
     },
 }

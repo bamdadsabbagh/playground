@@ -1,11 +1,7 @@
 import { getNode } from './get-node'
 
 export function toggleNode (nodeIndex: number) {
-    const node = getNode (nodeIndex)
-
-    const isDead = node.inputLinks
-        .filter (l => l.isDead === true)
-        .length !== 0
+    const {node, isDead} = getNode (nodeIndex)
 
     const needsToDie = !isDead
 
