@@ -124,7 +124,7 @@ export const novationLaunchpadX: Device = {
                     {
                         duration: 1000,
                         rawVelocity: true,
-                        velocity: device.colors.red,
+                        velocity: device.colors.green,
                     },
                 )
             }
