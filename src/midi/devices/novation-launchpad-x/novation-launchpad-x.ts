@@ -1,6 +1,7 @@
 import { Device, DeviceCategory } from '../devices.types'
 import { MidiType } from '../../midi.types'
-import { keepNote } from '../../utils/keep-note'
+import { getNetwork } from '../../../utils/get-network'
+import { getNeuronAndLayerIndexes } from '../../../utils/get-neuron-and-layer-indexes'
 
 /**
  * @description Novation Launchpad X
@@ -80,23 +81,17 @@ export const novationLaunchpadX: Device = {
         // remove all current listeners
         input.removeListener ()
 
-        // listen to notes
-        input.addListener (
-            'noteon',
-            device.channels.input,
-            (e) => {
-                console.log (e)
-                output.playNote (
-                    e.note.number,
-                    device.channels.output,
-                    {
-                        duration: 1000,
-                        rawVelocity: true,
-                        velocity: device.colors.fuchsia,
-                    },
-                )
-            },
-        )
+        // -----
+        // READY
+        // -----
+
+        const timers = {
+            default: 500,
+            infinite: 3600000,
+            boot: 2000,
+            wait: 200,
+            clickDelay: 600,
+        }
 
         // listen to controls
         input.addListener (
@@ -108,13 +103,14 @@ export const novationLaunchpadX: Device = {
                     e.controller.number,
                     device.channels.output,
                     {
-                        duration: 1000,
+                        duration: timers.default,
                         rawVelocity: true,
                         velocity: device.colors.fuchsia,
                     },
                 )
             })
 
+        // load
         // flash red on init
         setTimeout (() => {
             for (let i = device.all.start; i <= device.all.end; i++) {
@@ -122,22 +118,92 @@ export const novationLaunchpadX: Device = {
                     i,
                     device.channels.output,
                     {
-                        duration: 1000,
+                        duration: timers.default,
                         rawVelocity: true,
                         velocity: device.colors.green,
                     },
                 )
             }
-        }, 2000)
+        }, timers.boot)
 
-        // first pad
+        // runtime
         setTimeout (() => {
-            keepNote ({
-                output,
-                channel: device.channels.output,
-                note: device.pads.grid[0][0],
-                color: device.colors.aqua,
-            })
-        }, 4000)
+            let clickTimer = null
+
+            // network
+            const network = getNetwork ()
+            const networkLength = network.flat ().length
+            for (let n = 1; n <= networkLength; ++n) {
+                const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (n)
+                const shiftedIndex = (layerIndex - 1) + 1 // reset, then move to the right
+                const note = device.pads.grid[shiftedIndex][neuronIndex - 1]
+
+                output.playNote (
+                    note,
+                    device.channels.output,
+                    {
+                        duration: timers.infinite,
+                        rawVelocity: true,
+                        velocity: device.colors.red,
+                    },
+                )
+            }
+
+            // listen to notes
+            input.addListener (
+                'noteon',
+                device.channels.input,
+                (e) => {
+                    clickTimer = setTimeout (() => {
+
+                        clearTimeout (clickTimer)
+                        clickTimer = null
+
+                        output.playNote (
+                            e.note.number,
+                            device.channels.output,
+                            {
+                                duration: timers.infinite,
+                                rawVelocity: true,
+                                velocity: device.colors.lime,
+                            },
+                        )
+                    }, timers.clickDelay)
+                },
+            )
+
+            input.addListener (
+                'noteoff',
+                device.channels.input,
+                (e) => {
+
+                    if (clickTimer === null) return
+                    clearTimeout (clickTimer)
+                    clickTimer = null
+
+                    output.playNote (
+                        e.note.number,
+                        device.channels.output,
+                        {
+                            duration: timers.default,
+                            rawVelocity: true,
+                            velocity: device.colors.aqua,
+                        },
+                    )
+
+                    setTimeout (() => {
+                        output.playNote (
+                            e.note.number,
+                            device.channels.output,
+                            {
+                                duration: timers.infinite,
+                                rawVelocity: true,
+                                velocity: device.colors.red,
+                            },
+                        )
+                    }, timers.default)
+                },
+            )
+        }, timers.boot + timers.default + timers.wait)
     },
 }

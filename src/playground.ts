@@ -536,7 +536,7 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
                 div.classed ('disabled', died)
                 // clear mouseTimer so we prevent short action on mouse up
                 mouseTimer = null
-            }, 1000)
+            }, 600)
         })
         .on ('mouseup', () => {
 
