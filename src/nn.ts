@@ -356,8 +356,9 @@ export function updateWeights (
                 if (link.isDead) {
                     continue
                 }
-                let regulDer = regularization ?
-                    regularization.der (link.weight) : 0
+                let regulDer = regularization
+                    ? regularization.der (link.weight)
+                    : 0
                 if (link.numAccumulatedDers > 0) {
                     // Update the weight based on dE/dw.
                     link.weight = link.weight -
@@ -365,14 +366,19 @@ export function updateWeights (
                     // Further update the weight based on regularization.
                     let newLinkWeight = link.weight -
                         (learningRate * regularizationRate) * regulDer
-                    if (regularization === RegularizationFunction.L1 &&
-                        link.weight * newLinkWeight < 0) {
+
+                    // todo investigate
+                    if (
+                        regularization === RegularizationFunction.L1
+                        && link.weight * newLinkWeight < 0
+                    ) {
                         // The weight crossed 0 due to the regularization term. Set it to 0.
                         link.weight = 0
                         link.isDead = true
                     } else {
                         link.weight = newLinkWeight
                     }
+
                     link.accErrorDer = 0
                     link.numAccumulatedDers = 0
                 }
