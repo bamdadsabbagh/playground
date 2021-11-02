@@ -769,7 +769,7 @@ g.column rect {
 }
 
 #network .canvas.selected canvas {
-    border: 2px solid red;
+    border: 2px solid aqua;
 }
 
 #network .canvas.disabled canvas {

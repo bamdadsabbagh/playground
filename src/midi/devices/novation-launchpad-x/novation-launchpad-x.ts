@@ -134,13 +134,21 @@ export const novationLaunchpadX: Device = {
 
         // runtime
         setTimeout (() => {
-                // network
                 const network = getNetwork ()
                 const networkLength = network.flat ().length
+                const colors = {
+                    on: device.colors.lime,
+                    selected: device.colors.aqua,
+                    off: device.colors.gray,
+                }
+
+                // first draw
                 for (let n = 1; n <= networkLength; ++n) {
                     const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (n)
                     const shiftedIndex = (layerIndex - 1) + 1 // reset, then move to the right
                     const note = device.pads.grid[shiftedIndex][neuronIndex - 1]
+                    const {isDead} = getNode (neuronIndex)
+                    console.log (isDead)
                     selectedNodes[note] = false
 
                     output.playNote (
@@ -149,7 +157,7 @@ export const novationLaunchpadX: Device = {
                         {
                             duration: timers.infinite,
                             rawVelocity: true,
-                            velocity: device.colors.lime,
+                            velocity: isDead ? colors.off : colors.on,
                         },
                     )
                 }
@@ -160,6 +168,7 @@ export const novationLaunchpadX: Device = {
                     device.channels.input,
                     (e) => {
                         const nodeIndex = (device.pads.grid.flat ().indexOf (e.note.number) - 8) + 1
+                        if (!(nodeIndex >= 1 && nodeIndex <= networkLength)) return
                         const {isDead} = getNode (nodeIndex)
                         let clickTimer = null
                         const canvas = d3.select (`#canvas-${nodeIndex}`)
@@ -184,7 +193,7 @@ export const novationLaunchpadX: Device = {
                                 {
                                     duration: timers.infinite,
                                     rawVelocity: true,
-                                    velocity: selectedNodes[e.note.number] ? device.colors.aqua : device.colors.lime,
+                                    velocity: selectedNodes[e.note.number] ? colors.selected : colors.on,
                                 },
                             )
                         }
@@ -196,6 +205,7 @@ export const novationLaunchpadX: Device = {
                             clickTimer = null
 
                             const hasDied = toggleNode (nodeIndex)
+                            window['selectedNodes'] = window['selectedNodes'].filter (n => n !== nodeIndex)
                             selectedNodes[e.note.number] = false
                             canvas.classed ('selected', false)
                             updateNeuronCard ({nodeId: nodeIndex})
@@ -206,7 +216,7 @@ export const novationLaunchpadX: Device = {
                                 {
                                     duration: timers.infinite,
                                     rawVelocity: true,
-                                    velocity: hasDied ? device.colors.red : device.colors.lime,
+                                    velocity: hasDied ? colors.off : colors.on,
                                 },
                             )
                         }, timers.clickDelay)
