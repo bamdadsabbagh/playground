@@ -1,4 +1,5 @@
 import { getNetwork } from './get-network'
+import { novationLaunchpadX } from '../midi/devices/novation-launchpad-x/novation-launchpad-x'
 
 export function toggleInput (inputIndexOrIdentifier: number | string): void {
     const {inputs} = getNetwork ()
@@ -27,4 +28,7 @@ export function toggleInput (inputIndexOrIdentifier: number | string): void {
             ? Math.random () - 0.5
             : 0
     })
+
+    // midi
+    novationLaunchpadX.enableOrDisableInput (input.id, input.isEnabled)
 }

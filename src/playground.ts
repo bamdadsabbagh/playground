@@ -521,24 +521,15 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
             top: `${y + 3}px`,
         })
         .style ('cursor', 'pointer')
-        // .on ('mouseenter', function () {
-        //     selectedNodeId = nodeId
-        //     div.classed ('hovered', true)
-        //     nodeGroup.classed ('hovered', true)
-        //     updateDecisionBoundary (network, false)
-        //     heatMap.updateBackground (boundary[nodeId], state.discretize)
-        // })
-        // .on ('mouseleave', function () {
-        //     selectedNodeId = null
-        //     div.classed ('hovered', false)
-        //     nodeGroup.classed ('hovered', false)
-        //     updateDecisionBoundary (network, false)
-        //     heatMap.updateBackground (boundary[nn.getOutputNode (network).id], state.discretize)
-        // })
         .on ('mousedown', () => {
             mouseTimer = setTimeout (() => {
-                toggleNeuron (parseInt (nodeId))
+                if (isInput) {
+                    clearTimeout (mouseTimer)
+                    mouseTimer = null
+                    return
+                }
 
+                toggleNeuron (parseInt (nodeId))
                 clearTimeout (mouseTimer)
                 mouseTimer = null
             }, 600)

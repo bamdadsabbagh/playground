@@ -4,7 +4,6 @@ import { getNetwork } from '../../../utils/get-network'
 import { getNeuronAndLayerIndexes } from '../../../utils/get-neuron-and-layer-indexes'
 import { getNeuron } from '../../../utils/get-neuron'
 import { toggleNeuron } from '../../../utils/toggle-neuron'
-import { updateNeuronCard } from '../../../playground'
 import * as d3 from 'd3'
 import { toggleOutput } from '../../../utils/toggle-output'
 import { selectNode } from '../../../utils/select-node'
@@ -67,6 +66,79 @@ export const novationLaunchpadX: Device = {
     channels: {
         input: 'all',
         output: 1,
+    },
+    selectOrUnselectNeuron: (nodeIndex, isSelected) => {
+        // @ts-ignore
+        const that = this.novationLaunchpadX
+        if (typeof that === 'undefined') throw new Error ('selectOrUnselectNeuron error')
+
+        const wm = window['wm']
+        const output = wm.getOutputByName ('Launchpad X MIDI 2')
+        const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (nodeIndex)
+        const note = that.pads.grid[layerIndex][neuronIndex - 1]
+
+        output.playNote (
+            note,
+            that.channels.output,
+            {
+                duration: 3600000,
+                rawVelocity: true,
+                // colors: selected or on
+                velocity: isSelected ? that.colors.aqua : that.colors.lime,
+            },
+        )
+    },
+    enableOrDisableNeuron: (nodeIndex, isEnabled) => {
+        // @ts-ignore
+        const that = this.novationLaunchpadX
+        if (typeof that === 'undefined') throw new Error ('enableOrDisableNeuron error')
+
+        const wm = window['wm']
+        const output = wm.getOutputByName ('Launchpad X MIDI 2')
+        const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (nodeIndex)
+        const note = that.pads.grid[layerIndex][neuronIndex - 1]
+
+        output.playNote (
+            note,
+            that.channels.output,
+            {
+                duration: 3600000,
+                rawVelocity: true,
+                // colors: on or off
+                velocity: isEnabled ? that.colors.lime : that.colors.gray,
+            },
+        )
+    },
+    enableOrDisableInput: (inputName, isEnabled) => {
+        // @ts-ignore
+        const that = this.novationLaunchpadX
+        if (typeof that === 'undefined') throw new Error ('enableOrDisableInput error')
+
+        const wm = window['wm']
+        const output = wm.getOutputByName ('Launchpad X MIDI 2')
+
+        const map = {
+            x: 1,
+            y: 2,
+            xSquared: 3,
+            ySquared: 4,
+            xTimesY: 5,
+            sinX: 6,
+            sinY: 7,
+        }
+
+        const note = that.pads.grid[0][map[inputName] - 1]
+
+        output.playNote (
+            note,
+            that.channels.output,
+            {
+                duration: 3600000,
+                rawVelocity: true,
+                // colors: inputOn or off
+                velocity: isEnabled ? that.colors.yellow : that.colors.gray,
+            },
+        )
     },
     onAttach: (wm, device) => {
 
@@ -218,16 +290,6 @@ export const novationLaunchpadX: Device = {
                             const canvas = d3.select (`#canvas-${input.id}`)[0][0] as HTMLDivElement
                             canvas.click ()
 
-                            output.playNote (
-                                e.note.number,
-                                device.channels.output,
-                                {
-                                    duration: timers.infinite,
-                                    rawVelocity: true,
-                                    velocity: input.isEnabled ? colors.inputOn : colors.off,
-                                },
-                            )
-
                         } else if (flatGridIndex >= 56 && flatGridIndex <= 63) {
                             // output
 
@@ -253,7 +315,6 @@ export const novationLaunchpadX: Device = {
                             const nodeIndex = (device.pads.grid.flat ().indexOf (e.note.number) - 8) + 1
                             const {isEnabled} = getNeuron (nodeIndex)
                             let clickTimer = null
-                            const canvas = d3.select (`#canvas-${nodeIndex}`)
 
                             // short click
                             if (isEnabled) {
@@ -268,16 +329,6 @@ export const novationLaunchpadX: Device = {
                                 } else {
                                     unselectNode (nodeIndex)
                                 }
-
-                                output.playNote (
-                                    e.note.number,
-                                    device.channels.output,
-                                    {
-                                        duration: timers.infinite,
-                                        rawVelocity: true,
-                                        velocity: nodesAreSelected[e.note.number] ? colors.selected : colors.on,
-                                    },
-                                )
                             }
 
                             // long click
@@ -286,22 +337,9 @@ export const novationLaunchpadX: Device = {
                                 clearTimeout (clickTimer)
                                 clickTimer = null
 
+                                unselectNode (nodeIndex)
                                 toggleNeuron (nodeIndex)
-                                const {isEnabled} = getNeuron (nodeIndex)
-                                window['selectedNodes'] = window['selectedNodes'].filter (n => n !== nodeIndex)
-                                nodesAreSelected[e.note.number] = false
-                                canvas.classed ('selected', false)
-                                updateNeuronCard ({nodeId: nodeIndex})
 
-                                output.playNote (
-                                    e.note.number,
-                                    device.channels.output,
-                                    {
-                                        duration: timers.infinite,
-                                        rawVelocity: true,
-                                        velocity: isEnabled ? colors.on : colors.off,
-                                    },
-                                )
                             }, timers.clickDelay)
 
                             input.addListener ('noteoff', device.channels.input, () => {

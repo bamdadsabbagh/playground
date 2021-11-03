@@ -12,6 +12,9 @@ export type Device = {
         input: string | number,
         output: string | number,
     },
+    selectOrUnselectNeuron?: (nodeIndex: number, isSelected: boolean) => void,
+    enableOrDisableNeuron?: (nodeIndex: number, isEnabled: boolean) => void,
+    enableOrDisableInput?: (inputName: string, isEnabled: boolean) => void,
     all?: {
         start: number,
         end: number,
