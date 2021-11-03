@@ -1,6 +1,7 @@
 import { updateNeuronCard } from '../playground'
 import * as d3 from 'd3'
 import { novationLaunchpadX } from '../midi/devices/novation-launchpad-x/novation-launchpad-x'
+import { novationLaunchControlXl } from '../midi/devices/novation-launch-control-xl/novation-launch-control-xl'
 
 export function selectNode (nodeId: number): void {
     if (typeof nodeId !== 'number') throw new Error ('nodeId is not a number')
@@ -18,6 +19,9 @@ export function selectNode (nodeId: number): void {
     // neuron card
     updateNeuronCard ({nodeId})
 
-    // midi
+    // midi selection device
     novationLaunchpadX.selectOrUnselectNeuron (nodeId, true)
+
+    // midi control device
+    novationLaunchControlXl.onSelect ()
 }

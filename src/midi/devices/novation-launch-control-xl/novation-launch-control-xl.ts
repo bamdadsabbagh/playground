@@ -78,6 +78,36 @@ export const novationLaunchControlXl: Device = {
         // 83: 111,
         // 84: 127,
     },
+    onSelect: () => {
+        // @ts-ignore
+        const that = this.novationLaunchControlXl
+        if (typeof that === 'undefined') throw new Error ('onSelect error')
+
+        const wm = window['wm']
+        const output = wm.getOutputByName ('Launch Control XL MIDI 1')
+        const selectedNodes = window['selectedNodes']
+        let color
+
+        if (selectedNodes.length === 0) {
+            color = that.colors.black
+        } else if (selectedNodes.length === 1) {
+            color = that.colors.green
+        } else {
+            color = that.colors.amber
+        }
+
+        for (let i = that.all.start; i <= that.all.end; ++i) {
+            output.playNote (
+                i,
+                that.channels.output,
+                {
+                    duration: 3600000,
+                    rawVelocity: true,
+                    velocity: color,
+                },
+            )
+        }
+    },
     onAttach: (wm, device) => {
 
         // avoid double notes
@@ -186,7 +216,7 @@ export const novationLaunchControlXl: Device = {
                     {
                         duration: 1000,
                         rawVelocity: true,
-                        velocity: device.colors.green,
+                        velocity: device.colors.red,
                     },
                 )
             }

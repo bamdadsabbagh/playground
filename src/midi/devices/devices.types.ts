@@ -8,6 +8,7 @@ export type Device = {
     manufacturer: string,
     name: string,
     outputByInput?: any,
+    onSelect?: () => void,
     channels?: {
         input: string | number,
         output: string | number,
