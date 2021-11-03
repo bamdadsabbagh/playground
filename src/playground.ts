@@ -28,9 +28,12 @@ import {
 import { Example2D, shuffle } from './dataset'
 import { AppendingLineChart } from './linechart'
 import * as d3 from 'd3'
-import { toggleNode } from './utils/toggle-node'
-import { getNode } from './utils/get-node'
+import { toggleNeuron } from './utils/toggle-neuron'
+import { getNeuron } from './utils/get-neuron'
 import { Coolearning } from './coolearning/coolearning'
+import { toggleInput } from './utils/toggle-input'
+import { unselectNode } from './utils/unselect-node'
+import { selectNode } from './utils/select-node'
 
 Coolearning ()
 
@@ -534,53 +537,32 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
         // })
         .on ('mousedown', () => {
             mouseTimer = setTimeout (() => {
-                const died = toggleNode (parseInt (nodeId))
-                div.classed ('disabled', died)
-                // clear mouseTimer so we prevent short action on mouse up
+                toggleNeuron (parseInt (nodeId))
+
+                clearTimeout (mouseTimer)
                 mouseTimer = null
             }, 600)
         })
         .on ('mouseup', () => {
 
-            // do nothing if mouseTimer is null
-            // this means the mouse has been pressed long enough
-            // and the long action has been triggered
             if (mouseTimer === null) return
 
-            // mouse has not been pressed long enough
-            // we don't want the long action to trigger
-            // we want the short action below to trigger instead
             clearTimeout (mouseTimer)
+            mouseTimer = null
 
             if (div.classed ('disabled')) return
 
             if (!div.classed ('selected')) {
-                // if not a number, the node is an input
                 if (Number.isNaN (parseInt (nodeId))) return
-                // select
-                div.classed ('selected', true)
-                selectedNodes = [
-                    ...selectedNodes,
-                    parseInt (nodeId),
-                ]
-                // selectedNodes.forEach (nodeIndex => {
-                //     console.log (nodeIndex, getNode (nodeIndex).inputLinks)
-                // })
-                updateNeuronCard ({nodeId: parseInt (nodeId)})
+                selectNode (parseInt (nodeId))
             } else {
-                // unselect
-                div.classed ('selected', false)
-                selectedNodes = selectedNodes.filter (n => n !== parseInt (nodeId))
-                updateNeuronCard ({nodeId: parseInt (nodeId)})
+                unselectNode (parseInt (nodeId))
             }
-            // console.log (selectedNodes)
-            // todo show all weights to edit
         })
     if (isInput) {
         div.on ('click', function () {
-            state[nodeId] = !state[nodeId]
-            parametersChanged = true
-            reset ()
+            toggleInput (nodeId)
+            div.classed ('disabled', !div.classed ('disabled'))
         })
     }
     if (isInput) {
@@ -840,16 +822,16 @@ export function updateNeuronCard (
             }`,
     )
 
-    const {node} = getNode (nodeId)
+    const {neuron} = getNeuron (nodeId)
     const inputPlaceholder = 'ø or multi.'
 
     const biasInput = inputs[0] as HTMLInputElement
     biasInput.placeholder = inputPlaceholder
     biasInput.value = selectedNodes.length === 1
-        ? node.bias.toPrecision (2)
+        ? neuron.bias.toPrecision (2)
         : null
 
-    const {inputLinks} = node
+    const {inputLinks} = neuron
     inputs.slice (1).forEach ((input: HTMLInputElement, k) => {
         if (typeof inputLinks[k] === 'undefined') {
             input.value = null

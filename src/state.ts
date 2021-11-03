@@ -152,13 +152,13 @@ export class State {
     networkShape: number[] = [8, 8, 8, 8, 8, 8]
     x = true
     y = true
-    xTimesY = false
-    xSquared = false
-    ySquared = false
+    xTimesY = true
+    xSquared = true
+    ySquared = true
     cosX = false
-    sinX = false
+    sinX = true
     cosY = false
-    sinY = false
+    sinY = true
     dataset: dataset.DataGenerator = dataset.classifyCircleData
     regDataset: dataset.DataGenerator = dataset.regressPlane
     seed: string

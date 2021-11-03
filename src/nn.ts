@@ -44,12 +44,14 @@ export class Node {
     numAccumulatedDers = 0
     /** Activation function that takes total input and returns node's output */
     activation: ActivationFunction
+    isEnabled: boolean
 
     /**
      * Creates a new node with the provided id and activation function.
      */
     constructor (id: string, activation: ActivationFunction, initZero?: boolean) {
         this.id = id
+        this.isEnabled = true
         this.activation = activation
         if (initZero) {
             this.bias = 0

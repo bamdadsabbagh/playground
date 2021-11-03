@@ -1,4 +1,4 @@
-import { NeuronElement, Neurons } from '../types'
+import { NeuronElement } from '../types'
 
 const getWeightsHovers = (elementD3) => {
     const weights = {}
@@ -59,7 +59,7 @@ export function getNeurons (): any {
         neurons[index] = {
             ...neurons[index],
             layerIndex: savedLayerIndex,
-            node,
+            neuron: node,
             weights,
         }
     })
