@@ -12,22 +12,35 @@ main.selector = selector;
 main.controller = controller;
 
 /**
- * @description Initialize the main object.
+ * @description Initialize main
  */
 main.init = async function (): Promise<void> {
   if (this.isInitialized) {
     throw new Error ('main is already initialized');
   }
-
   await midi.init ();
-  devices.init (midi.devices);
+  await this.attachDevices ();
+  this.isInitialized = true;
+  console.log (main);
+};
 
+/**
+ * @description Attach devices
+ */
+main.attachDevices = async function () {
+  devices.init (midi.ports);
   await Promise.all ([
     selector.init (devices.pickSelector (1)),
     controller.init (devices.pickController (0)),
   ]);
+};
 
-  console.log (main);
-
-  this.isInitialized = true;
+/**
+ * @description Reset devices
+ */
+main.resetDevices = async function () {
+  devices.isInitialized = false;
+  selector.isInitialized = false;
+  controller.isInitialized = false;
+  await this.attachDevices ();
 };

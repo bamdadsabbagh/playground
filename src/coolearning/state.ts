@@ -38,7 +38,7 @@ export const state = (function () {
       const json = JSON.parse (string);
       isLearning = json.isLearning;
       learningParameter = json.learningParameter;
-      devices = json.devices;
+      devices = json.ports;
       controlByParameter = json.controlByParameter;
       parametersByControl = json.parametersByControl;
     } catch (error) {

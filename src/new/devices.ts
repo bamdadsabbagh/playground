@@ -16,14 +16,14 @@ devices.knownDevices = knownDevices;
 
 /**
  * @description Initialize devices
- * @param {*} devices - devices to reference
+ * @param {*} ports - devices to reference
  */
-devices.init = function (devices: any): void {
+devices.init = function (ports: any): void {
   if (this.isInitialized) {
     throw new Error ('devices is already initialized');
   }
 
-  this.devices = devices;
+  this.devices = ports;
   this.sortDevices ();
 
   this.isInitialized = true;
@@ -51,6 +51,9 @@ devices.setSelectors = function (): void {
   this.selectors = this.pickDevicesByProperty ('isSelector');
 };
 
+/**
+ * @description Set used devices
+ */
 devices.setUsed = function (): void {
   this.used = this.pickDevicesByProperty ('isUsed');
 };
@@ -63,6 +66,8 @@ devices.setUsed = function (): void {
 devices.pickController = function (index: number): Controller {
   const controller = this.controllers[Object.keys (this.controllers)[index]];
   controller.isUsed = true;
+  controller.input.isUsed = true;
+  controller.output.isUsed = true;
   this.setUsed ();
   return controller;
 };
@@ -75,6 +80,8 @@ devices.pickController = function (index: number): Controller {
 devices.pickSelector = function (index: number): Selector {
   const selector = this.selectors[Object.keys (this.selectors)[index]];
   selector.isUsed = true;
+  selector.input.isUsed = true;
+  selector.output.isUsed = true;
   this.setUsed ();
   return selector;
 };
