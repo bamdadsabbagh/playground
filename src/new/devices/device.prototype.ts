@@ -101,7 +101,7 @@ devicePrototype.playNotes = function (
 };
 
 /**
- * @description Utility function to attach an input event to the grid
+ * @description Utility function to attach an input event to the device
  * @param {string} noteState - The state of the note to listen to
  * @param {function} listener - The listener function
  */
@@ -121,10 +121,10 @@ devicePrototype.onNote = function (
 };
 
 /**
- * @description Utility function to remove an input event from the grid
+ * @description Utility function to remove an input event from the device
  * @param {string} noteState - The state of the note to remove the listener from
  */
-devicePrototype.removeOnNote = function (noteState: string): void {
+devicePrototype.clearNote = function (noteState: string): void {
   if (noteState !== 'on' && noteState !== 'off') {
     throw new Error ('note should be either "on" or "off"');
   }
@@ -132,10 +132,21 @@ devicePrototype.removeOnNote = function (noteState: string): void {
   this.device.input.removeListener (`note${noteState}`);
 };
 
-devicePrototype.onControlChange = function (listener) {
+/**
+ * @description Utility function to attach an input event to the device
+ * @param listener
+ */
+devicePrototype.onControl = function (listener) {
   this.device.input.addListener (
     'controlchange',
     this.settings.channels.input,
     (e) => listener (e),
   );
+};
+
+/**
+ * @description Utility function to remove an input event from the device
+ */
+devicePrototype.clearControl = function () {
+  this.device.input.removeListener ('controlchange');
 };

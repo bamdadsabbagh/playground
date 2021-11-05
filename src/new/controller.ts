@@ -2,6 +2,9 @@ import { getNetwork } from './utils/get-network';
 import { devicePrototype } from './devices/device.prototype';
 import { state } from '../coolearning/state';
 import { updateParameter } from '../coolearning/utils/update-parameter';
+import { getNeuron } from './utils/get-neuron';
+import { rangeMap } from '../coolearning/utils/range-map';
+import { updateWeight } from './utils/update-weight';
 
 export const controller = Object.create (devicePrototype);
 
@@ -67,11 +70,25 @@ controller.attachButtons = function () {
   });
 };
 
+controller.attachRanges = function () {
+  const selectedNodes = window['selectedNodes'];
+
+  this.clearControl ();
+
+  if (selectedNodes.length === 0) {
+    this.attachRangesDefault ();
+  } else if (selectedNodes.length === 1) {
+    this.attachRangesForNeuron ();
+  } else {
+    this.attachRangesForNeurons ();
+  }
+};
+
 /**
  * @description Attach events to the ranges.
  */
-controller.attachRanges = function () {
-  this.onControlChange ((e) => {
+controller.attachRangesDefault = function () {
+  this.onControl ((e) => {
     const note = parseInt (e.controller.number);
     const {isLearning, learningParameter} = state;
     const parameters = state.getParametersByControl (note);
@@ -93,37 +110,96 @@ controller.attachRanges = function () {
       });
     }
 
-    let color;
-    if (
-      note >= this.settings.rangeKeys.first
-      && note <= this.settings.rangeKeys.last
-    ) {
-      color = this.settings.colors.amber;
-    } else {
-      color = this.settings.colors.green;
-    }
-
     this.playNote ({
       note: this.settings.outputByInput[note],
       duration: this.settings.time.defaultDuration,
-      color,
+      color: this.settings.colors.red,
     });
   });
 };
 
 /**
- * @description Redraw when the neuron selection state changes.
+ * @description Attach events to the ranges for a single neuron
  */
-controller.redrawOnNeuronSelectionChange = function () {
+controller.attachRangesForNeuron = function () {
+  const selectedNode = window['selectedNodes'][0];
+  const {neuron} = getNeuron (selectedNode);
+  const links = neuron.inputLinks;
+
+  let weights = links.map (link => link.weight);
+  weights = Object.keys (weights).map ((key) => {
+    return {
+      weight: weights[key],
+      hasSnapped: false,
+    };
+  });
+
+  // first draw
+  weights.forEach ((weight, index) => {
+    const note = this.settings.rows.firstButtons[index];
+    this.playNote ({
+      note,
+      color: this.settings.colors.red,
+    });
+  });
+
+  // listen to changes
+  this.onControl ((e) => {
+    if (
+      e.controller.number >= this.settings.rows.faders[0]
+      && e.controller.number <= this.settings.rows.faders[7]
+    ) {
+      const index = e.controller.number - this.settings.rows.faders[0];
+      const value = rangeMap (e.value, 0, 127, -1, 1);
+
+      if (value.toFixed (1) === weights[index].weight.toFixed (1)) {
+        weights[index].hasSnapped = true;
+      }
+
+      if (weights[index].hasSnapped) {
+        links[index].weight = value;
+        updateWeight (index, value);
+        this.playNote ({
+          note: this.settings.outputByInput[e.controller.number],
+          color: this.settings.colors.green,
+        });
+      } else {
+        this.playNote ({
+          note: this.settings.outputByInput[e.controller.number],
+          color: this.settings.colors.red,
+        });
+      }
+    }
+  });
+};
+
+controller.attachRangesForNeurons = function () {
+
+};
+
+/**
+ * @description This is called when selection is made.
+ */
+controller.onSelect = function () {
+  this.changeLights ();
+  setTimeout (() => {
+    this.attachRanges ();
+  }, this.settings.time.wait);
+};
+
+/**
+ * @description Change all lights.
+ */
+controller.changeLights = function () {
   const selectedNodes = window['selectedNodes'];
 
   let color;
   if (selectedNodes.length === 0) {
-    color = this.settings.colors.black;
-  } else if (selectedNodes.length === 1) {
-    color = this.settings.colors.green;
-  } else {
     color = this.settings.colors.amber;
+  } else if (selectedNodes.length === 1) {
+    color = this.settings.colors.black;
+  } else {
+    color = this.settings.colors.red;
   }
 
   this.playNotes ({

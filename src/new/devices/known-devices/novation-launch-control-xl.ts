@@ -1,10 +1,8 @@
 import { DeviceSettings, DeviceCategory } from '../devices.types';
 
 export type NovationLaunchControlXl = DeviceSettings & {
-  rangeKeys: {
-    first: number,
-    last: number,
-  },
+  grid: number[][],
+  rows: any,
   outputByInput: {
     [output: number]: number,
   }
@@ -39,10 +37,6 @@ export const novationLaunchControlXl: NovationLaunchControlXl = {
     deviceReady: 2000,
     defaultDuration: 1000,
   },
-  rangeKeys: {
-    first: 77,
-    last: 84,
-  },
   bootSequence: function ({playNotes, resolve}) {
     setTimeout (() => {
       playNotes ({
@@ -53,6 +47,17 @@ export const novationLaunchControlXl: NovationLaunchControlXl = {
       });
       setTimeout (() => resolve (), this.time.defaultDuration + this.time.wait);
     }, this.time.deviceReady);
+  },
+  grid: [
+    // by columns,
+  ],
+  rows: {
+    firstPots: [13, 14, 15, 16, 17, 18, 19, 20],
+    secondPots: [29, 30, 31, 32, 33, 34, 35, 36],
+    thirdPots: [49, 50, 51, 52, 53, 54, 55, 56],
+    faders: [77, 78, 79, 80, 81, 82, 83, 84],
+    firstButtons: [41, 42, 43, 44, 57, 58, 59, 60],
+    secondButtons: [73, 74, 75, 76, 89, 90, 91, 92],
   },
   outputByInput: {
     // first row

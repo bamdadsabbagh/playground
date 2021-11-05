@@ -25,5 +25,5 @@ export function selectNode (nodeId: number): void {
     isSelected: true,
   });
 
-  controller.redrawOnNeuronSelectionChange ();
+  controller.onSelect ();
 }

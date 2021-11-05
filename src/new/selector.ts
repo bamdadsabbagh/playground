@@ -160,7 +160,7 @@ selector.attachNeurons = function (): void {
       if (clickTimer === null) return;
       clearTimeout (clickTimer);
       clickTimer = null;
-      this.removeOnNote ('off');
+      this.clearNote ('off');
     });
   });
 };
