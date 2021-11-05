@@ -1,6 +1,6 @@
 import * as WebMidi from 'webmidi';
 import { getKnownDeviceInfo } from './devices/utils/get-known-device-info';
-import { Devices } from './devices/devices.types';
+import { Device, Devices } from './devices/devices.types';
 import { Input, Output } from 'webmidi';
 
 export const midi = Object.create (null);
@@ -81,10 +81,10 @@ midi.setDevices = function () {
     acc[name] = {
       isController,
       isSelector,
-      isEnabled: false,
+      isUsed: false,
       input: knownInput[0],
       output: knownOutput[0],
-    };
+    } as Device;
 
     return acc;
   }, {});

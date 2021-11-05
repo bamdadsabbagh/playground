@@ -9,6 +9,7 @@ export const devices = Object.create (null);
 
 devices.isInitialized = false as boolean;
 devices.devices = null as Devices;
+devices.used = null as Devices;
 devices.controllers = null as Controllers;
 devices.selectors = null as Selectors;
 devices.knownDevices = knownDevices;
@@ -50,38 +51,48 @@ devices.setSelectors = function (): void {
   this.selectors = this.pickDevicesByProperty ('isSelector');
 };
 
-/**
- * @description Get a controller by index
- * @param {number} index - controller index
- * @returns {*} controller
- */
-devices.getController = function (index: number): Controller {
-  return this.controllers[Object.keys (this.controllers)[index]];
+devices.setUsed = function (): void {
+  this.used = this.pickDevicesByProperty ('isUsed');
 };
 
 /**
- * @description Get a selector by index
+ * @description Pick a controller by index
+ * @param {number} index - controller index
+ * @returns {*} controller
+ */
+devices.pickController = function (index: number): Controller {
+  const controller = this.controllers[Object.keys (this.controllers)[index]];
+  controller.isUsed = true;
+  this.setUsed ();
+  return controller;
+};
+
+/**
+ * @description Pick a selector by index
  * @param {number} index - selector index
  * @returns {*} selector
  */
-devices.getSelector = function (index: number): Selector {
-  return this.selectors[Object.keys (this.selectors)[index]];
+devices.pickSelector = function (index: number): Selector {
+  const selector = this.selectors[Object.keys (this.selectors)[index]];
+  selector.isUsed = true;
+  this.setUsed ();
+  return selector;
 };
+
+type DeviceProperty = 'isController' | 'isSelector' | 'isUsed';
 
 /**
  * @description Utility function to pick devices by property
  * @param {string} property - property to pick
  * @returns {*} devices for a given property
  */
-devices.pickDevicesByProperty = function (property: 'isController' | 'isSelector'): any {
+devices.pickDevicesByProperty = function (property: DeviceProperty): any {
   return Object.keys (this.devices).reduce ((acc, name) => {
     const device = this.devices[name];
     const settings = device.input.settings || device.output.settings || null;
     if (device[property]) {
       device.name = name;
       device.settings = settings;
-      delete device.isController;
-      delete device.isSelector;
       acc[name] = device;
     }
     return acc;

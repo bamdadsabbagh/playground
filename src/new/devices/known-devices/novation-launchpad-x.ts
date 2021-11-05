@@ -1,6 +1,6 @@
-import { Device, DeviceCategory } from '../devices.types';
+import { DeviceSettings, DeviceCategory } from '../devices.types';
 
-export type NovationLaunchpadX = Device & {
+export type NovationLaunchpadX = DeviceSettings & {
   grid: number[][],
   functionKeys: {
     firstRow: number[],

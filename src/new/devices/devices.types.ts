@@ -1,12 +1,13 @@
 import { BootSequenceOptions } from './device.prototype';
 import { Controller, Selector } from './known-devices';
+import { Input, Output } from 'webmidi';
 
 export enum DeviceCategory {
   select = 'Selector',
   control = 'Controller',
 }
 
-export type Device = {
+export type DeviceSettings = {
   category: DeviceCategory,
   manufacturer: string,
   name: string,
@@ -28,6 +29,16 @@ export type Device = {
     [other: string]: number,
   },
   bootSequence: (options: BootSequenceOptions) => void,
+}
+
+export type Device = {
+  name: string,
+  isController: boolean,
+  isSelector: boolean,
+  isUsed: boolean,
+  input: Input,
+  output: Output,
+  settings: DeviceSettings,
 }
 
 export type Devices = {

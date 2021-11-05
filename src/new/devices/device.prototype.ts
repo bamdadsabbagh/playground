@@ -5,12 +5,13 @@ import {
   InputEventNoteon,
 } from 'webmidi';
 import { PromiseResolver } from '../../coolearning/types';
+import { Device, DeviceSettings } from './devices.types';
 
 export const devicePrototype = Object.create (null);
 
-devicePrototype.isInitialized = false;
-devicePrototype.device = null as object;
-devicePrototype.settings = null as object;
+devicePrototype.isInitialized = false as boolean;
+devicePrototype.device = null as Device;
+devicePrototype.settings = null as DeviceSettings;
 devicePrototype.network = null as any;
 
 export type BootSequenceOptions = {

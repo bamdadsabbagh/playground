@@ -23,8 +23,8 @@ main.init = async function (): Promise<void> {
   devices.init (midi.devices);
 
   await Promise.all ([
-    selector.init (devices.getSelector (1)),
-    controller.init (devices.getController (0)),
+    selector.init (devices.pickSelector (1)),
+    controller.init (devices.pickController (0)),
   ]);
 
   console.log (main);

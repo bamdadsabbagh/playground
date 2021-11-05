@@ -1,6 +1,6 @@
-import { Device, DeviceCategory } from '../devices.types';
+import { DeviceSettings, DeviceCategory } from '../devices.types';
 
-export type NovationLaunchControlXl = Device & {
+export type NovationLaunchControlXl = DeviceSettings & {
   rangeKeys: {
     first: number,
     last: number,
