@@ -1,6 +1,6 @@
 import { getNetwork } from './utils/get-network';
 import { devicePrototype } from './devices/device.prototype';
-import { state } from '../coolearning/state/state';
+import { state } from '../coolearning/state';
 import { updateParameter } from '../coolearning/utils/update-parameter';
 
 export const controller = Object.create (devicePrototype);

@@ -1,20 +1,20 @@
-import { state } from '../state/state'
+import { state } from '../state';
 
 /**
  * @description devices parser for midi events
  */
 export function watchDevices (event: any): void {
-    const {port} = event
+  const {port} = event;
 
-    if (!port) return
+  if (!port) return;
 
-    const {connection, id, type} = port
+  const {connection, id, type} = port;
 
-    if (!connection) return
-    if (type !== 'input') return
+  if (!connection) return;
+  if (type !== 'input') return;
 
-    connection === 'open'
-        ? state.addDevice ({id})
-        : state.removeDevice ({id})
+  connection === 'open'
+    ? state.addDevice ({id})
+    : state.removeDevice ({id});
 
 }
