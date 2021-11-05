@@ -1,11 +1,28 @@
-import { DeviceCategory } from '../../../midi/devices/devices.types';
+import { Device, DeviceCategory } from '../devices.types';
+
+export type NovationLaunchpadX = Device & {
+  grid: number[][],
+  functionKeys: {
+    firstRow: number[],
+    lastColumn: number[],
+  },
+  colorByState: {
+    inputOn: number,
+    inputOff: number,
+    neuronOn: number,
+    neuronOff: number,
+    neuronSelected: number,
+    outputWeightOn: number,
+    outputWeightOff: number,
+  }
+}
 
 /**
  * @description Novation Launchpad X
  * @see Programmer's Reference https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/Launchpad%20X%20-%20Programmers%20Reference%20Manual.pdf
  * @see User Guide https://www.kraftmusic.com/media/ownersmanual/Novation_Launchpad_X_User_Guide.pdf
  */
-export const novationLaunchpadX: any = {
+export const novationLaunchpadX: NovationLaunchpadX = {
   category: DeviceCategory.select,
   manufacturer: 'Focusrite - Novation',
   name: 'Launchpad X',
@@ -64,9 +81,10 @@ export const novationLaunchpadX: any = {
     };
   },
   time: {
+    wait: 50,
     deviceReady: 2000,
     defaultDuration: 500,
-    longClick: 300,
+    longClick: 400,
   },
   bootSequence: async function ({output, playNotes, resolve}) {
     // programmer mode
@@ -81,7 +99,7 @@ export const novationLaunchpadX: any = {
         duration: this.time.defaultDuration,
       });
 
-      setTimeout (() => resolve (), this.time.defaultDuration);
+      setTimeout (() => resolve (), this.time.defaultDuration + this.time.wait);
     }, this.time.deviceReady);
   },
 };

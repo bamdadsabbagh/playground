@@ -1,7 +1,7 @@
 HTMLElement.prototype.appendTo = function (parent) {
-    parent.appendChild (this)
-}
+  parent.appendChild (this);
+};
 
 HTMLElement.prototype.prependTo = function (parent) {
-    parent.insertBefore (this, parent.firstChild)
-}
+  parent.insertBefore (this, parent.firstChild);
+};

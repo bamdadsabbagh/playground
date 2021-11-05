@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import { updateNeuronCard } from '../../playground';
-import { selector } from '../devices/selector';
+import { selector } from '../selector';
+import { controller } from '../controller';
 
 export function selectNode (nodeId: number): void {
   if (typeof nodeId !== 'number') throw new Error ('nodeId is not a number');
@@ -23,4 +24,6 @@ export function selectNode (nodeId: number): void {
     index: nodeId,
     isSelected: true,
   });
+
+  controller.redrawOnNeuronSelectionChange ();
 }
