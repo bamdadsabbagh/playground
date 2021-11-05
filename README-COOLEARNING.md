@@ -15,7 +15,7 @@ There are two main category of device your can attach.
 
 ### Selector
 
-This usually provides a grid of color backlit keys.
+This usually provides a grid of color backlit pads.
 
 - Use the grid to display the inputs, neurons and output of the current neural network
     - Color code:
@@ -32,10 +32,10 @@ This usually provides a grid of color backlit keys.
 
 ### Controller
 
-This usually provides faders, potentiometers and as well as some buttons.
+This device usually provides faders, potentiometers and buttons.
 
-- Use faders to control input weights of selected neurons
-- Use potentiometers to control activation curves, etc. of selected neurons
+- Use faders to control **input weights** of selected **neurons**
+- Use potentiometers to control **activation curves**, etc. of selected **neurons**
 - Use buttons to play, pause or reset the neural network iterations.
 
 ## Constraints
