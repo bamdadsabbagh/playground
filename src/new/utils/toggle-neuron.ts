@@ -9,18 +9,36 @@ export function toggleNeuron (neuronIndex: number): void {
 
   neuron.isEnabled = !isEnabled;
 
-  neuron.inputLinks.forEach (inputLink => {
-
-    if (!inputLink.source.isEnabled) {
-      inputLink.isDead = true;
-      inputLink.weight = 0;
+  // input weights
+  neuron.inputLinks.forEach ((link) => {
+    // kill if source neuron is disabled
+    if (!link.source.isEnabled) {
+      link.isDead = true;
+      link.savedWeight = link.weight;
+      link.weight = 0;
       return;
     }
 
-    inputLink.isDead = !neuron.isEnabled;
-    inputLink.weight = neuron.isEnabled
-      ? Math.random () - 0.5
-      : 0;
+    if (neuron.isEnabled) {
+      link.isDead = false;
+      link.weight = link.savedWeight || Math.random () - 0.5;
+    } else {
+      link.isDead = true;
+      link.savedWeight = link.weight;
+      link.weight = 0;
+    }
+  });
+
+  // output weights
+  neuron.outputs.forEach ((link) => {
+    if (neuron.isEnabled) {
+      link.isDead = false;
+      link.weight = link.savedWeight || Math.random () - 0.5;
+    } else {
+      link.isDead = true;
+      link.savedWeight = link.weight;
+      link.weight = 0;
+    }
   });
 
   // user interface
