@@ -28,12 +28,12 @@ import {
 import { Example2D, shuffle } from './dataset';
 import { AppendingLineChart } from './linechart';
 import * as d3 from 'd3';
-import { Coolearning } from './coolearning/coolearning';
-import { toggleNeuron } from './new/utils/toggle-neuron';
-import { getNeuron } from './new/utils/get-neuron';
-import { toggleInput } from './new/utils/toggle-input';
-import { unselectNode } from './new/utils/unselect-node';
-import { selectNode } from './new/utils/select-node';
+import { Coolearning } from '../coolearning/coolearning';
+import { toggleNeuron } from '../new/utils/toggle-neuron';
+import { getNeuron } from '../new/utils/get-neuron';
+import { toggleInput } from '../new/utils/toggle-input';
+import { unselectNode } from '../new/utils/unselect-node';
+import { selectNode } from '../new/utils/select-node';
 
 Coolearning ();
 
@@ -161,7 +161,6 @@ state.getHiddenProps ().forEach (prop => {
 });
 
 let boundary: { [id: string]: number[][] } = {};
-let selectedNodeId: string = null;
 // Plot the heatmap.
 let xDomain: [number, number] = [-6, 6];
 let heatMap =
@@ -437,7 +436,7 @@ function updateWeightsUI (network: nn.Node[][], container) {
 }
 
 function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
-                   container, node?: nn.Node) {
+                   container, _node?: nn.Node) {
   let x = cx - RECT_SIZE / 2;
   let y = cy - RECT_SIZE / 2;
 
@@ -732,6 +731,7 @@ function addPlusMinusControl (x: number, layerIdx: number) {
   );
 }
 
+// noinspection JSUnusedLocalSymbols
 function updateHoverCard (type: HoverType, nodeOrLink?: nn.Node | nn.Link,
                           coordinates?: [number, number]) {
   let hovercard = d3.select ('#hovercard');
@@ -800,7 +800,6 @@ export function updateNeuronCard (
   neuronCard.style ('display', 'flex');
 
   const nodeTitle = neuronCard.select ('.node');
-  const titlesText = neuronCard.selectAll ('.title.text')[0];
   const inputs = neuronCard.selectAll ('input')[0];
 
   nodeTitle.text (

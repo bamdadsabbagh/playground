@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { updateNeuronCard } from '../../playground';
+import { updateNeuronCard } from '../../playground/playground';
 import { selector } from '../selector';
 import { controller } from '../controller';
 
