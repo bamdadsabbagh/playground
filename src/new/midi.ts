@@ -13,7 +13,7 @@ midi.inputs = null as Input[];
 midi.outputs = null as Output[];
 
 /**
- * @description Initialize MIDI
+ * Initialize MIDI
  */
 midi.init = async function (): Promise<void> {
   if (this.isInitialized) {
@@ -26,7 +26,7 @@ midi.init = async function (): Promise<void> {
 };
 
 /**
- * @description Enable MIDI service
+ * Enable MIDI service
  */
 midi.enableService = function (): Promise<void> {
   return new Promise ((resolve) => {
@@ -47,7 +47,7 @@ midi.enableService = function (): Promise<void> {
 };
 
 /**
- * @description Handle connected MIDI device
+ * Handle connected MIDI device
  */
 midi.handleConnected = function (): void {
   this.inputs.forEach ((input) => this.onConnect (input));
@@ -56,7 +56,7 @@ midi.handleConnected = function (): void {
 };
 
 /**
- * @description Utility function to handle input and output connections
+ * Utility function to handle input and output connections
  * @param {*} port - The MIDI input or output
  */
 midi.onConnect = function (port): void {
@@ -82,7 +82,7 @@ midi.onConnect = function (port): void {
 };
 
 /**
- * @description Handle disconnected MIDI device
+ * Handle disconnected MIDI device
  */
 midi.handleDisconnected = function (): void {
   // this.inputs.forEach (this.onDisconnect);
@@ -90,7 +90,7 @@ midi.handleDisconnected = function (): void {
 };
 
 /**
- * @description Utility function to handle input and output disconnections
+ * Utility function to handle input and output disconnections
  * @param {*} port - The MIDI input or output
  */
 midi.onDisconnect = function (port) {
@@ -101,7 +101,7 @@ midi.onDisconnect = function (port) {
 };
 
 /**
- * @description Set known devices
+ * Set known devices
  */
 midi.setPorts = function () {
   const knownInputs = this.inputs.filter ((input) => input.isKnown && input.isConnected);
@@ -128,7 +128,7 @@ midi.setPorts = function () {
 };
 
 /**
- * @description Utility function to sort MIDI ports by name
+ * Utility function to sort MIDI ports by name
  * @param {*} ports - The MIDI inputs or outputs
  */
 midi.sortPortsByName = function (ports): any {

@@ -18,7 +18,7 @@ export type NovationLaunchpadX = DeviceSettings & {
 }
 
 /**
- * @description Novation Launchpad X
+ * Novation Launchpad X
  * @see Programmer's Reference https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/Launchpad%20X%20-%20Programmers%20Reference%20Manual.pdf
  * @see User Guide https://www.kraftmusic.com/media/ownersmanual/Novation_Launchpad_X_User_Guide.pdf
  */

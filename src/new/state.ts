@@ -14,7 +14,7 @@ Object.defineProperty (state, 'localStorage', {
 });
 
 /**
- * @description Initializes the state object.
+ * Initializes the state object.
  * @param {boolean} [forceReset=false] - Forces the state to be reset.
  */
 state.init = function (forceReset: boolean = false) {
@@ -35,7 +35,7 @@ state.initializeState = function () {
 };
 
 /**
- * @description Resets the state.
+ * Resets the state.
  */
 state.resetState = function () {
   this.initializeState ();
@@ -43,14 +43,14 @@ state.resetState = function () {
 };
 
 /**
- * @description Loads the state from local storage.
+ * Loads the state from local storage.
  */
 state.isLocalStorage = function (): boolean {
   return typeof window.localStorage[this.localStorageIdentifier] !== 'undefined';
 };
 
 /**
- * @description Parse the state from local storage.
+ * Parse the state from local storage.
  */
 state.parseLocalStorage = function () {
   let json = null;
@@ -63,7 +63,7 @@ state.parseLocalStorage = function () {
 };
 
 /**
- * @description Reloads the window.
+ * Reloads the window.
  */
 state.reloadWindow = function () {
   window.localStorage.removeItem (this.localStorageIdentifier);

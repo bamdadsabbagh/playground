@@ -9,7 +9,7 @@ import { updateWeight } from './utils/update-weight';
 export const controller = Object.create (devicePrototype);
 
 /**
- * @description Initialize the controller.
+ * Initialize the controller.
  * @param {*} device
  */
 controller.init = async function (device: any): Promise<void> {
@@ -29,7 +29,7 @@ controller.init = async function (device: any): Promise<void> {
 };
 
 /**
- * @description Attach events to the controller.
+ * Attach events to the controller.
  */
 controller.attachEvents = function () {
   this.attachButtons ();
@@ -37,7 +37,7 @@ controller.attachEvents = function () {
 };
 
 /**
- * @description Attach events to the buttons.
+ * Attach events to the buttons.
  */
 controller.attachButtons = function () {
   this.onNote ('on', (e) => {
@@ -70,6 +70,9 @@ controller.attachButtons = function () {
   });
 };
 
+/**
+ * Attach events to the ranges.
+ */
 controller.attachRanges = function () {
   const selectedNodes = window['selectedNodes'];
 
@@ -85,7 +88,7 @@ controller.attachRanges = function () {
 };
 
 /**
- * @description Attach events to the ranges.
+ * Attach events to the ranges.
  */
 controller.attachRangesDefault = function () {
   this.onControl ((e) => {
@@ -119,7 +122,7 @@ controller.attachRangesDefault = function () {
 };
 
 /**
- * @description Attach events to the ranges for a single neuron
+ * Attach events to the ranges for a single neuron
  */
 controller.attachRangesForNeuron = function () {
   const selectedNode = window['selectedNodes'][0];
@@ -173,12 +176,15 @@ controller.attachRangesForNeuron = function () {
   });
 };
 
+/**
+ * Attach events to the ranges for multiple neurons
+ */
 controller.attachRangesForNeurons = function () {
 
 };
 
 /**
- * @description This is called when selection is made.
+ * This is called when selection is made.
  */
 controller.onSelect = function () {
   this.changeLights ();
@@ -188,7 +194,7 @@ controller.onSelect = function () {
 };
 
 /**
- * @description Change all lights.
+ * Change all lights.
  */
 controller.changeLights = function () {
   const selectedNodes = window['selectedNodes'];

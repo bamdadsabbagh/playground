@@ -12,7 +12,7 @@ main.selector = selector;
 main.controller = controller;
 
 /**
- * @description Initialize main
+ * Initialize main
  */
 main.init = async function (): Promise<void> {
   if (this.isInitialized) {
@@ -25,7 +25,7 @@ main.init = async function (): Promise<void> {
 };
 
 /**
- * @description Attach devices
+ * Attach devices
  */
 main.attachDevices = async function () {
   devices.init (midi.ports);
@@ -36,7 +36,7 @@ main.attachDevices = async function () {
 };
 
 /**
- * @description Reset devices
+ * Reset devices
  */
 main.resetDevices = async function () {
   devices.isInitialized = false;

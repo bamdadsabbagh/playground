@@ -29,16 +29,28 @@ type LearnOptions = {
  * Learn a mapping between a parameter and a control.
  * @param {LearnOptions} options - The options for learning.
  */
-mapping.learn = function (options: LearnOptions) {
-  const {parameter, control, type} = options;
-
+mapping.learn = function (
+  {
+    parameter,
+    control,
+    type,
+  }: LearnOptions,
+) {
   if (this.isMapped (parameter)) return;
 
-  this.setParameterMaps (options);
+  this.setParameterMaps ({
+    parameter,
+    control,
+    type,
+  });
 
   this.disableLearningMode ();
 
-  renderSetting (options);
+  renderSetting ({
+    parameter,
+    control,
+    type,
+  });
 
   showSnack ({
     message: `Learn: control ${control} for ${parameter} (${type})`,
@@ -84,9 +96,13 @@ mapping.disableLearningMode = function () {
  * Set the parameter and control maps.
  * @param {LearnOptions} options - The options for learning.
  */
-mapping.setParameterMaps = function (options: LearnOptions) {
-  const {parameter, control, type} = options;
-
+mapping.setParameterMaps = function (
+  {
+    parameter,
+    control,
+    type,
+  }: LearnOptions,
+) {
   // map
   this.controlByParameter[parameter] = {
     control,

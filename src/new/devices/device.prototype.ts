@@ -23,7 +23,7 @@ export type BootSequenceOptions = {
 }
 
 /**
- * @description Run the boot sequence
+ * Run the boot sequence
  */
 devicePrototype.runBootSequence = async function (): Promise<void> {
   return new Promise ((resolve) => {
@@ -48,8 +48,8 @@ type PlayNoteOptions = {
 }
 
 /**
- * @description Utility function to play a note
- * @param {object} options - The options
+ * Utility function to play a note
+ * @param {PlayNoteOptions} options - The options
  * @param {number} options.note - The note to play
  * @param {number} options.color - The color of the note (velocity)
  * @param {number} [options.duration] - The duration of the note
@@ -76,8 +76,8 @@ type PlayNotesOptions = {
 }
 
 /**
- * @description Utility function to play multiple notes
- * @param {object} options - The options
+ * Utility function to play multiple notes
+ * @param {PlayNotesOptions} options - The options
  * @param {number} options.firstNote - The first note to play
  * @param {number} options.lastNote - The last note to play
  * @param {number} options.color - The color of the note (velocity)
@@ -101,7 +101,7 @@ devicePrototype.playNotes = function (
 };
 
 /**
- * @description Utility function to attach an input event to the device
+ * Utility function to attach an input event to the device
  * @param {string} noteState - The state of the note to listen to
  * @param {function} listener - The listener function
  */
@@ -121,7 +121,7 @@ devicePrototype.onNote = function (
 };
 
 /**
- * @description Utility function to remove an input event from the device
+ * Utility function to remove an input event from the device
  * @param {string} noteState - The state of the note to remove the listener from
  */
 devicePrototype.clearNote = function (noteState: string): void {
@@ -133,7 +133,7 @@ devicePrototype.clearNote = function (noteState: string): void {
 };
 
 /**
- * @description Utility function to attach an input event to the device
+ * Utility function to attach an input event to the device
  * @param listener
  */
 devicePrototype.onControl = function (listener) {
@@ -145,7 +145,7 @@ devicePrototype.onControl = function (listener) {
 };
 
 /**
- * @description Utility function to remove an input event from the device
+ * Utility function to remove an input event from the device
  */
 devicePrototype.clearControl = function () {
   this.device.input.removeListener ('controlchange');

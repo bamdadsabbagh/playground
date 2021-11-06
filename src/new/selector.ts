@@ -13,7 +13,7 @@ export const selector = Object.create (devicePrototype);
 selector.grid = null as number[][];
 
 /**
- * @description Initialize the selector
+ * Initialize the selector
  * @param {*} device - The device to initialize
  */
 selector.init = async function (device: any): Promise<void> {
@@ -35,7 +35,7 @@ selector.init = async function (device: any): Promise<void> {
 };
 
 /**
- * @description First draw of the neural network
+ * First draw of the neural network
  */
 selector.drawGrid = function (): void {
   this.drawInputs ();
@@ -44,7 +44,7 @@ selector.drawGrid = function (): void {
 };
 
 /**
- * @description Attach events to the grid
+ * Attach events to the grid
  */
 selector.attachEvents = function (): void {
   this.attachInputs ();
@@ -53,7 +53,7 @@ selector.attachEvents = function (): void {
 };
 
 /**
- * @description Draw the inputs
+ * Draw the inputs
  */
 selector.drawInputs = function (): void {
   for (let i = 0; i < this.network.inputs.length; ++i) {
@@ -65,7 +65,7 @@ selector.drawInputs = function (): void {
 };
 
 /**
- * @description Attach events to the inputs
+ * Attach events to the inputs
  */
 selector.attachInputs = function (): void {
   this.onNote ('on', (e) => {
@@ -82,7 +82,7 @@ selector.attachInputs = function (): void {
 };
 
 /**
- * @description Setter for the input
+ * Setter for the input
  * @param {string} inputName - The name of the input
  * @param {boolean} isEnabled - The state of the input
  */
@@ -106,7 +106,7 @@ selector.setInput = function (inputName: string, isEnabled: boolean): void {
 };
 
 /**
- * @description Draw the neurons
+ * Draw the neurons
  */
 selector.drawNeurons = function (): void {
   const neuronsLength = this.network.neurons.flat ().length;
@@ -124,7 +124,7 @@ selector.drawNeurons = function (): void {
 };
 
 /**
- * @description Attach events to the neurons
+ * Attach events to the neurons
  */
 selector.attachNeurons = function (): void {
   this.onNote ('on', (e) => {
@@ -165,31 +165,28 @@ selector.attachNeurons = function (): void {
   });
 };
 
+type SetNeuronOptions = {
+  index: number;
+  isSelected?: boolean;
+  isDisabled?: boolean;
+}
+
 /**
- * @description Setter for the neuron
- * @param {object} options - The options
- * @param {number} options.index - The index of the neuron
- * @param {boolean} options.isSelected - The state of the neuron
- * @param {boolean} options.isEnabled - The state of the neuron
+ * Setter for the neuron
+ * @param {SetNeuronOptions} options - The options
  */
-selector.setNeuron = function (
-  {
-    index,
-    isSelected = undefined,
-    isEnabled = undefined,
-  }: {
-    index: number,
-    isSelected?: boolean,
-    isEnabled?: boolean,
-  },
-): void {
+selector.setNeuron = function (options: SetNeuronOptions): void {
+  const {index} = options;
+  const isSelected = options.isSelected || null;
+  const isDisabled = options.isDisabled || null;
+
   const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (index);
   const note = this.grid[layerIndex][neuronIndex - 1];
 
   let color;
-  if (isSelected === true) {
+  if (isSelected) {
     color = this.settings.colorByState.neuronSelected;
-  } else if (isEnabled === false) {
+  } else if (isDisabled) {
     color = this.settings.colorByState.neuronOff;
   } else {
     color = this.settings.colorByState.neuronOn;
@@ -202,7 +199,7 @@ selector.setNeuron = function (
 };
 
 /**
- * @description Draw the output weights
+ * Draw the output weights
  */
 selector.drawOutputWeights = function (): void {
   const outputWeights = this.network.output.inputLinks;
@@ -218,7 +215,7 @@ selector.drawOutputWeights = function (): void {
 };
 
 /**
- * @description Attach events to the output weights
+ * Attach events to the output weights
  */
 selector.attachOutputWeights = function (): void {
   this.onNote ('on', (e) => {
@@ -243,7 +240,7 @@ selector.attachOutputWeights = function (): void {
 };
 
 /**
- * @description Utility function to get the flat index of a note
+ * Utility function to get the flat index of a note
  * @param {number} note - The note to get the flat index of
  * @returns {number} The flat index of the note
  */

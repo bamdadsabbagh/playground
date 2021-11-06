@@ -15,7 +15,7 @@ devices.selectors = null as Selectors;
 devices.knownDevices = knownDevices;
 
 /**
- * @description Initialize devices
+ * Initialize devices
  * @param {*} ports - devices to reference
  */
 devices.init = function (ports: any): void {
@@ -30,7 +30,7 @@ devices.init = function (ports: any): void {
 };
 
 /**
- * @description Sort devices by category
+ * Sort devices by category
  */
 devices.sortDevices = function (): void {
   this.setControllers ();
@@ -38,28 +38,28 @@ devices.sortDevices = function (): void {
 };
 
 /**
- * @description Set controllers devices
+ * Set controllers devices
  */
 devices.setControllers = function (): void {
   this.controllers = this.pickDevicesByProperty ('isController');
 };
 
 /**
- * @description Set selectors devices
+ * Set selectors devices
  */
 devices.setSelectors = function (): void {
   this.selectors = this.pickDevicesByProperty ('isSelector');
 };
 
 /**
- * @description Set used devices
+ * Set used devices
  */
 devices.setUsed = function (): void {
   this.used = this.pickDevicesByProperty ('isUsed');
 };
 
 /**
- * @description Pick a controller by index
+ * Pick a controller by index
  * @param {number} index - controller index
  * @returns {*} controller
  */
@@ -73,7 +73,7 @@ devices.pickController = function (index: number): Controller {
 };
 
 /**
- * @description Pick a selector by index
+ * Pick a selector by index
  * @param {number} index - selector index
  * @returns {*} selector
  */
@@ -89,7 +89,7 @@ devices.pickSelector = function (index: number): Selector {
 type DeviceProperty = 'isController' | 'isSelector' | 'isUsed';
 
 /**
- * @description Utility function to pick devices by property
+ * Utility function to pick devices by property
  * @param {string} property - property to pick
  * @returns {*} devices for a given property
  */

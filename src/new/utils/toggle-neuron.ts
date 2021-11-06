@@ -48,6 +48,6 @@ export function toggleNeuron (neuronIndex: number): void {
   // midi
   selector.setNeuron ({
     index: neuronIndex,
-    isEnabled: neuron.isEnabled,
+    isDisabled: !neuron.isEnabled,
   });
 }
