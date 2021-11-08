@@ -2,8 +2,8 @@ import {
   Controller,
   Selector,
   knownDevices,
-} from './devices/known-devices';
-import { Controllers, Devices, Selectors } from './devices/devices.types';
+} from './known-devices/known-devices';
+import { Controllers, Devices, Selectors } from './devices.types';
 
 export const devices = Object.create (null);
 

@@ -1,4 +1,4 @@
-import { mapping } from './mapping';
+import { mapping } from './mapping/mapping';
 
 export const state = Object.create (null);
 

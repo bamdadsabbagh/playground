@@ -4,7 +4,7 @@ import { initializeSettings } from './utils/initialize-settings';
 import { initializeKeyboardEvents } from './utils/initialize-keyboard-events';
 import { initializePlayground } from './utils/initialize-playground';
 import { showSnack } from './utils/show-snack';
-import { main } from '../new/main';
+import { app } from '../new/app';
 
 /**
  * @description entry point for CooLearning playground extension
@@ -15,7 +15,7 @@ export function Coolearning (): void {
     try {
       initializePlayground ();
       initializeSettings ();
-      main.init ();
+      app.init ();
       initializeKeyboardEvents ();
     } catch (error) {
       console.error (error);

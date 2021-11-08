@@ -1,11 +1,11 @@
 import {
   NovationLaunchpadX,
   novationLaunchpadX,
-} from './known-devices/novation-launchpad-x';
+} from './novation-launchpad-x';
 import {
   NovationLaunchControlXl,
   novationLaunchControlXl,
-} from './known-devices/novation-launch-control-xl';
+} from './novation-launch-control-xl';
 
 export type Controller = NovationLaunchControlXl;
 export type Selector = NovationLaunchpadX;

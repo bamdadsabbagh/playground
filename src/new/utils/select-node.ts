@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
 import { updateNeuronCard } from '../../playground/playground';
-import { selector } from '../selector';
-import { controller } from '../controller';
+import { selector } from '../devices/selector';
+import { controller } from '../devices/controller';
 
 export function selectNode (nodeId: number): void {
   if (typeof nodeId !== 'number') throw new Error ('nodeId is not a number');

@@ -1,33 +1,33 @@
-import { midi } from './midi';
-import { devices } from './devices';
-import { selector } from './selector';
-import { controller } from './controller';
+import { midi } from './midi/midi';
+import { devices } from './devices/devices';
+import { selector } from './devices/selector';
+import { controller } from './devices/controller';
 
-export const main = Object.create (null);
+export const app = Object.create (null);
 
-main.isInitialized = false;
-main.midi = midi;
-main.devices = devices;
-main.selector = selector;
-main.controller = controller;
+app.isInitialized = false;
+app.midi = midi;
+app.devices = devices;
+app.selector = selector;
+app.controller = controller;
 
 /**
  * Initialize main
  */
-main.init = async function (): Promise<void> {
+app.init = async function (): Promise<void> {
   if (this.isInitialized) {
     throw new Error ('main is already initialized');
   }
   await midi.init ();
   await this.attachDevices ();
   this.isInitialized = true;
-  console.log (main);
+  console.log (app);
 };
 
 /**
  * Attach devices
  */
-main.attachDevices = async function () {
+app.attachDevices = async function () {
   devices.init (midi.ports);
   await Promise.all ([
     selector.init (devices.pickSelector (1)),
@@ -38,7 +38,7 @@ main.attachDevices = async function () {
 /**
  * Reset devices
  */
-main.resetDevices = async function () {
+app.resetDevices = async function () {
   devices.isInitialized = false;
   selector.isInitialized = false;
   controller.isInitialized = false;

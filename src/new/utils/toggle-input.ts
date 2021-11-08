@@ -1,5 +1,5 @@
 import { getNetwork } from './get-network';
-import { selector } from '../selector';
+import { selector } from '../devices/selector';
 
 export function toggleInput (inputIndexOrIdentifier: number | string): void {
   const {inputs} = getNetwork ();

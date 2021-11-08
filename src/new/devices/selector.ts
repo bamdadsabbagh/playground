@@ -1,12 +1,12 @@
-import { getNetwork } from './utils/get-network';
-import { getNeuronAndLayerIndexes } from './utils/get-neuron-and-layer-indexes';
-import { getNeuron } from './utils/get-neuron';
-import { toggleOutput } from './utils/toggle-output';
-import { selectNode } from './utils/select-node';
-import { unselectNode } from './utils/unselect-node';
-import { toggleNeuron } from './utils/toggle-neuron';
-import { selectInputCanvas } from './utils/select-input-canvas';
-import { devicePrototype } from './devices/device.prototype';
+import { getNetwork } from '../utils/get-network';
+import { getNeuronAndLayerIndexes } from '../utils/get-neuron-and-layer-indexes';
+import { getNeuron } from '../utils/get-neuron';
+import { toggleOutput } from '../utils/toggle-output';
+import { selectNode } from '../utils/select-node';
+import { unselectNode } from '../utils/unselect-node';
+import { toggleNeuron } from '../utils/toggle-neuron';
+import { selectInputCanvas } from '../utils/select-input-canvas';
+import { devicePrototype } from './device.prototype';
 
 export const selector = Object.create (devicePrototype);
 

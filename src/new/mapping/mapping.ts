@@ -1,5 +1,5 @@
-import { renderSetting } from '../coolearning/utils/render-setting';
-import { showSnack } from '../coolearning/utils/show-snack';
+import { renderSetting } from '../../coolearning/utils/render-setting';
+import { showSnack } from '../../coolearning/utils/show-snack';
 
 export const mapping = Object.create (null);
 

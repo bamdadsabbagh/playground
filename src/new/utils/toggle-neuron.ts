@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { getNeuron } from './get-neuron';
-import { selector } from '../selector';
+import { selector } from '../devices/selector';
 
 export function toggleNeuron (neuronIndex: number): void {
   const {neuron, isEnabled} = getNeuron (neuronIndex);

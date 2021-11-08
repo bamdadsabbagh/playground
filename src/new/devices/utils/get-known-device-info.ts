@@ -1,5 +1,5 @@
 import { DeviceCategory } from '../devices.types';
-import { devices } from '../../devices';
+import { devices } from '../devices';
 
 export function getKnownDeviceInfo (manufacturer, name) {
 

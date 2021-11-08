@@ -1,6 +1,6 @@
 import * as WebMidi from 'webmidi';
-import { getKnownDeviceInfo } from './devices/utils/get-known-device-info';
-import { Device, Devices } from './devices/devices.types';
+import { getKnownDeviceInfo } from '../devices/utils/get-known-device-info';
+import { Device, Devices } from '../devices/devices.types';
 import { Input, Output } from 'webmidi';
 
 export const midi = Object.create (null);

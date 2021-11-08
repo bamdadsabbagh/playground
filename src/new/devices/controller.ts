@@ -1,10 +1,10 @@
-import { getNetwork } from './utils/get-network';
-import { devicePrototype } from './devices/device.prototype';
-import { state } from '../coolearning/state';
-import { updateParameter } from '../coolearning/utils/update-parameter';
-import { getNeuron } from './utils/get-neuron';
-import { rangeMap } from '../coolearning/utils/range-map';
-import { updateWeight } from './utils/update-weight';
+import { getNetwork } from '../utils/get-network';
+import { devicePrototype } from './device.prototype';
+import { state } from '../../coolearning/state';
+import { updateParameter } from '../../coolearning/utils/update-parameter';
+import { getNeuron } from '../utils/get-neuron';
+import { rangeMap } from '../../coolearning/utils/range-map';
+import { updateWeight } from '../utils/update-weight';
 
 export const controller = Object.create (devicePrototype);
 
