@@ -82,7 +82,7 @@ export const novationLaunchpadX: NovationLaunchpadX = {
     };
   },
   time: {
-    wait: 50,
+    wait: 200,
     deviceReady: 2000,
     defaultDuration: 500,
     longClick: 400,

@@ -30,11 +30,8 @@ controller.init = async function (device: any): Promise<void> {
   this.settings = device.settings;
 
   await this.runBootSequence ();
+  this.drawLights ();
   this.attachEvents ();
-
-  setTimeout (() => {
-    this.changeLights ();
-  }, this.settings.time.wait);
 
   this.isInitialized = true;
 };
@@ -156,22 +153,20 @@ controller.attachRangesToNeurons = function () {
  * This is called when selection is made.
  */
 controller.onSelect = function () {
-  this.changeLights ();
+  this.drawLights ();
   setTimeout (() => {
     this.attachRanges ();
   }, this.settings.time.wait);
 };
 
 /**
- * Change all lights.
+ * Draw all lights.
  */
-controller.changeLights = function () {
-  const { selectedNodes } = playgroundFacade;
-
+controller.drawLights = function () {
   let color;
-  if (selectedNodes.length === 0) {
+  if (this.isDefaultMode ()) {
     color = this.settings.colors.amber;
-  } else if (selectedNodes.length === 1) {
+  } else if (this.isSingleMode ()) {
     color = this.settings.colors.black;
   } else {
     color = this.settings.colors.red;
@@ -197,10 +192,6 @@ controller.applyRangesToNeuron = function (selectedNode: number): void {
     weight: link.weight,
     hasSnapped: false,
   }));
-  // weights = Object.keys (weights).map ((key) => ({
-  //   weight: weights[key],
-  //   hasSnapped: false,
-  // }));
 
   // first draw
   weights.forEach ((weight, index) => {
