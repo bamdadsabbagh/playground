@@ -1,4 +1,3 @@
-import { BootSequenceOptions } from './device.prototype';
 import { Controller, Selector } from './known-devices';
 import { Input, Output } from 'webmidi';
 
@@ -28,7 +27,13 @@ export type DeviceSettings = {
     defaultDuration: number,
     [other: string]: number,
   },
-  bootSequence: (options: BootSequenceOptions) => void,
+  bootSequence: {
+    color: number,
+    sysex?: {
+      manufacturer: number,
+      data: number[],
+    }
+  }
 }
 
 export type Device = {

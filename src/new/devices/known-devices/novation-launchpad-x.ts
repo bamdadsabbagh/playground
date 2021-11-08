@@ -86,20 +86,13 @@ export const novationLaunchpadX: NovationLaunchpadX = {
     defaultDuration: 500,
     longClick: 400,
   },
-  bootSequence: async function ({output, playNotes, resolve}) {
-    // programmer mode
-    output.sendSysex (0, [32, 41, 2, 12, 14, 1]);
-
-    // flash red
-    setTimeout (() => {
-      playNotes ({
-        firstNote: this.lights.first,
-        lastNote: this.lights.last,
-        color: this.colors.red,
-        duration: this.time.defaultDuration,
-      });
-
-      setTimeout (() => resolve (), this.time.defaultDuration + this.time.wait);
-    }, this.time.deviceReady);
+  get bootSequence () {
+    return {
+      color: this.colors.red,
+      sysex: {
+        manufacturer: 0,
+        data: [32, 41, 2, 12, 14, 1],
+      },
+    };
   },
 };

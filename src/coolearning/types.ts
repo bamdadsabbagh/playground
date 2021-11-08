@@ -13,5 +13,3 @@ export type Neurons = {
     layerIndex: number, // start at 1, from left to right
   }
 }
-
-export type PromiseResolver = (value: void | PromiseLike<void>) => void

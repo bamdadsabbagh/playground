@@ -1,10 +1,4 @@
-import {
-  Input,
-  Output,
-  InputEventNoteoff,
-  InputEventNoteon,
-} from 'webmidi';
-import { PromiseResolver } from '../../coolearning/types';
+import { InputEventNoteoff, InputEventNoteon } from 'webmidi';
 import { Device, DeviceSettings } from './devices.types';
 
 export const devicePrototype = Object.create (null);
@@ -14,30 +8,42 @@ devicePrototype.device = null as Device;
 devicePrototype.settings = null as DeviceSettings;
 devicePrototype.network = null as any;
 
-export type BootSequenceOptions = {
-  resolve: PromiseResolver,
-  input: Input,
-  output: Output,
-  playNote: (options: PlayNoteOptions) => void,
-  playNotes: (options: PlayNotesOptions) => void,
-}
-
 /**
  * Run the boot sequence
  */
 devicePrototype.runBootSequence = async function (): Promise<void> {
   return new Promise ((resolve) => {
-    this.device.input.removeListener ();
+    this.clearListeners ();
 
-    const options: BootSequenceOptions = {
-      resolve,
-      input: this.device.input,
-      output: this.device.output,
-      playNote: this.playNote.bind (this),
-      playNotes: this.playNotes.bind (this),
-    };
+    const {color, sysex} = this.settings.bootSequence;
+    if (sysex) {
+      const {manufacturer, data} = sysex;
+      if (manufacturer && data) {
+        this.device.output.sendSysex (manufacturer, data);
+      }
+    }
 
-    this.settings.bootSequence (options);
+    // flash the lights
+    setTimeout (() => {
+        this.playNotes ({
+          firstNote: this.settings.lights.first,
+          lastNote: this.settings.lights.last,
+          color: color,
+          duration: this.settings.time.defaultDuration,
+        });
+      },
+      this.settings.time.deviceReady,
+    );
+
+    // resolve
+    setTimeout (() => {
+        resolve ();
+      },
+      this.settings.time.deviceReady
+      + this.settings.time.defaultDuration
+      + this.settings.time.wait,
+    );
+
   });
 };
 
@@ -98,6 +104,13 @@ devicePrototype.playNotes = function (
       color,
     });
   }
+};
+
+/**
+ * Clear listeners.
+ */
+devicePrototype.clearListeners = function (): void {
+  this.device.input.removeListener ();
 };
 
 /**
