@@ -2,6 +2,7 @@ import { dialog } from './dialog';
 import { modal } from './modal';
 import { buttons } from './buttons';
 import { notifications } from './notifications';
+import { neuronCard } from './neuron-card';
 
 export const ui = Object.create (null);
 
@@ -15,6 +16,7 @@ ui.init = async function () {
   modal.init ();
   buttons.init ();
   dialog.init ();
+  neuronCard.init ();
 
   notifications.notify ('test');
 };

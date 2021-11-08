@@ -3,8 +3,8 @@ import { state } from '../../coolearning/state';
 import { updateParameter } from '../../coolearning/utils/update-parameter';
 import { getNeuron } from '../utils/get-neuron';
 import { rangeMap } from '../../coolearning/utils/range-map';
-import { updateWeight } from '../utils/update-weight';
 import { playgroundFacade } from '../playground/playground.facade';
+import { neuronCard } from '../ui/neuron-card';
 
 /**
  * Controller is a unique device that controls the playground.
@@ -209,7 +209,7 @@ controller.attachRangesToNeuron = function (selectedNode: number): void {
 
       if (weights[index].hasSnapped && source.isEnabled) {
         links[index].weight = value;
-        updateWeight (index, value);
+        neuronCard.updateWeight (index, value);
         this.playNote ({
           note: this.settings.outputByInput[e.controller.number],
           color: this.settings.colors.green,
