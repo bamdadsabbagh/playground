@@ -1,10 +1,10 @@
-import { getNetwork } from '../utils/get-network';
 import { devicePrototype } from './device.prototype';
 import { state } from '../../coolearning/state';
 import { updateParameter } from '../../coolearning/utils/update-parameter';
 import { getNeuron } from '../utils/get-neuron';
 import { rangeMap } from '../../coolearning/utils/range-map';
 import { updateWeight } from '../utils/update-weight';
+import { playgroundAdapter } from '../playground.adapter';
 
 export const controller = Object.create (devicePrototype);
 
@@ -19,7 +19,7 @@ controller.init = async function (device: any): Promise<void> {
 
   this.device = device;
   this.settings = device.settings;
-  this.network = getNetwork ();
+  this.network = playgroundAdapter.network;
 
   await this.runBootSequence ();
 

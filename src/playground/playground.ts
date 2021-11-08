@@ -177,7 +177,7 @@ let colorScale = d3.scale.linear<string, number> ()
 let iter = 0;
 let trainData: Example2D[] = [];
 let testData: Example2D[] = [];
-let network: nn.Node[][] = null;
+export let network: nn.Node[][] = null;
 let lossTrain = 0;
 let lossTest = 0;
 let player = new Player ();
@@ -566,7 +566,6 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
 
 // Draw network
 function drawNetwork (network: nn.Node[][]): void {
-  window['nn'] = network;
   let svg = d3.select ('#svg');
   // Remove all svg elements.
   svg.select ('g.core').remove ();

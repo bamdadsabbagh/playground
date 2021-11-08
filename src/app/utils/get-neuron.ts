@@ -1,16 +1,15 @@
-import { getNeuronAndLayerIndexes } from './get-neuron-and-layer-indexes'
+import { getNeuronAndLayerIndexes } from './get-neuron-and-layer-indexes';
+import { playgroundAdapter } from '../playground.adapter';
 
 export function getNeuron (nodeIndex: number) {
-    // @ts-ignore
-    const network = window.nn
-    const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (nodeIndex)
+  const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (nodeIndex);
 
-    const neuron = network[layerIndex][neuronIndex - 1]
+  const {neurons} = playgroundAdapter.network;
+  const neuron = neurons[layerIndex - 1][neuronIndex - 1];
+  const {isEnabled} = neuron;
 
-    const {isEnabled} = neuron
-
-    return {
-        neuron,
-        isEnabled,
-    }
+  return {
+    neuron,
+    isEnabled,
+  };
 }

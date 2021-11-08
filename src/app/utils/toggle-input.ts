@@ -1,8 +1,8 @@
-import { getNetwork } from './get-network';
 import { selector } from '../devices/selector';
+import { playgroundAdapter } from '../playground.adapter';
 
 export function toggleInput (inputIndexOrIdentifier: number | string): void {
-  const {inputs} = getNetwork ();
+  const {inputs} = playgroundAdapter.network;
   let input;
 
   if (typeof inputIndexOrIdentifier === 'string') {

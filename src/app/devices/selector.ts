@@ -1,4 +1,3 @@
-import { getNetwork } from '../utils/get-network';
 import { getNeuronAndLayerIndexes } from '../utils/get-neuron-and-layer-indexes';
 import { getNeuron } from '../utils/get-neuron';
 import { toggleOutput } from '../utils/toggle-output';
@@ -7,6 +6,7 @@ import { unselectNode } from '../utils/unselect-node';
 import { toggleNeuron } from '../utils/toggle-neuron';
 import { selectInputCanvas } from '../utils/select-input-canvas';
 import { devicePrototype } from './device.prototype';
+import { playgroundAdapter } from '../playground.adapter';
 
 export const selector = Object.create (devicePrototype);
 
@@ -23,7 +23,7 @@ selector.init = async function (device: any): Promise<void> {
 
   this.device = device;
   this.settings = device.settings;
-  this.network = getNetwork ();
+  this.network = playgroundAdapter.network;
   this.grid = this.settings.grid;
 
   await this.runBootSequence ();
