@@ -27,7 +27,6 @@ selector.init = async function (device: any): Promise<void> {
   this.grid = this.settings.grid;
 
   await this.runBootSequence ();
-
   this.drawGrid ();
   this.attachEvents ();
 

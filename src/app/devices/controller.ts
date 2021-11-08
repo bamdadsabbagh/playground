@@ -19,10 +19,8 @@ controller.init = async function (device: any): Promise<void> {
 
   this.device = device;
   this.settings = device.settings;
-  this.network = playgroundAdapter.network;
 
   await this.runBootSequence ();
-
   this.attachEvents ();
 
   this.isInitialized = true;
