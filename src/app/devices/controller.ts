@@ -81,9 +81,9 @@ controller.attachRanges = function () {
   if (selectedNodes.length === 0) {
     this.attachRangesDefault ();
   } else if (selectedNodes.length === 1) {
-    this.attachRangesForNeuron ();
+    this.attachRangesToNeuron ();
   } else {
-    this.attachRangesForNeurons ();
+    this.attachRangesToNeurons ();
   }
 };
 
@@ -122,10 +122,57 @@ controller.attachRangesDefault = function () {
 };
 
 /**
- * Attach events to the ranges for a single neuron
+ * Attach events to the ranges to a single neuron
  */
-controller.attachRangesForNeuron = function () {
+controller.attachRangesToNeuron = function () {
   const selectedNode = window['selectedNodes'][0];
+  this.applyRangesToNeuron (selectedNode);
+};
+
+/**
+ * Attach events to the ranges to multiple neurons
+ */
+controller.attachRangesToNeurons = function () {
+  const selectedNodes = window['selectedNodes'];
+  selectedNodes.forEach ((n) => this.applyRangesToNeuron (n));
+};
+
+/**
+ * This is called when selection is made.
+ */
+controller.onSelect = function () {
+  this.changeLights ();
+  setTimeout (() => {
+    this.attachRanges ();
+  }, this.settings.time.wait);
+};
+
+/**
+ * Change all lights.
+ */
+controller.changeLights = function () {
+  const selectedNodes = window['selectedNodes'];
+
+  let color;
+  if (selectedNodes.length === 0) {
+    color = this.settings.colors.amber;
+  } else if (selectedNodes.length === 1) {
+    color = this.settings.colors.black;
+  } else {
+    color = this.settings.colors.red;
+  }
+
+  this.playNotes ({
+    firstNote: this.settings.lights.first,
+    lastNote: this.settings.lights.last,
+    color,
+  });
+};
+
+/**
+ * Apply ranges to a single neuron.
+ */
+controller.applyRangesToNeuron = function (selectedNode: number): void {
   const {neuron} = getNeuron (selectedNode);
   const links = neuron.inputLinks;
 
@@ -173,44 +220,5 @@ controller.attachRangesForNeuron = function () {
         });
       }
     }
-  });
-};
-
-/**
- * Attach events to the ranges for multiple neurons
- */
-controller.attachRangesForNeurons = function () {
-
-};
-
-/**
- * This is called when selection is made.
- */
-controller.onSelect = function () {
-  this.changeLights ();
-  setTimeout (() => {
-    this.attachRanges ();
-  }, this.settings.time.wait);
-};
-
-/**
- * Change all lights.
- */
-controller.changeLights = function () {
-  const selectedNodes = window['selectedNodes'];
-
-  let color;
-  if (selectedNodes.length === 0) {
-    color = this.settings.colors.amber;
-  } else if (selectedNodes.length === 1) {
-    color = this.settings.colors.black;
-  } else {
-    color = this.settings.colors.red;
-  }
-
-  this.playNotes ({
-    firstNote: this.settings.lights.first,
-    lastNote: this.settings.lights.last,
-    color,
   });
 };
