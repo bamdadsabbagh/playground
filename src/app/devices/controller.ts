@@ -31,17 +31,105 @@ controller.init = async function (device: any): Promise<void> {
 
   await this.runBootSequence ();
   this.drawLights ();
-  this.attachEvents ();
+  this.setMode ();
+  this.attachButtons ();
 
   this.isInitialized = true;
 };
 
 /**
- * Attach events to the controller.
+ * Draw all lights.
  */
-controller.attachEvents = function () {
-  this.attachButtons ();
-  this.attachRanges ();
+controller.drawLights = function () {
+  let color;
+  if (this.isDefaultMode ()) {
+    color = this.settings.colors.amber;
+  } else if (this.isSingleMode ()) {
+    color = this.settings.colors.black;
+  } else {
+    color = this.settings.colors.red;
+  }
+
+  this.playNotes ({
+    firstNote: this.settings.lights.first,
+    lastNote: this.settings.lights.last,
+    color,
+  });
+};
+
+/**
+ * Set the mode of the controller.
+ */
+controller.setMode = function () {
+  this.clearControl ();
+
+  if (this.isDefaultMode ()) {
+    this.setDefaultMode ();
+  } else if (this.isSingleMode ()) {
+    this.setSingleMode ();
+  } else {
+    this.setMultipleMode ();
+  }
+};
+
+/**
+ * Set the default mode.
+ */
+controller.setDefaultMode = function () {
+  this.onControl ((e) => {
+    const note = parseInt (e.controller.number);
+    const { isLearning, learningParameter } = state;
+    const parameters = state.getParametersByControl (note);
+
+    if (parameters) {
+      parameters.forEach ((parameter) => {
+        updateParameter ({
+          parameter,
+          value: e.value,
+        });
+      });
+    }
+
+    if (isLearning && learningParameter) {
+      state.learn ({
+        parameter: learningParameter,
+        control: note,
+        type: 'range',
+      });
+    }
+
+    this.playNote ({
+      note: this.settings.outputByInput[note],
+      duration: this.settings.time.defaultDuration,
+      color: this.settings.colors.red,
+    });
+  });
+};
+
+/**
+ * Set the single mode.
+ */
+controller.setSingleMode = function () {
+  const selectedNode = playgroundFacade.selectedNodes[0];
+  this.attachRangesToNeuron (selectedNode);
+};
+
+/**
+ * Set the multiple mode.
+ */
+controller.setMultipleMode = function () {
+  const { selectedNodes } = playgroundFacade;
+  selectedNodes.forEach ((n) => this.attachRangesToNeuron (n));
+};
+
+/**
+ * This is called when selection is made.
+ */
+controller.onSelect = function () {
+  this.drawLights ();
+  setTimeout (() => {
+    this.setMode ();
+  }, this.settings.time.wait);
 };
 
 /**
@@ -84,107 +172,10 @@ controller.attachButtons = function () {
 
 /**
  * Attach events to the ranges.
- */
-controller.attachRanges = function () {
-  const { selectedNodes } = playgroundFacade;
-
-  this.clearControl ();
-
-  if (selectedNodes.length === 0) {
-    this.attachRangesDefault ();
-  } else if (selectedNodes.length === 1) {
-    this.attachRangesToNeuron ();
-  } else {
-    this.attachRangesToNeurons ();
-  }
-};
-
-/**
- * Attach events to the ranges.
- */
-controller.attachRangesDefault = function () {
-  this.onControl ((e) => {
-    const note = parseInt (e.controller.number);
-    const { isLearning, learningParameter } = state;
-    const parameters = state.getParametersByControl (note);
-
-    if (parameters) {
-      parameters.forEach ((parameter) => {
-        updateParameter ({
-          parameter,
-          value: e.value,
-        });
-      });
-    }
-
-    if (isLearning && learningParameter) {
-      state.learn ({
-        parameter: learningParameter,
-        control: note,
-        type: 'range',
-      });
-    }
-
-    this.playNote ({
-      note: this.settings.outputByInput[note],
-      duration: this.settings.time.defaultDuration,
-      color: this.settings.colors.red,
-    });
-  });
-};
-
-/**
- * Attach events to the ranges to a single neuron
- */
-controller.attachRangesToNeuron = function () {
-  const selectedNode = playgroundFacade.selectedNodes[0];
-  this.applyRangesToNeuron (selectedNode);
-};
-
-/**
- * Attach events to the ranges to multiple neurons
- */
-controller.attachRangesToNeurons = function () {
-  const { selectedNodes } = playgroundFacade;
-  selectedNodes.forEach ((n) => this.applyRangesToNeuron (n));
-};
-
-/**
- * This is called when selection is made.
- */
-controller.onSelect = function () {
-  this.drawLights ();
-  setTimeout (() => {
-    this.attachRanges ();
-  }, this.settings.time.wait);
-};
-
-/**
- * Draw all lights.
- */
-controller.drawLights = function () {
-  let color;
-  if (this.isDefaultMode ()) {
-    color = this.settings.colors.amber;
-  } else if (this.isSingleMode ()) {
-    color = this.settings.colors.black;
-  } else {
-    color = this.settings.colors.red;
-  }
-
-  this.playNotes ({
-    firstNote: this.settings.lights.first,
-    lastNote: this.settings.lights.last,
-    color,
-  });
-};
-
-/**
- * Apply ranges to a single neuron.
  *
  * @param {number} selectedNode - The selected node.
  */
-controller.applyRangesToNeuron = function (selectedNode: number): void {
+controller.attachRangesToNeuron = function (selectedNode: number): void {
   const { neuron } = getNeuron (selectedNode);
   const links = neuron.inputLinks;
 
@@ -209,13 +200,14 @@ controller.applyRangesToNeuron = function (selectedNode: number): void {
       && e.controller.number <= this.settings.rows.faders[7]
     ) {
       const index = e.controller.number - this.settings.rows.faders[0];
+      const { source } = links[index];
       const value = rangeMap (e.value, 0, 127, -1, 1);
 
       if (value.toFixed (1) === weights[index].weight.toFixed (1)) {
         weights[index].hasSnapped = true;
       }
 
-      if (weights[index].hasSnapped) {
+      if (weights[index].hasSnapped && source.isEnabled) {
         links[index].weight = value;
         updateWeight (index, value);
         this.playNote ({
