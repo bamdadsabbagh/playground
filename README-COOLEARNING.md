@@ -9,11 +9,6 @@ It aims to bring interactivity to the existing user interface with USB controlle
 
 It has been authored at [CREATIS Laboratory](https://www.creatis.insa-lyon.fr/site7/fr) (Lyon, France).
 
-## Supported Devices
-
-- Novation Launchpad X
-- Novation Launch Control XL
-
 ## Features
 
 There are two main category of device your can attach.
@@ -77,3 +72,13 @@ yarn
 yarn start
 # navigate to http://localhost:5000
 ```
+
+## Supported Devices
+
+### [Novation Launchpad X](https://novationmusic.com/en/launch/launchpad-x)
+
+![](https://novationmusic.com/sites/novation/files/lpx-overhead-391-390.png)
+
+### [Novation Launch Control XL](https://novationmusic.com/en/launch/launch-control-xl)
+
+![](https://novationmusic.com/sites/novation/files/LCXL-overhead-1067-1062.png)
