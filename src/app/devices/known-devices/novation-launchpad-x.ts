@@ -1,24 +1,25 @@
 import { DeviceSettings, DeviceCategory } from '../devices.types';
 
 export type NovationLaunchpadX = DeviceSettings & {
-  grid: number[][],
+  grid: number[][];
   functionKeys: {
-    firstRow: number[],
-    lastColumn: number[],
-  },
+    firstRow: number[];
+    lastColumn: number[];
+  };
   colorByState: {
-    inputOn: number,
-    inputOff: number,
-    neuronOn: number,
-    neuronOff: number,
-    neuronSelected: number,
-    outputWeightOn: number,
-    outputWeightOff: number,
-  }
+    inputOn: number;
+    inputOff: number;
+    neuronOn: number;
+    neuronOff: number;
+    neuronSelected: number;
+    outputWeightOn: number;
+    outputWeightOff: number;
+  };
 }
 
 /**
  * Novation Launchpad X
+ *
  * @see Programmer's Reference https://fael-downloads-prod.focusrite.com/customer/prod/s3fs-public/downloads/Launchpad%20X%20-%20Programmers%20Reference%20Manual.pdf
  * @see User Guide https://www.kraftmusic.com/media/ownersmanual/Novation_Launchpad_X_User_Guide.pdf
  */

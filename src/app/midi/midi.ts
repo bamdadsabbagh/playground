@@ -1,7 +1,7 @@
 import * as WebMidi from 'webmidi';
+import { Input, Output } from 'webmidi';
 import { getKnownDeviceInfo } from '../devices/utils/get-known-device-info';
 import { Device, Devices } from '../devices/devices.types';
-import { Input, Output } from 'webmidi';
 
 export const midi = Object.create (null);
 
@@ -27,6 +27,8 @@ midi.init = async function (): Promise<void> {
 
 /**
  * Enable MIDI service
+ *
+ * @returns {Promise<void>}
  */
 midi.enableService = function (): Promise<void> {
   return new Promise ((resolve) => {
@@ -57,10 +59,11 @@ midi.handleConnected = function (): void {
 
 /**
  * Utility function to handle input and output connections
+ *
  * @param {*} port - The MIDI input or output
  */
 midi.onConnect = function (port): void {
-  const {manufacturer, name} = port;
+  const { manufacturer, name } = port;
   const {
     isKnown,
     isController,
@@ -91,10 +94,12 @@ midi.handleDisconnected = function (): void {
 
 /**
  * Utility function to handle input and output disconnections
+ *
  * @param {*} port - The MIDI input or output
  */
 midi.onDisconnect = function (port) {
   if (port.isUsed) {
+    // eslint-disable-next-line no-console
     console.log (`${port.name} in used has been disconnected`);
   }
   port.isConnected = false;
@@ -129,7 +134,9 @@ midi.setPorts = function () {
 
 /**
  * Utility function to sort MIDI ports by name
+ *
  * @param {*} ports - The MIDI inputs or outputs
+ * @returns {*} Map of ports by name
  */
 midi.sortPortsByName = function (ports): any {
   return ports.reduce ((acc, inputOrOutput) => {

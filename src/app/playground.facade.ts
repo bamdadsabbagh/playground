@@ -6,7 +6,7 @@ import {
 export const playgroundFacade = Object.create (null);
 
 Object.defineProperty (playgroundFacade, 'network', {
-  get: function () {
+  get () {
     const network = importedNetwork;
 
     const inputs = network[0];
@@ -22,7 +22,7 @@ Object.defineProperty (playgroundFacade, 'network', {
 });
 
 Object.defineProperty (playgroundFacade, 'selectedNodes', {
-  get: function () {
+  get () {
     return importedSelectedNodes;
   },
 });

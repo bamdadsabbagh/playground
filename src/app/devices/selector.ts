@@ -14,6 +14,7 @@ selector.grid = null as number[][];
 
 /**
  * Initialize the selector
+ *
  * @param {*} device - The device to initialize
  */
 selector.init = async function (device: any): Promise<void> {
@@ -82,6 +83,7 @@ selector.attachInputs = function (): void {
 
 /**
  * Setter for the input
+ *
  * @param {string} inputName - The name of the input
  * @param {boolean} isEnabled - The state of the input
  */
@@ -110,10 +112,10 @@ selector.setInput = function (inputName: string, isEnabled: boolean): void {
 selector.drawNeurons = function (): void {
   const neuronsLength = this.network.neurons.flat ().length;
   for (let i = 1; i <= neuronsLength; ++i) {
-    const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (i);
+    const { neuronIndex, layerIndex } = getNeuronAndLayerIndexes (i);
     const shiftedIndex = (layerIndex - 1) + 1; // reset, then move to the right
     const note = this.grid[shiftedIndex][neuronIndex - 1];
-    const {isEnabled} = getNeuron (neuronIndex);
+    const { isEnabled } = getNeuron (neuronIndex);
 
     this.playNote ({
       note,
@@ -134,7 +136,7 @@ selector.attachNeurons = function (): void {
     }
 
     const nodeIndex = this.getGridFlatIndex (e.note.number) - 8 + 1;
-    const {isEnabled} = getNeuron (nodeIndex);
+    const { isEnabled } = getNeuron (nodeIndex);
 
     // short click only if enabled
     if (isEnabled) {
@@ -156,7 +158,9 @@ selector.attachNeurons = function (): void {
     }, this.settings.time.longClick);
 
     this.onNote ('off', () => {
-      if (clickTimer === null) return;
+      if (clickTimer === null) {
+        return;
+      }
       clearTimeout (clickTimer);
       clickTimer = null;
       this.clearNote ('off');
@@ -172,14 +176,15 @@ type SetNeuronOptions = {
 
 /**
  * Setter for the neuron
+ *
  * @param {SetNeuronOptions} options - The options
  */
 selector.setNeuron = function (options: SetNeuronOptions): void {
-  const {index} = options;
+  const { index } = options;
   const isSelected = options.isSelected || null;
   const isDisabled = options.isDisabled || null;
 
-  const {neuronIndex, layerIndex} = getNeuronAndLayerIndexes (index);
+  const { neuronIndex, layerIndex } = getNeuronAndLayerIndexes (index);
   const note = this.grid[layerIndex][neuronIndex - 1];
 
   let color;
@@ -240,6 +245,7 @@ selector.attachOutputWeights = function (): void {
 
 /**
  * Utility function to get the flat index of a note
+ *
  * @param {number} note - The note to get the flat index of
  * @returns {number} The flat index of the note
  */

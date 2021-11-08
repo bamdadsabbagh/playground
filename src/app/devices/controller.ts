@@ -17,7 +17,9 @@ export const controller = Object.create (devicePrototype);
 
 /**
  * Initialize the controller.
- * @param {*} device
+ *
+ * @param {*} device - The device to initialize.
+ * @returns {Promise<void>}
  */
 controller.init = async function (device: any): Promise<void> {
   if (this.isInitialized) {
@@ -55,11 +57,11 @@ controller.attachButtons = function () {
     }
 
     const note = parseInt (e.note.number);
-    const {isLearning, learningParameter} = state;
+    const { isLearning, learningParameter } = state;
     const parameters = state.getParametersByControl (note);
 
     if (parameters) {
-      parameters.forEach (parameter => {
+      parameters.forEach ((parameter) => {
         updateParameter ({
           parameter,
           value: 1,
@@ -87,7 +89,7 @@ controller.attachButtons = function () {
  * Attach events to the ranges.
  */
 controller.attachRanges = function () {
-  const {selectedNodes} = playgroundFacade;
+  const { selectedNodes } = playgroundFacade;
 
   this.clearControl ();
 
@@ -106,11 +108,11 @@ controller.attachRanges = function () {
 controller.attachRangesDefault = function () {
   this.onControl ((e) => {
     const note = parseInt (e.controller.number);
-    const {isLearning, learningParameter} = state;
+    const { isLearning, learningParameter } = state;
     const parameters = state.getParametersByControl (note);
 
     if (parameters) {
-      parameters.forEach (parameter => {
+      parameters.forEach ((parameter) => {
         updateParameter ({
           parameter,
           value: e.value,
@@ -146,7 +148,7 @@ controller.attachRangesToNeuron = function () {
  * Attach events to the ranges to multiple neurons
  */
 controller.attachRangesToNeurons = function () {
-  const {selectedNodes} = playgroundFacade;
+  const { selectedNodes } = playgroundFacade;
   selectedNodes.forEach ((n) => this.applyRangesToNeuron (n));
 };
 
@@ -164,7 +166,7 @@ controller.onSelect = function () {
  * Change all lights.
  */
 controller.changeLights = function () {
-  const {selectedNodes} = playgroundFacade;
+  const { selectedNodes } = playgroundFacade;
 
   let color;
   if (selectedNodes.length === 0) {
@@ -184,18 +186,21 @@ controller.changeLights = function () {
 
 /**
  * Apply ranges to a single neuron.
+ *
+ * @param {number} selectedNode - The selected node.
  */
 controller.applyRangesToNeuron = function (selectedNode: number): void {
-  const {neuron} = getNeuron (selectedNode);
+  const { neuron } = getNeuron (selectedNode);
   const links = neuron.inputLinks;
 
-  let weights = links.map (link => link.weight);
-  weights = Object.keys (weights).map ((key) => {
-    return {
-      weight: weights[key],
-      hasSnapped: false,
-    };
-  });
+  const weights = links.map ((link) => ({
+    weight: link.weight,
+    hasSnapped: false,
+  }));
+  // weights = Object.keys (weights).map ((key) => ({
+  //   weight: weights[key],
+  //   hasSnapped: false,
+  // }));
 
   // first draw
   weights.forEach ((weight, index) => {

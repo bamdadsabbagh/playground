@@ -5,22 +5,23 @@ export const state = Object.create (null);
 state.localStorageIdentifier = 'coolearning';
 
 Object.defineProperty (state, 'localStorage', {
-  get: function (): string {
+  get (): string {
     return window.localStorage[this.localStorageIdentifier];
   },
-  set: function (string: string) {
+  set (string: string) {
     window.localStorage[this.localStorageIdentifier] = string;
   },
 });
 
 /**
  * Initializes the state object.
+ *
  * @param {boolean} [forceReset=false] - Forces the state to be reset.
  */
-state.init = function (forceReset: boolean = false) {
+state.init = function (forceReset = false) {
   if (forceReset) {
     this.resetState ();
-  } else if (this.isLocalStorage ()) {
+  } else if (this.isLocalStorageDefined ()) {
     this.parseLocalStorage ();
   } else {
     this.initializeState ();
@@ -28,7 +29,7 @@ state.init = function (forceReset: boolean = false) {
 };
 
 /**
- * @descriptoin Initializes the state.
+ * Initializes the state.
  */
 state.initializeState = function () {
   //
@@ -44,13 +45,17 @@ state.resetState = function () {
 
 /**
  * Loads the state from local storage.
+ *
+ * @returns {boolean} - Whether the browser supports local storage.
  */
-state.isLocalStorage = function (): boolean {
+state.isLocalStorageDefined = function (): boolean {
   return typeof window.localStorage[this.localStorageIdentifier] !== 'undefined';
 };
 
 /**
  * Parse the state from local storage.
+ *
+ * @returns {*} - The parsed state from local storage.
  */
 state.parseLocalStorage = function () {
   let json = null;

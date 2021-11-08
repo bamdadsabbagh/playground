@@ -1,14 +1,15 @@
 import { DeviceSettings, DeviceCategory } from '../devices.types';
 
 export type NovationLaunchControlXl = DeviceSettings & {
-  rows: any,
+  rows: any;
   outputByInput: {
-    [output: number]: number,
-  }
+    [output: number]: number;
+  };
 }
 
 /**
  * Novation Launch Control XL
+ *
  * @see Programmer's Reference https://resource.novationmusic.com/sites/default/files/novation/downloads/9922/launch-control-xl-programmers-reference-guide.pdf
  */
 export const novationLaunchControlXl: NovationLaunchControlXl = {

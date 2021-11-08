@@ -27,6 +27,7 @@ type LearnOptions = {
 
 /**
  * Learn a mapping between a parameter and a control.
+ *
  * @param {LearnOptions} options - The options for learning.
  */
 mapping.learn = function (
@@ -36,7 +37,9 @@ mapping.learn = function (
     type,
   }: LearnOptions,
 ) {
-  if (this.isMapped (parameter)) return;
+  if (this.isMapped (parameter)) {
+    return;
+  }
 
   this.setParameterMaps ({
     parameter,
@@ -59,14 +62,17 @@ mapping.learn = function (
 
 /**
  * Unlearn a mapping between a parameter and a control.
+ *
  * @param {string} parameter - The parameter to unlearn.
  */
 mapping.unlearn = function (parameter: string) {
-  if (!this.isMapped (parameter)) return;
+  if (!this.isMapped (parameter)) {
+    return;
+  }
 
   this.unsetParameterMaps (parameter);
 
-  renderSetting ({parameter});
+  renderSetting ({ parameter });
 
   showSnack ({
     message: `${parameter} unlearned`,
@@ -77,6 +83,7 @@ mapping.unlearn = function (parameter: string) {
 
 /**
  * Enable learning mode.
+ *
  * @param {string} newLearningParameter - The parameter to learn.
  */
 mapping.enableLearningMode = function (newLearningParameter: string) {
@@ -94,6 +101,7 @@ mapping.disableLearningMode = function () {
 
 /**
  * Set the parameter and control maps.
+ *
  * @param {LearnOptions} options - The options for learning.
  */
 mapping.setParameterMaps = function (
@@ -119,6 +127,7 @@ mapping.setParameterMaps = function (
 
 /**
  * Unset the parameter and control maps.
+ *
  * @param {string} parameter - The parameter to unset.
  */
 mapping.unsetParameterMaps = function (parameter: string) {
@@ -126,7 +135,7 @@ mapping.unsetParameterMaps = function (parameter: string) {
   delete this.controlByParameter[parameter];
 
   // reverse unmap
-  const {control} = this.controlByParameter[parameter];
+  const { control } = this.controlByParameter[parameter];
   const parameters = this.parametersByControl[control];
 
   if (parameters.length === 1) {
@@ -141,8 +150,10 @@ mapping.unsetParameterMaps = function (parameter: string) {
 
 /**
  * Check if a parameter is mapped.
+ *
  * @param {string} parameter - The parameter to check.
+ * @returns {boolean} - True if the parameter is mapped.
  */
-mapping.isMapped = function (parameter: string) {
+mapping.isMapped = function (parameter: string): boolean {
   return this.controlByParameter[parameter] !== undefined;
 };

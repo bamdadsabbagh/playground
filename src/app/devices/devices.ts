@@ -16,6 +16,7 @@ devices.knownDevices = knownDevices;
 
 /**
  * Initialize devices
+ *
  * @param {*} ports - devices to reference
  */
 devices.init = function (ports: any): void {
@@ -60,6 +61,7 @@ devices.setUsed = function (): void {
 
 /**
  * Pick a controller by index
+ *
  * @param {number} index - controller index
  * @returns {*} controller
  */
@@ -74,6 +76,7 @@ devices.pickController = function (index: number): Controller {
 
 /**
  * Pick a selector by index
+ *
  * @param {number} index - selector index
  * @returns {*} selector
  */
@@ -90,6 +93,7 @@ type DeviceProperty = 'isController' | 'isSelector' | 'isUsed';
 
 /**
  * Utility function to pick devices by property
+ *
  * @param {string} property - property to pick
  * @returns {*} devices for a given property
  */

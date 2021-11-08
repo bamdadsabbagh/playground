@@ -6,8 +6,15 @@ import {
 import { selector } from '../devices/selector';
 import { controller } from '../devices/controller';
 
+/**
+ * Selects a node and adds it to the selected nodes list.
+ *
+ * @param {number} nodeId - The id of the node to select.
+ */
 export function selectNode (nodeId: number): void {
-  if (typeof nodeId !== 'number') throw new Error ('nodeId is not a number');
+  if (typeof nodeId !== 'number') {
+    throw new Error ('nodeId is not a number');
+  }
 
   // state
   addToSelectedNodes (nodeId);
@@ -17,7 +24,7 @@ export function selectNode (nodeId: number): void {
   canvas.classed ('selected', true);
 
   // neuron card
-  updateNeuronCard ({nodeId});
+  updateNeuronCard ({ nodeId });
 
   // midi
   selector.setNeuron ({

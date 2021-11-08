@@ -1,16 +1,26 @@
 import * as d3 from 'd3';
 import { getNeuron } from './get-neuron';
 import { selector } from '../devices/selector';
+import { Link as ImportedLink } from '../../playground/nn';
 
+type Link = ImportedLink & {
+  savedWeight: number;
+}
+
+/**
+ * Toggle a neuron
+ *
+ * @param {number} neuronIndex - The index of the neuron to toggle
+ */
 export function toggleNeuron (neuronIndex: number): void {
-  const {neuron, isEnabled} = getNeuron (neuronIndex);
+  const { neuron, isEnabled } = getNeuron (neuronIndex);
 
   // todo how to impact node.bias ?
 
   neuron.isEnabled = !isEnabled;
 
   // input weights
-  neuron.inputLinks.forEach ((link) => {
+  neuron.inputLinks.forEach ((link: Link) => {
     // kill if source neuron is disabled
     if (!link.source.isEnabled) {
       link.isDead = true;
@@ -30,7 +40,7 @@ export function toggleNeuron (neuronIndex: number): void {
   });
 
   // output weights
-  neuron.outputs.forEach ((link) => {
+  neuron.outputs.forEach ((link: Link) => {
     if (neuron.isEnabled) {
       link.isDead = false;
       link.weight = link.savedWeight || Math.random () - 0.5;

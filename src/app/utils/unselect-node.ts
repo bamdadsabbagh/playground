@@ -1,13 +1,20 @@
+import * as d3 from 'd3';
 import {
   removeFromSelectedNodes,
   updateNeuronCard,
 } from '../../playground/playground';
-import * as d3 from 'd3';
 import { selector } from '../devices/selector';
 import { controller } from '../devices/controller';
 
+/**
+ * Unselects a node.
+ *
+ * @param {number} nodeId - The id of the node to unselect.
+ */
 export function unselectNode (nodeId: number): void {
-  if (typeof nodeId !== 'number') throw new Error ('nodeId is not a number');
+  if (typeof nodeId !== 'number') {
+    throw new Error ('nodeId is not a number');
+  }
 
   // state
   removeFromSelectedNodes (nodeId);
@@ -17,7 +24,7 @@ export function unselectNode (nodeId: number): void {
   canvas.classed ('selected', false);
 
   // neuron card
-  updateNeuronCard ({nodeId});
+  updateNeuronCard ({ nodeId });
 
   // midi
   selector.setNeuron ({

@@ -1,5 +1,5 @@
-import { Controller, Selector } from './known-devices/known-devices';
 import { Input, Output } from 'webmidi';
+import { Controller, Selector } from './known-devices/known-devices';
 
 export enum DeviceCategory {
   select = 'Selector',
@@ -7,53 +7,53 @@ export enum DeviceCategory {
 }
 
 export type DeviceSettings = {
-  category: DeviceCategory,
-  manufacturer: string,
-  name: string,
+  category: DeviceCategory;
+  manufacturer: string;
+  name: string;
   channels: {
-    input: number | 'all',
-    output: number | 'all',
-  },
+    input: number | 'all';
+    output: number | 'all';
+  };
   lights: {
-    first: number,
-    last: number,
-  },
+    first: number;
+    last: number;
+  };
   colors: {
-    [name: string]: number,
-  },
+    [name: string]: number;
+  };
   time: {
-    wait: number,
-    deviceReady: number,
-    defaultDuration: number,
-    [other: string]: number,
-  },
+    wait: number;
+    deviceReady: number;
+    defaultDuration: number;
+    [other: string]: number;
+  };
   bootSequence: {
-    color: number,
+    color: number;
     sysex?: {
-      manufacturer: number,
-      data: number[],
-    }
-  }
+      manufacturer: number;
+      data: number[];
+    };
+  };
 }
 
 export type Device = {
-  name: string,
-  isController: boolean,
-  isSelector: boolean,
-  isUsed: boolean,
-  input: Input,
-  output: Output,
-  settings: DeviceSettings,
+  name: string;
+  isController: boolean;
+  isSelector: boolean;
+  isUsed: boolean;
+  input: Input;
+  output: Output;
+  settings: DeviceSettings;
 }
 
 export type Devices = {
-  [name: string]: Device,
+  [name: string]: Device;
 }
 
 export type Controllers = {
-  [name: string]: Controller,
+  [name: string]: Controller;
 }
 
 export type Selectors = {
-  [name: string]: Selector,
+  [name: string]: Selector;
 }

@@ -15,9 +15,9 @@ devicePrototype.runBootSequence = async function (): Promise<void> {
   return new Promise ((resolve) => {
     this.clearListeners ();
 
-    const {color, sysex} = this.settings.bootSequence;
+    const { color, sysex } = this.settings.bootSequence;
     if (sysex) {
-      const {manufacturer, data} = sysex;
+      const { manufacturer, data } = sysex;
       if (typeof manufacturer !== 'undefined' && typeof data !== 'undefined') {
         this.device.output.sendSysex (manufacturer, data);
       }
@@ -25,36 +25,36 @@ devicePrototype.runBootSequence = async function (): Promise<void> {
 
     // flash the lights
     setTimeout (() => {
-        this.playNotes ({
-          firstNote: this.settings.lights.first,
-          lastNote: this.settings.lights.last,
-          color: color,
-          duration: this.settings.time.defaultDuration,
-        });
-      },
-      this.settings.time.deviceReady,
+      this.playNotes ({
+        firstNote: this.settings.lights.first,
+        lastNote: this.settings.lights.last,
+        color,
+        duration: this.settings.time.defaultDuration,
+      });
+    },
+    this.settings.time.deviceReady,
     );
 
     // resolve
     setTimeout (() => {
-        resolve ();
-      },
-      this.settings.time.deviceReady
+      resolve ();
+    },
+    this.settings.time.deviceReady
       + this.settings.time.defaultDuration
       + this.settings.time.wait,
     );
-
   });
 };
 
 type PlayNoteOptions = {
-  note: number,
-  color: number,
-  duration?: number,
+  note: number;
+  color: number;
+  duration?: number;
 }
 
 /**
  * Utility function to play a note
+ *
  * @param {PlayNoteOptions} options - The options
  * @param {number} options.note - The note to play
  * @param {number} options.color - The color of the note (velocity)
@@ -75,14 +75,15 @@ devicePrototype.playNote = function (
 };
 
 type PlayNotesOptions = {
-  firstNote: number,
-  lastNote: number,
-  color: number,
-  duration?: number,
+  firstNote: number;
+  lastNote: number;
+  color: number;
+  duration?: number;
 }
 
 /**
  * Utility function to play multiple notes
+ *
  * @param {PlayNotesOptions} options - The options
  * @param {number} options.firstNote - The first note to play
  * @param {number} options.lastNote - The last note to play
@@ -115,11 +116,12 @@ devicePrototype.clearListeners = function (): void {
 
 /**
  * Utility function to attach an input event to the device
+ *
  * @param {string} noteState - The state of the note to listen to
- * @param {function} listener - The listener function
+ * @param {Function} listener - The listener function
  */
 devicePrototype.onNote = function (
-  noteState: string = 'on',
+  noteState = 'on',
   listener: (e: InputEventNoteon | InputEventNoteoff) => any,
 ): void {
   if (noteState !== 'on' && noteState !== 'off') {
@@ -135,6 +137,7 @@ devicePrototype.onNote = function (
 
 /**
  * Utility function to remove an input event from the device
+ *
  * @param {string} noteState - The state of the note to remove the listener from
  */
 devicePrototype.clearNote = function (noteState: string): void {
@@ -147,7 +150,8 @@ devicePrototype.clearNote = function (noteState: string): void {
 
 /**
  * Utility function to attach an input event to the device
- * @param listener
+ *
+ * @param {*} listener - The listener function
  */
 devicePrototype.onControl = function (listener) {
   this.device.input.addListener (
