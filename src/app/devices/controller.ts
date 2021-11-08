@@ -6,6 +6,13 @@ import { rangeMap } from '../../coolearning/utils/range-map';
 import { updateWeight } from '../utils/update-weight';
 import { playgroundFacade } from '../playground.facade';
 
+/**
+ * Controller is a unique device that controls the playground.
+ * It has 3 layout modes:
+ *   - Default `0`
+ *   - Single selection `1`
+ *   - Multiple selection `2`
+ */
 export const controller = Object.create (devicePrototype);
 
 /**
@@ -23,6 +30,10 @@ controller.init = async function (device: any): Promise<void> {
   await this.runBootSequence ();
   this.attachEvents ();
 
+  setTimeout (() => {
+    this.changeLights ();
+  }, this.settings.time.wait);
+
   this.isInitialized = true;
 };
 
@@ -39,6 +50,10 @@ controller.attachEvents = function () {
  */
 controller.attachButtons = function () {
   this.onNote ('on', (e) => {
+    if (!this.isDefaultMode ()) {
+      return;
+    }
+
     const note = parseInt (e.note.number);
     const {isLearning, learningParameter} = state;
     const parameters = state.getParametersByControl (note);
@@ -219,4 +234,16 @@ controller.applyRangesToNeuron = function (selectedNode: number): void {
       }
     }
   });
+};
+
+controller.isDefaultMode = function () {
+  return playgroundFacade.selectedNodes.length === 0;
+};
+
+controller.isSingleMode = function () {
+  return playgroundFacade.selectedNodes.length === 1;
+};
+
+controller.isMultipleMode = function () {
+  return playgroundFacade.selectedNodes.length > 1;
 };

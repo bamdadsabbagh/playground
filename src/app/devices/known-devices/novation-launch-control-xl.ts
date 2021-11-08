@@ -32,7 +32,7 @@ export const novationLaunchControlXl: NovationLaunchControlXl = {
     green: 60,
   },
   time: {
-    wait: 50,
+    wait: 100,
     deviceReady: 2000,
     defaultDuration: 1000,
   },
