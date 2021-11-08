@@ -9,6 +9,11 @@ It aims to bring interactivity to the existing user interface with USB controlle
 
 It has been authored at [CREATIS Laboratory](https://www.creatis.insa-lyon.fr/site7/fr) (Lyon, France).
 
+## Supported Devices
+
+- Novation Launchpad X
+- Novation Launch Control XL
+
 ## Features
 
 There are two main category of device your can attach.
@@ -50,6 +55,7 @@ This device usually provides faders, potentiometers and buttons.
 - `chrome` only compatibility
 - `selector` at least 64 pads
 - `controller` at least 8 faders
+- `d3` version 3 dependency
 
 ## More
 
