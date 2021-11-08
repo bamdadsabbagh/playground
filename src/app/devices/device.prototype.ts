@@ -18,7 +18,7 @@ devicePrototype.runBootSequence = async function (): Promise<void> {
     const {color, sysex} = this.settings.bootSequence;
     if (sysex) {
       const {manufacturer, data} = sysex;
-      if (manufacturer && data) {
+      if (typeof manufacturer !== 'undefined' && typeof data !== 'undefined') {
         this.device.output.sendSysex (manufacturer, data);
       }
     }
