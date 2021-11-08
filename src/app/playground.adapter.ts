@@ -1,4 +1,7 @@
-import { network as importedNetwork } from '../playground/playground';
+import {
+  network as importedNetwork,
+  selectedNodes as importedSelectedNodes,
+} from '../playground/playground';
 
 export const playgroundAdapter = Object.create (null);
 
@@ -15,5 +18,11 @@ Object.defineProperty (playgroundAdapter, 'network', {
       neurons,
       output,
     };
+  },
+});
+
+Object.defineProperty (playgroundAdapter, 'selectedNodes', {
+  get: function () {
+    return importedSelectedNodes;
   },
 });

@@ -74,7 +74,7 @@ controller.attachButtons = function () {
  * Attach events to the ranges.
  */
 controller.attachRanges = function () {
-  const selectedNodes = window['selectedNodes'];
+  const {selectedNodes} = playgroundAdapter;
 
   this.clearControl ();
 
@@ -125,7 +125,7 @@ controller.attachRangesDefault = function () {
  * Attach events to the ranges to a single neuron
  */
 controller.attachRangesToNeuron = function () {
-  const selectedNode = window['selectedNodes'][0];
+  const selectedNode = playgroundAdapter.selectedNodes[0];
   this.applyRangesToNeuron (selectedNode);
 };
 
@@ -133,7 +133,7 @@ controller.attachRangesToNeuron = function () {
  * Attach events to the ranges to multiple neurons
  */
 controller.attachRangesToNeurons = function () {
-  const selectedNodes = window['selectedNodes'];
+  const {selectedNodes} = playgroundAdapter;
   selectedNodes.forEach ((n) => this.applyRangesToNeuron (n));
 };
 
@@ -151,7 +151,7 @@ controller.onSelect = function () {
  * Change all lights.
  */
 controller.changeLights = function () {
-  const selectedNodes = window['selectedNodes'];
+  const {selectedNodes} = playgroundAdapter;
 
   let color;
   if (selectedNodes.length === 0) {

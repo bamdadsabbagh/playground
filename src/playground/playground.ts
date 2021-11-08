@@ -183,10 +183,8 @@ let lossTest = 0;
 let player = new Player ();
 let lineChart = new AppendingLineChart (d3.select ('#linechart'),
   ['#777', 'black']);
-let selectedNodes: number[] = [];
+export let selectedNodes: number[] = [];
 let mouseTimer = null;
-
-window['selectedNodes'] = selectedNodes;
 
 function makeGUI () {
   d3.select ('#reset-button').on ('click', () => {
@@ -789,8 +787,6 @@ export function updateNeuronCard (
 ) {
   let neuronCard = d3.select ('#neuron-card');
 
-  selectedNodes = window['selectedNodes'];
-
   if (selectedNodes.length === 0) {
     neuronCard.style ('display', 'none');
     return;
@@ -1224,6 +1220,17 @@ function simulationStarted () {
   });
   parametersChanged = false;
 }
+
+export const addToSelectedNodes = function (nodeIndex: number) {
+  selectedNodes = [
+    ...selectedNodes,
+    nodeIndex,
+  ];
+};
+
+export const removeFromSelectedNodes = function (nodeIndex: number) {
+  selectedNodes = selectedNodes.filter (n => n !== nodeIndex);
+};
 
 drawDatasetThumbnails ();
 initTutorial ();

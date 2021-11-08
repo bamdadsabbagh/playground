@@ -139,7 +139,7 @@ selector.attachNeurons = function (): void {
 
     // short click only if enabled
     if (isEnabled) {
-      if (window['selectedNodes'].indexOf (nodeIndex) === -1) {
+      if (playgroundAdapter.selectedNodes.indexOf (nodeIndex) === -1) {
         selectNode (nodeIndex);
       } else {
         unselectNode (nodeIndex);
