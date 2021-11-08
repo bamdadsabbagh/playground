@@ -4,7 +4,7 @@ import { initializeSettings } from './utils/initialize-settings';
 import { initializeKeyboardEvents } from './utils/initialize-keyboard-events';
 import { initializePlayground } from './utils/initialize-playground';
 import { showSnack } from './utils/show-snack';
-import { app } from '../new/app';
+import { app } from '../app/app';
 
 /**
  * @description entry point for CooLearning playground extension

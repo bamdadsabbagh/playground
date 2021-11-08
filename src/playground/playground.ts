@@ -29,11 +29,11 @@ import { Example2D, shuffle } from './dataset';
 import { AppendingLineChart } from './linechart';
 import * as d3 from 'd3';
 import { Coolearning } from '../coolearning/coolearning';
-import { toggleNeuron } from '../new/utils/toggle-neuron';
-import { getNeuron } from '../new/utils/get-neuron';
-import { toggleInput } from '../new/utils/toggle-input';
-import { unselectNode } from '../new/utils/unselect-node';
-import { selectNode } from '../new/utils/select-node';
+import { toggleNeuron } from '../app/utils/toggle-neuron';
+import { getNeuron } from '../app/utils/get-neuron';
+import { toggleInput } from '../app/utils/toggle-input';
+import { unselectNode } from '../app/utils/unselect-node';
+import { selectNode } from '../app/utils/select-node';
 
 Coolearning ();
 
