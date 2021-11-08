@@ -2,7 +2,7 @@ import { midi } from './midi/midi';
 import { devices } from './devices/devices';
 import { selector } from './devices/selector';
 import { controller } from './devices/controller';
-import { playgroundAdapter } from './playground.adapter';
+import { playgroundFacade } from './playground.facade';
 
 export const app = Object.create (null);
 
@@ -11,7 +11,7 @@ app.midi = midi;
 app.devices = devices;
 app.selector = selector;
 app.controller = controller;
-app.playground = playgroundAdapter;
+app.playground = playgroundFacade;
 
 /**
  * Initialize main

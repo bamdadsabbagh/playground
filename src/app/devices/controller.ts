@@ -4,7 +4,7 @@ import { updateParameter } from '../../coolearning/utils/update-parameter';
 import { getNeuron } from '../utils/get-neuron';
 import { rangeMap } from '../../coolearning/utils/range-map';
 import { updateWeight } from '../utils/update-weight';
-import { playgroundAdapter } from '../playground.adapter';
+import { playgroundFacade } from '../playground.facade';
 
 export const controller = Object.create (devicePrototype);
 
@@ -72,7 +72,7 @@ controller.attachButtons = function () {
  * Attach events to the ranges.
  */
 controller.attachRanges = function () {
-  const {selectedNodes} = playgroundAdapter;
+  const {selectedNodes} = playgroundFacade;
 
   this.clearControl ();
 
@@ -123,7 +123,7 @@ controller.attachRangesDefault = function () {
  * Attach events to the ranges to a single neuron
  */
 controller.attachRangesToNeuron = function () {
-  const selectedNode = playgroundAdapter.selectedNodes[0];
+  const selectedNode = playgroundFacade.selectedNodes[0];
   this.applyRangesToNeuron (selectedNode);
 };
 
@@ -131,7 +131,7 @@ controller.attachRangesToNeuron = function () {
  * Attach events to the ranges to multiple neurons
  */
 controller.attachRangesToNeurons = function () {
-  const {selectedNodes} = playgroundAdapter;
+  const {selectedNodes} = playgroundFacade;
   selectedNodes.forEach ((n) => this.applyRangesToNeuron (n));
 };
 
@@ -149,7 +149,7 @@ controller.onSelect = function () {
  * Change all lights.
  */
 controller.changeLights = function () {
-  const {selectedNodes} = playgroundAdapter;
+  const {selectedNodes} = playgroundFacade;
 
   let color;
   if (selectedNodes.length === 0) {

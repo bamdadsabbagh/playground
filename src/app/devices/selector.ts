@@ -6,7 +6,7 @@ import { unselectNode } from '../utils/unselect-node';
 import { toggleNeuron } from '../utils/toggle-neuron';
 import { selectInputCanvas } from '../utils/select-input-canvas';
 import { devicePrototype } from './device.prototype';
-import { playgroundAdapter } from '../playground.adapter';
+import { playgroundFacade } from '../playground.facade';
 
 export const selector = Object.create (devicePrototype);
 
@@ -23,7 +23,7 @@ selector.init = async function (device: any): Promise<void> {
 
   this.device = device;
   this.settings = device.settings;
-  this.network = playgroundAdapter.network;
+  this.network = playgroundFacade.network;
   this.grid = this.settings.grid;
 
   await this.runBootSequence ();
@@ -138,7 +138,7 @@ selector.attachNeurons = function (): void {
 
     // short click only if enabled
     if (isEnabled) {
-      if (playgroundAdapter.selectedNodes.indexOf (nodeIndex) === -1) {
+      if (playgroundFacade.selectedNodes.indexOf (nodeIndex) === -1) {
         selectNode (nodeIndex);
       } else {
         unselectNode (nodeIndex);

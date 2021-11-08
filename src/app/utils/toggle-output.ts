@@ -1,7 +1,7 @@
-import { playgroundAdapter } from '../playground.adapter';
+import { playgroundFacade } from '../playground.facade';
 
 export function toggleOutput (outputIndex: number) {
-  const {output} = playgroundAdapter.network;
+  const {output} = playgroundFacade.network;
 
   const inputLink = output.inputLinks[outputIndex];
 

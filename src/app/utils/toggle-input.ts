@@ -1,8 +1,8 @@
 import { selector } from '../devices/selector';
-import { playgroundAdapter } from '../playground.adapter';
+import { playgroundFacade } from '../playground.facade';
 
 export function toggleInput (inputIndexOrIdentifier: number | string): void {
-  const {inputs} = playgroundAdapter.network;
+  const {inputs} = playgroundFacade.network;
   let input;
 
   if (typeof inputIndexOrIdentifier === 'string') {

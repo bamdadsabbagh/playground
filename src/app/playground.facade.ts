@@ -3,9 +3,9 @@ import {
   selectedNodes as importedSelectedNodes,
 } from '../playground/playground';
 
-export const playgroundAdapter = Object.create (null);
+export const playgroundFacade = Object.create (null);
 
-Object.defineProperty (playgroundAdapter, 'network', {
+Object.defineProperty (playgroundFacade, 'network', {
   get: function () {
     const network = importedNetwork;
 
@@ -21,7 +21,7 @@ Object.defineProperty (playgroundAdapter, 'network', {
   },
 });
 
-Object.defineProperty (playgroundAdapter, 'selectedNodes', {
+Object.defineProperty (playgroundFacade, 'selectedNodes', {
   get: function () {
     return importedSelectedNodes;
   },
