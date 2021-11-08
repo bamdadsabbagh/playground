@@ -1,8 +1,6 @@
 import { getNeuronAndLayerIndexes } from '../utils/get-neuron-and-layer-indexes';
 import { getNeuron } from '../utils/get-neuron';
 import { toggleOutput } from '../utils/toggle-output';
-import { selectNode } from '../utils/select-node';
-import { unselectNode } from '../utils/unselect-node';
 import { toggleNeuron } from '../utils/toggle-neuron';
 import { selectInputCanvas } from '../utils/select-input-canvas';
 import { devicePrototype } from './device.prototype';
@@ -141,9 +139,9 @@ selector.attachNeurons = function (): void {
     // short click only if enabled
     if (isEnabled) {
       if (playgroundFacade.selectedNodes.indexOf (nodeIndex) === -1) {
-        selectNode (nodeIndex);
+        playgroundFacade.toggleNodeSelection (nodeIndex, true);
       } else {
-        unselectNode (nodeIndex);
+        playgroundFacade.toggleNodeSelection (nodeIndex, false);
       }
     }
 
@@ -153,7 +151,7 @@ selector.attachNeurons = function (): void {
       clearTimeout (clickTimer);
       clickTimer = null;
       // payload
-      unselectNode (nodeIndex);
+      playgroundFacade.toggleNodeSelection (nodeIndex, false);
       toggleNeuron (nodeIndex);
     }, this.settings.time.longClick);
 

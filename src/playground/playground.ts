@@ -30,10 +30,8 @@ import { AppendingLineChart } from './linechart';
 import * as d3 from 'd3';
 import { Coolearning } from '../coolearning/coolearning';
 import { toggleNeuron } from '../app/utils/toggle-neuron';
-import { getNeuron } from '../app/utils/get-neuron';
 import { toggleInput } from '../app/utils/toggle-input';
-import { unselectNode } from '../app/utils/unselect-node';
-import { selectNode } from '../app/utils/select-node';
+import { playgroundFacade } from '../app/playground/playground.facade';
 
 Coolearning ();
 
@@ -540,12 +538,16 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
 
       if (div.classed ('disabled')) return;
 
-      if (!div.classed ('selected')) {
-        if (Number.isNaN (parseInt (nodeId))) return;
-        selectNode (parseInt (nodeId));
+      if (Number.isNaN (parseInt (nodeId))) {
+        return;
       } else {
-        unselectNode (parseInt (nodeId));
+        if (!div.classed ('selected')) {
+          playgroundFacade.toggleNodeSelection (parseInt (nodeId), true);
+        } else {
+          playgroundFacade.toggleNodeSelection (parseInt (nodeId), false);
+        }
       }
+
     });
   if (isInput) {
     div.on ('click', function () {
@@ -774,69 +776,6 @@ function updateHoverCard (type: HoverType, nodeOrLink?: nn.Node | nn.Link,
   hovercard.select ('input')
     .property ('value', value.toPrecision (2))
     .style ('display', 'none');
-}
-
-type UpdateNeuronCardProps = {
-  nodeId: number,
-}
-
-export function updateNeuronCard (
-  {
-    nodeId,
-  }: UpdateNeuronCardProps,
-) {
-  let neuronCard = d3.select ('#neuron-card');
-
-  if (selectedNodes.length === 0) {
-    neuronCard.style ('display', 'none');
-    return;
-  }
-
-  neuronCard.style ('display', 'flex');
-
-  const nodeTitle = neuronCard.select ('.node');
-  const inputs = neuronCard.selectAll ('input')[0];
-
-  nodeTitle.text (
-    selectedNodes.length === 1
-      ? `Node: ${selectedNodes[0]}`
-      : `Nodes: ${
-        selectedNodes
-          .sort ((a, b) => a - b)
-          .join (', ')
-      }`,
-  );
-
-  const {neuron} = getNeuron (nodeId);
-  const inputPlaceholder = 'ø or multi.';
-
-  const biasInput = inputs[0] as HTMLInputElement;
-  biasInput.placeholder = inputPlaceholder;
-  biasInput.value = selectedNodes.length === 1
-    ? neuron.bias.toPrecision (2)
-    : null;
-
-  const {inputLinks} = neuron;
-  inputs.slice (1).forEach ((input: HTMLInputElement, k) => {
-    if (typeof inputLinks[k] === 'undefined') {
-      input.value = null;
-      input.placeholder = inputPlaceholder;
-      input.disabled = true;
-      return;
-    }
-
-    input.disabled = false;
-
-    if (selectedNodes.length > 1) {
-      input.value = null;
-      input.placeholder = inputPlaceholder;
-      return;
-    }
-
-    input.value = inputLinks[k].weight.toPrecision (2);
-  });
-
-  // todo add to state and serialize
 }
 
 function drawLink (
