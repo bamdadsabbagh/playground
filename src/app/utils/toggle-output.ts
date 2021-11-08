@@ -1,4 +1,4 @@
-import { playgroundFacade } from '../playground.facade';
+import { playgroundFacade } from '../playground/playground.facade';
 
 /**
  * Toggle one output of the playground

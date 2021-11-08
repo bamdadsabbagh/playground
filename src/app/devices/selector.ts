@@ -6,7 +6,7 @@ import { unselectNode } from '../utils/unselect-node';
 import { toggleNeuron } from '../utils/toggle-neuron';
 import { selectInputCanvas } from '../utils/select-input-canvas';
 import { devicePrototype } from './device.prototype';
-import { playgroundFacade } from '../playground.facade';
+import { playgroundFacade } from '../playground/playground.facade';
 
 export const selector = Object.create (devicePrototype);
 

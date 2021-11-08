@@ -1,5 +1,5 @@
 import { getNeuronAndLayerIndexes } from './get-neuron-and-layer-indexes';
-import { playgroundFacade } from '../playground.facade';
+import { playgroundFacade } from '../playground/playground.facade';
 import { Node } from '../../playground/nn';
 
 type GetNeuron = {

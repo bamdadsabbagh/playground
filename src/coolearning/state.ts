@@ -1,5 +1,5 @@
 import { renderSetting } from './utils/render-setting';
-import { showSnack } from './utils/show-snack';
+import { notifications } from '../app/ui/notifications';
 
 const initialState = {
   isLearning: false,
@@ -17,6 +17,20 @@ export const state = (function () {
   let controlByParameter = initialState.controlByParameter;
   let parametersByControl = initialState.parametersByControl;
 
+  function loadState () {
+    try {
+      const string = window.localStorage[localStorageIdentifier];
+      const json = JSON.parse (string);
+      isLearning = json.isLearning;
+      learningParameter = json.learningParameter;
+      devices = json.ports;
+      controlByParameter = json.controlByParameter;
+      parametersByControl = json.parametersByControl;
+    } catch (error) {
+      throw new Error ('error while importing state');
+    }
+  }
+
   if (window.localStorage[localStorageIdentifier]) {
     loadState ();
   }
@@ -30,20 +44,6 @@ export const state = (function () {
 
     window.localStorage.removeItem (localStorageIdentifier);
     window.location.reload ();
-  }
-
-  function loadState () {
-    try {
-      const string = window.localStorage[localStorageIdentifier];
-      const json = JSON.parse (string);
-      isLearning = json.isLearning;
-      learningParameter = json.learningParameter;
-      devices = json.ports;
-      controlByParameter = json.controlByParameter;
-      parametersByControl = json.parametersByControl;
-    } catch (error) {
-      throw new Error ('error while importing state');
-    }
   }
 
   function saveState () {
@@ -68,13 +68,15 @@ export const state = (function () {
   }
 
   function learn (options: {
-    parameter: string,
-    control: number,
-    type: string,
+    parameter: string;
+    control: number;
+    type: string;
   }) {
-    const {parameter, control, type} = options;
+    const { parameter, control, type } = options;
 
-    if (controlByParameter[parameter]) return;
+    if (controlByParameter[parameter]) {
+      return;
+    }
 
     controlByParameter[parameter] = {
       control,
@@ -100,42 +102,46 @@ export const state = (function () {
       type,
     });
 
-    showSnack ({
-      message: `Learn: control ${control} for ${parameter} (${type})`,
-    });
+    notifications.notify (
+      `Learn: control ${control} for ${parameter} (${type})`,
+    );
 
     saveState ();
   }
 
   function unlearn (parameter) {
-    if (!controlByParameter[parameter]) return;
+    if (!controlByParameter[parameter]) {
+      return;
+    }
 
-    const {control} = controlByParameter[parameter];
+    const { control } = controlByParameter[parameter];
 
     delete controlByParameter[parameter];
 
     if (parametersByControl[control].length === 1) {
       delete parametersByControl[control];
     } else {
-      parametersByControl[control] = parametersByControl[control].filter (p => p !== parameter);
+      parametersByControl[control] = parametersByControl[control].filter ((p) => p !== parameter);
     }
 
-    renderSetting ({parameter});
+    renderSetting ({ parameter });
 
-    showSnack ({
-      message: `Unlearn: control ${control} for ${parameter}`,
-    });
+    notifications.notify (`Unlearn: control ${control} for ${parameter}`);
 
     saveState ();
   }
 
   function getParametersByControl (control) {
-    if (!parametersByControl[control]) return;
+    if (!parametersByControl[control]) {
+      return;
+    }
     return parametersByControl[control];
   }
 
   function getControlByParameter (parameter) {
-    if (!controlByParameter[parameter]) return;
+    if (!controlByParameter[parameter]) {
+      return;
+    }
     return controlByParameter[parameter];
   }
 
@@ -145,7 +151,7 @@ export const state = (function () {
         parameter,
       });
     } else {
-      const {control, type} = getControlByParameter (parameter);
+      const { control, type } = getControlByParameter (parameter);
       renderSetting ({
         parameter,
         control,
@@ -160,19 +166,19 @@ export const state = (function () {
       device,
     ];
 
-    showSnack ({
-      message: `device ${device.id} added`,
-      timeout: 500,
-    });
+    notifications.notify (
+      `device ${device.id} added`,
+      500,
+    );
   }
 
   function removeDevice (device) {
-    devices = devices.filter (d => d.id !== device.id);
+    devices = devices.filter ((d) => d.id !== device.id);
 
-    showSnack ({
-      message: `device ${device.id} removed`,
-      timeout: 500,
-    });
+    notifications.notify (
+      `device ${device.id} removed`,
+      500,
+    );
   }
 
   return {

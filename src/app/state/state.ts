@@ -1,4 +1,4 @@
-import { mapping } from './mapping/mapping';
+import { mappings } from '../mappings/mappings';
 
 export const state = Object.create (null);
 
@@ -77,7 +77,7 @@ state.reloadWindow = function () {
 
 state.fetchStates = function () {
   return {
-    mapping: mapping.state,
+    mapping: mappings.state,
   };
 };
 

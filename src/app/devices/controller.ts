@@ -4,7 +4,7 @@ import { updateParameter } from '../../coolearning/utils/update-parameter';
 import { getNeuron } from '../utils/get-neuron';
 import { rangeMap } from '../../coolearning/utils/range-map';
 import { updateWeight } from '../utils/update-weight';
-import { playgroundFacade } from '../playground.facade';
+import { playgroundFacade } from '../playground/playground.facade';
 
 /**
  * Controller is a unique device that controls the playground.

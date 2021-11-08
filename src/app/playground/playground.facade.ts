@@ -1,7 +1,7 @@
 import {
   network as importedNetwork,
   selectedNodes as importedSelectedNodes,
-} from '../playground/playground';
+} from '../../playground/playground';
 
 export const playgroundFacade = Object.create (null);
 

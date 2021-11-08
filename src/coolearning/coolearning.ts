@@ -1,28 +1,24 @@
 import './interfaces';
 import './prototypes';
-import { initializeSettings } from './utils/initialize-settings';
 import { initializeKeyboardEvents } from './utils/initialize-keyboard-events';
-import { initializePlayground } from './utils/initialize-playground';
-import { showSnack } from './utils/show-snack';
 import { app } from '../app/app';
+import { notifications } from '../app/ui/notifications';
 
 /**
  * @description entry point for CooLearning playground extension
  */
 export function Coolearning (): void {
-
   window.addEventListener ('load', () => {
     try {
-      initializePlayground ();
-      initializeSettings ();
       app.init ();
       initializeKeyboardEvents ();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error (error);
-      showSnack ({
-        message: error.toString (),
-        timeout: 5000,
-      });
+      notifications.notify (
+        error.toString (),
+        5000,
+      );
     }
   });
 }

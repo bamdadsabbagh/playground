@@ -1,5 +1,4 @@
 import { getSetting } from './get-setting';
-import { buildArrayFromCollection } from './build-array-from-collection';
 import { createSettingsActionButton } from './create-settings-action-button';
 import { SettingsActions, SettingsPositions } from '../enums';
 import { SETTINGS } from '../constants';
@@ -8,12 +7,16 @@ import { ControlIdentifier, ControlType, Parameter } from '../types';
 import { state } from '../state';
 
 type UpdateSettingProps = {
-  parameter: Parameter,
-  control?: ControlIdentifier,
-  type?: ControlType,
+  parameter: Parameter;
+  control?: ControlIdentifier;
+  type?: ControlType;
 }
 
 /**
+ * @param root0
+ * @param root0.parameter
+ * @param root0.control
+ * @param root0.type
  * @description render setting
  */
 export function renderSetting (
@@ -23,19 +26,27 @@ export function renderSetting (
     type = undefined,
   }: UpdateSettingProps,
 ): void {
-  if (!isTabActive ()) return;
+  if (!isTabActive ()) {
+    return;
+  }
 
-  if (!parameter) throw new Error ('parameter is not defined');
-  if (typeof parameter !== 'string') throw new Error ('parameter is not a string');
+  if (!parameter) {
+    throw new Error ('parameter is not defined');
+  }
+  if (typeof parameter !== 'string') {
+    throw new Error ('parameter is not a string');
+  }
 
   const setting = getSetting (parameter);
 
-  if (!setting) throw new Error ('error getting setting');
+  if (!setting) {
+    throw new Error ('error getting setting');
+  }
 
-  const children = buildArrayFromCollection (setting.children);
+  const children = Array.from (setting.children);
   const learned = control && type;
 
-  children.forEach ((child, key) => {
+  children.forEach ((child: any, key) => {
     switch (key) {
       case SettingsPositions.Parameter:
         break;

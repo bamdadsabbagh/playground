@@ -1,5 +1,5 @@
 import { selector } from '../devices/selector';
-import { playgroundFacade } from '../playground.facade';
+import { playgroundFacade } from '../playground/playground.facade';
 
 /**
  * Toggles the inputs / features of the playground.
