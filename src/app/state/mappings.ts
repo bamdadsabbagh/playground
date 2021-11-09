@@ -1,6 +1,9 @@
 import { renderSetting } from '../../coolearning/utils/render-setting';
 import { notifications } from '../ui/notifications';
 
+/**
+ * State object for the mappings.
+ */
 export const mappings = Object.create (null);
 
 mappings.isLearning = false;
