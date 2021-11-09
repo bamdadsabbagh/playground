@@ -1,4 +1,4 @@
-import { playgroundFacade } from '../playground/playground.facade';
+import { networkState } from '../state/network.state';
 
 /**
  * Toggle one output of the playground
@@ -6,7 +6,7 @@ import { playgroundFacade } from '../playground/playground.facade';
  * @param {number} outputIndex - index of the output to toggle
  */
 export function toggleOutput (outputIndex: number): void {
-  const { output } = playgroundFacade.network;
+  const { output } = networkState;
 
   const inputLink = output.inputLinks[outputIndex];
 

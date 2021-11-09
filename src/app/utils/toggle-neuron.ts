@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
-import { getNeuron } from './get-neuron';
 import { selector } from '../devices/selector';
 import { Link as ImportedLink } from '../../playground/nn';
+import { networkState } from '../state/network.state';
 
 type Link = ImportedLink & {
   savedWeight: number;
@@ -13,7 +13,7 @@ type Link = ImportedLink & {
  * @param {number} neuronIndex - The index of the neuron to toggle
  */
 export function toggleNeuron (neuronIndex: number): void {
-  const { neuron, isEnabled } = getNeuron (neuronIndex);
+  const { neuron, isEnabled } = networkState.getNeuron (neuronIndex);
 
   // todo how to impact node.bias ?
 

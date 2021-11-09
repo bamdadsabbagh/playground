@@ -31,7 +31,7 @@ import * as d3 from 'd3';
 import { Coolearning } from '../coolearning/coolearning';
 import { toggleNeuron } from '../app/utils/toggle-neuron';
 import { toggleInput } from '../app/utils/toggle-input';
-import { playgroundFacade } from '../app/playground/playground.facade';
+import { playgroundFacade } from '../app/facades/playground.facade';
 
 Coolearning ();
 

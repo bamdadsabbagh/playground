@@ -1,5 +1,5 @@
 import { selector } from '../devices/selector';
-import { playgroundFacade } from '../playground/playground.facade';
+import { networkState } from '../state/network.state';
 
 /**
  * Toggles the inputs / features of the playground.
@@ -7,7 +7,7 @@ import { playgroundFacade } from '../playground/playground.facade';
  * @param {number|string} inputIndexOrIdentifier - The index or identifier of the input to toggle.
  */
 export function toggleInput (inputIndexOrIdentifier: number | string): void {
-  const { inputs } = playgroundFacade.network;
+  const { inputs } = networkState;
 
   let input;
   if (typeof inputIndexOrIdentifier === 'string') {

@@ -2,7 +2,7 @@ import { midi } from './midi/midi';
 import { devices } from './devices/devices';
 import { selector } from './devices/selector';
 import { controller } from './devices/controller';
-import { playgroundFacade } from './playground/playground.facade';
+import { playgroundFacade } from './facades/playground.facade';
 import { ui } from './ui/ui';
 
 export const app = Object.create (null);

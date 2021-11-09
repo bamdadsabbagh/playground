@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
-import { getNeuron } from '../utils/get-neuron';
-import { playgroundFacade } from '../playground/playground.facade';
+import { playgroundFacade } from '../facades/playground.facade';
+import { networkState } from '../state/network.state';
 
 export const neuronCard = Object.create (null);
 
@@ -45,7 +45,7 @@ neuronCard.updateCard = function (nodeIndex: number) {
       }`,
   );
 
-  const { neuron } = getNeuron (nodeIndex);
+  const { neuron } = networkState.getNeuron (nodeIndex);
   const inputPlaceholder = 'ø or multi.';
 
   const biasInput = inputs[0] as HTMLInputElement;

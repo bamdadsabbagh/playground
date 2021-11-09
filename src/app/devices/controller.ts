@@ -1,10 +1,10 @@
 import { devicePrototype } from './device.prototype';
 import { state } from '../../coolearning/state';
-import { updateParameter } from '../../coolearning/utils/update-parameter';
-import { getNeuron } from '../utils/get-neuron';
 import { rangeMap } from '../../coolearning/utils/range-map';
-import { playgroundFacade } from '../playground/playground.facade';
+import { playgroundFacade } from '../facades/playground.facade';
 import { neuronCard } from '../ui/neuron-card';
+import { networkUi } from '../ui/network.ui';
+import { networkState } from '../state/network.state';
 
 /**
  * Controller is a unique device that controls the playground.
@@ -83,10 +83,7 @@ controller.setDefaultMode = function () {
 
     if (parameters) {
       parameters.forEach ((parameter) => {
-        updateParameter ({
-          parameter,
-          value: e.value,
-        });
+        networkUi.drawParameter (parameter, e.value);
       });
     }
 
@@ -147,10 +144,7 @@ controller.attachButtons = function () {
 
     if (parameters) {
       parameters.forEach ((parameter) => {
-        updateParameter ({
-          parameter,
-          value: 1,
-        });
+        networkUi.drawParameter (parameter, 1);
       });
     }
 
@@ -176,7 +170,7 @@ controller.attachButtons = function () {
  * @param {number} selectedNode - The selected node.
  */
 controller.attachRangesToNeuron = function (selectedNode: number): void {
-  const { neuron } = getNeuron (selectedNode);
+  const { neuron } = networkState.getNeuron (selectedNode);
   const links = neuron.inputLinks;
 
   const weights = links.map ((link) => ({

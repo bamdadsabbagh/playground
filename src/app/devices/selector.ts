@@ -1,10 +1,9 @@
-import { getNeuronAndLayerIndexes } from '../utils/get-neuron-and-layer-indexes';
-import { getNeuron } from '../utils/get-neuron';
 import { toggleOutput } from '../utils/toggle-output';
 import { toggleNeuron } from '../utils/toggle-neuron';
 import { selectInputCanvas } from '../utils/select-input-canvas';
 import { devicePrototype } from './device.prototype';
-import { playgroundFacade } from '../playground/playground.facade';
+import { playgroundFacade } from '../facades/playground.facade';
+import { networkState } from '../state/network.state';
 
 export const selector = Object.create (devicePrototype);
 
@@ -22,7 +21,6 @@ selector.init = async function (device: any): Promise<void> {
 
   this.device = device;
   this.settings = device.settings;
-  this.network = playgroundFacade.network;
   this.grid = this.settings.grid;
 
   await this.runBootSequence ();
@@ -54,7 +52,7 @@ selector.attachEvents = function (): void {
  * Draw the inputs
  */
 selector.drawInputs = function (): void {
-  for (let i = 0; i < this.network.inputs.length; ++i) {
+  for (let i = 0; i < networkState.inputs.length; ++i) {
     this.playNote ({
       note: this.grid[0][i],
       color: this.settings.colorByState.inputOn,
@@ -73,7 +71,7 @@ selector.attachInputs = function (): void {
       return;
     }
 
-    const inputNode = this.network.inputs[flatIndex];
+    const inputNode = networkState.inputs[flatIndex];
     const inputCanvas = selectInputCanvas (inputNode.id);
     inputCanvas.click ();
   });
@@ -108,12 +106,15 @@ selector.setInput = function (inputName: string, isEnabled: boolean): void {
  * Draw the neurons
  */
 selector.drawNeurons = function (): void {
-  const neuronsLength = this.network.neurons.flat ().length;
+  const neuronsLength = networkState.neurons.flat ().length;
   for (let i = 1; i <= neuronsLength; ++i) {
-    const { neuronIndex, layerIndex } = getNeuronAndLayerIndexes (i);
+    const {
+      neuronIndex,
+      layerIndex,
+    } = networkState.getNeuronAndLayerIndexes (i);
     const shiftedIndex = (layerIndex - 1) + 1; // reset, then move to the right
     const note = this.grid[shiftedIndex][neuronIndex - 1];
-    const { isEnabled } = getNeuron (neuronIndex);
+    const { isEnabled } = networkState.getNeuron (neuronIndex);
 
     this.playNote ({
       note,
@@ -134,7 +135,7 @@ selector.attachNeurons = function (): void {
     }
 
     const nodeIndex = this.getGridFlatIndex (e.note.number) - 8 + 1;
-    const { isEnabled } = getNeuron (nodeIndex);
+    const { isEnabled } = networkState.getNeuron (nodeIndex);
 
     // short click only if enabled
     if (isEnabled) {
@@ -182,7 +183,10 @@ selector.setNeuron = function (options: SetNeuronOptions): void {
   const isSelected = options.isSelected || null;
   const isDisabled = options.isDisabled || null;
 
-  const { neuronIndex, layerIndex } = getNeuronAndLayerIndexes (index);
+  const {
+    neuronIndex,
+    layerIndex,
+  } = networkState.getNeuronAndLayerIndexes (index);
   const note = this.grid[layerIndex][neuronIndex - 1];
 
   let color;
@@ -204,7 +208,7 @@ selector.setNeuron = function (options: SetNeuronOptions): void {
  * Draw the output weights
  */
 selector.drawOutputWeights = function (): void {
-  const outputWeights = this.network.output.inputLinks;
+  const outputWeights = networkState.output.inputLinks;
   for (let i = 0; i < outputWeights.length; ++i) {
     const note = this.grid[this.grid.length - 1][i];
     const isEnabled = !outputWeights[i].isDead && outputWeights[i].weight !== 0;
@@ -227,7 +231,7 @@ selector.attachOutputWeights = function (): void {
       return;
     }
 
-    const weights = this.network.output.inputLinks;
+    const weights = networkState.output.inputLinks;
     const index = flatIndex - 56;
     toggleOutput (index);
 
