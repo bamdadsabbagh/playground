@@ -2,12 +2,12 @@ import { ModalComponent } from './components/modal.component';
 import { CLASSES, PARAMETERS } from '../../coolearning/constants';
 import { state } from '../../coolearning/state';
 
-export const modal = Object.create (null);
+export const modalUi = Object.create (null);
 
-modal.container = null;
-modal.content = null;
+modalUi.container = null;
+modalUi.content = null;
 
-modal.init = function () {
+modalUi.init = function () {
   const { container, content } = ModalComponent ();
   this.container = container;
   this.content = content;
@@ -16,15 +16,15 @@ modal.init = function () {
   this.populateContent ();
 };
 
-modal.show = function () {
+modalUi.show = function () {
   this.container.style.display = 'block';
 };
 
-modal.hide = function () {
+modalUi.hide = function () {
   this.container.style.display = 'none';
 };
 
-modal.populateContent = function () {
+modalUi.populateContent = function () {
   // styles
   this.content.style.display = 'flex';
   this.content.style.flexDirection = 'column';

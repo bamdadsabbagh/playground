@@ -2,7 +2,7 @@ import './interfaces';
 import './prototypes';
 import { initializeKeyboardEvents } from './utils/initialize-keyboard-events';
 import { app } from '../app/app';
-import { notifications } from '../app/ui/notifications';
+import { notificationsUi } from '../app/ui/notifications.ui';
 
 /**
  * @description entry point for CooLearning playground extension
@@ -15,7 +15,7 @@ export function Coolearning (): void {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error (error);
-      notifications.notify (
+      notificationsUi.notify (
         error.toString (),
         5000,
       );

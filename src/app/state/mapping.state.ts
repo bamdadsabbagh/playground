@@ -1,17 +1,17 @@
 import { renderSetting } from '../../coolearning/utils/render-setting';
-import { notifications } from '../ui/notifications';
+import { notificationsUi } from '../ui/notifications.ui';
 
 /**
  * State object for the mappings.
  */
-export const mappings = Object.create (null);
+export const mappingState = Object.create (null);
 
-mappings.isLearning = false;
-mappings.learningParameter = null;
-mappings.controlByParameter = {};
-mappings.parametersByControl = {};
+mappingState.isLearning = false;
+mappingState.learningParameter = null;
+mappingState.controlByParameter = {};
+mappingState.parametersByControl = {};
 
-mappings.state = {
+mappingState.state = {
   get state () {
     return {
       isLearning: this.isLearning,
@@ -33,7 +33,7 @@ type LearnOptions = {
  *
  * @param {LearnOptions} options - The options for learning.
  */
-mappings.learn = function ({
+mappingState.learn = function ({
   parameter,
   control,
   type,
@@ -56,7 +56,7 @@ mappings.learn = function ({
     type,
   });
 
-  notifications.notify (
+  notificationsUi.notify (
     `Learn: control ${control} for ${parameter} (${type})`,
   );
 };
@@ -66,7 +66,7 @@ mappings.learn = function ({
  *
  * @param {string} parameter - The parameter to unlearn.
  */
-mappings.unlearn = function (parameter: string) {
+mappingState.unlearn = function (parameter: string) {
   if (!this.isMapped (parameter)) {
     return;
   }
@@ -75,7 +75,7 @@ mappings.unlearn = function (parameter: string) {
 
   renderSetting ({ parameter });
 
-  notifications.notify (
+  notificationsUi.notify (
     `${parameter} unlearned`,
   );
 
@@ -87,7 +87,7 @@ mappings.unlearn = function (parameter: string) {
  *
  * @param {string} newLearningParameter - The parameter to learn.
  */
-mappings.enableLearningMode = function (newLearningParameter: string) {
+mappingState.enableLearningMode = function (newLearningParameter: string) {
   this.isLearning = true;
   this.learningParameter = newLearningParameter;
 };
@@ -95,7 +95,7 @@ mappings.enableLearningMode = function (newLearningParameter: string) {
 /**
  * Disable learning mode.
  */
-mappings.disableLearningMode = function () {
+mappingState.disableLearningMode = function () {
   this.isLearning = false;
   this.learningParameter = null;
 };
@@ -105,7 +105,7 @@ mappings.disableLearningMode = function () {
  *
  * @param {LearnOptions} options - The options for learning.
  */
-mappings.setParameterMaps = function ({
+mappingState.setParameterMaps = function ({
   parameter,
   control,
   type,
@@ -129,7 +129,7 @@ mappings.setParameterMaps = function ({
  *
  * @param {string} parameter - The parameter to unset.
  */
-mappings.unsetParameterMaps = function (parameter: string) {
+mappingState.unsetParameterMaps = function (parameter: string) {
   // unmap
   delete this.controlByParameter[parameter];
 
@@ -153,6 +153,6 @@ mappings.unsetParameterMaps = function (parameter: string) {
  * @param {string} parameter - The parameter to check.
  * @returns {boolean} - True if the parameter is mapped.
  */
-mappings.isMapped = function (parameter: string): boolean {
+mappingState.isMapped = function (parameter: string): boolean {
   return this.controlByParameter[parameter] !== undefined;
 };

@@ -1,6 +1,6 @@
 import { IconMaterialComponent } from './material/icon.material.component';
 import { ButtonMaterialComponent } from './material/button.material.component';
-import { modal } from '../modal';
+import { modalUi } from '../modal.ui';
 
 /**
  * Button to show the settings panel.
@@ -10,7 +10,7 @@ import { modal } from '../modal';
 export function ShowButtonComponent (): HTMLButtonElement {
   const icon = IconMaterialComponent ('settings');
 
-  const button = ButtonMaterialComponent (icon, () => modal.show ());
+  const button = ButtonMaterialComponent (icon, () => modalUi.show ());
   button.style.display = 'block';
   button.style.position = 'fixed';
   button.style.bottom = '6px';

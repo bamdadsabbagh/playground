@@ -1,14 +1,14 @@
-import { mappings } from './mappings';
+import { mappingState } from './mapping.state';
 
 /**
  * Object to store the state of the application.
  * Powered by localStorage.
  */
-export const storage = Object.create (null);
+export const storageState = Object.create (null);
 
-storage.localStorageIdentifier = 'coolearning';
+storageState.localStorageIdentifier = 'coolearning';
 
-Object.defineProperty (storage, 'localStorage', {
+Object.defineProperty (storageState, 'localStorage', {
   get (): string {
     return window.localStorage[this.localStorageIdentifier];
   },
@@ -22,7 +22,7 @@ Object.defineProperty (storage, 'localStorage', {
  *
  * @param {boolean} [forceReset=false] - Forces the state to be reset.
  */
-storage.init = function (forceReset = false) {
+storageState.init = function (forceReset = false) {
   if (forceReset) {
     this.resetState ();
   } else if (this.isLocalStorageDefined ()) {
@@ -35,14 +35,14 @@ storage.init = function (forceReset = false) {
 /**
  * Initializes the state.
  */
-storage.initializeState = function () {
+storageState.initializeState = function () {
   //
 };
 
 /**
  * Resets the state.
  */
-storage.resetState = function () {
+storageState.resetState = function () {
   this.initializeState ();
   this.reloadWindow ();
 };
@@ -52,7 +52,7 @@ storage.resetState = function () {
  *
  * @returns {boolean} - Whether the browser supports local storage.
  */
-storage.isLocalStorageDefined = function (): boolean {
+storageState.isLocalStorageDefined = function (): boolean {
   return typeof window.localStorage[this.localStorageIdentifier] !== 'undefined';
 };
 
@@ -61,7 +61,7 @@ storage.isLocalStorageDefined = function (): boolean {
  *
  * @returns {*} - The parsed state from local storage.
  */
-storage.parseLocalStorage = function () {
+storageState.parseLocalStorage = function () {
   let json = null;
   try {
     json = JSON.parse (this.localStorage);
@@ -74,21 +74,21 @@ storage.parseLocalStorage = function () {
 /**
  * Reloads the window.
  */
-storage.reloadWindow = function () {
+storageState.reloadWindow = function () {
   window.localStorage.removeItem (this.localStorageIdentifier);
   window.location.reload ();
 };
 
-storage.fetchStates = function () {
+storageState.fetchStates = function () {
   return {
-    mapping: mappings.state,
+    mapping: mappingState.state,
   };
 };
 
-storage.stringifyState = function () {
+storageState.stringifyState = function () {
   return JSON.stringify (this.fetchStates ());
 };
 
-storage.saveToLocalStorage = function () {
+storageState.saveToLocalStorage = function () {
   this.localStorage = this.stringifyState ();
 };

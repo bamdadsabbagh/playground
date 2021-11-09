@@ -2,9 +2,9 @@ import { ListMaterialComponent } from './components/material/list.material.compo
 import { ChipMaterialComponent } from './components/material/chip.material.component';
 import { DialogMaterialComponent } from './components/material/dialog.material.component';
 
-export const dialog = Object.create (null);
+export const dialogUi = Object.create (null);
 
-dialog.modal = {
+dialogUi.modal = {
   container: null,
   content: null,
 };
@@ -12,7 +12,7 @@ dialog.modal = {
 /**
  * Initialize settings.
  */
-dialog.init = function () {
+dialogUi.init = function () {
   this.createFutureDialog ();
 };
 
@@ -21,7 +21,7 @@ dialog.init = function () {
  *
  * @todo programmed for future use
  */
-dialog.createFutureDialog = function () {
+dialogUi.createFutureDialog = function () {
   const list = ListMaterialComponent ([
     'first',
     'second',

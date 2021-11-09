@@ -1,8 +1,8 @@
-import { dialog } from './dialog';
-import { modal } from './modal';
-import { buttons } from './buttons';
-import { notifications } from './notifications';
-import { neuronCard } from './neuron-card';
+import { dialogUi } from './dialog.ui';
+import { modalUi } from './modal.ui';
+import { buttonsUi } from './buttons.ui';
+import { notificationsUi } from './notifications.ui';
+import { neuronCardUi } from './neuron-card.ui';
 
 export const ui = Object.create (null);
 
@@ -12,13 +12,13 @@ export const ui = Object.create (null);
 ui.init = async function () {
   this.addMaterialScript ();
 
-  await notifications.init ();
-  modal.init ();
-  buttons.init ();
-  dialog.init ();
-  neuronCard.init ();
+  await notificationsUi.init ();
+  modalUi.init ();
+  buttonsUi.init ();
+  dialogUi.init ();
+  neuronCardUi.init ();
 
-  notifications.notify ('test');
+  notificationsUi.notify ('test');
 };
 
 /**

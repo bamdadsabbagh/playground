@@ -1,16 +1,16 @@
 import { SnackbarComponent } from './components/snackbar.component';
 
-export const notifications = Object.create (null);
+export const notificationsUi = Object.create (null);
 
-notifications.snackbar = null;
+notificationsUi.snackbar = null;
 
-notifications.init = async function () {
+notificationsUi.init = async function () {
   this.snackbar = SnackbarComponent ();
   document.body.appendChild (this.snackbar);
   await this.waitForMaterialScripts ();
 };
 
-notifications.waitForMaterialScripts = async function () {
+notificationsUi.waitForMaterialScripts = async function () {
   return new Promise ((resolve) => {
     const sender = this.snackbar?.MaterialSnackbar?.showSnackbar;
     if (sender) {
@@ -23,7 +23,7 @@ notifications.waitForMaterialScripts = async function () {
   });
 };
 
-notifications.notify = function (
+notificationsUi.notify = function (
   message: string,
   timeout = 2000,
   actionHandler: (e: Event) => void = () => undefined,

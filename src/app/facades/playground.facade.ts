@@ -5,7 +5,7 @@ import {
   network as importedNetwork,
   selectedNodes as importedSelectedNodes,
 } from '../../playground/playground';
-import { neuronCard } from '../ui/neuron-card';
+import { neuronCardUi } from '../ui/neuron-card.ui';
 import { selector } from '../devices/selector';
 import { controller } from '../devices/controller';
 
@@ -39,7 +39,7 @@ playgroundFacade.toggleNodeSelection = function (nodeIndex: number, isSelected: 
   const canvas = d3.select (`#canvas-${nodeIndex}`);
   canvas.classed ('selected', isSelected);
 
-  neuronCard.updateCard (nodeIndex);
+  neuronCardUi.updateCard (nodeIndex);
 
   selector.setNeuron ({
     index: nodeIndex,

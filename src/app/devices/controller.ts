@@ -2,7 +2,7 @@ import { devicePrototype } from './device.prototype';
 import { state } from '../../coolearning/state';
 import { rangeMap } from '../../coolearning/utils/range-map';
 import { playgroundFacade } from '../facades/playground.facade';
-import { neuronCard } from '../ui/neuron-card';
+import { neuronCardUi } from '../ui/neuron-card.ui';
 import { networkUi } from '../ui/network.ui';
 import { networkState } from '../state/network.state';
 
@@ -203,7 +203,7 @@ controller.attachRangesToNeuron = function (selectedNode: number): void {
 
       if (weights[index].hasSnapped && source.isEnabled) {
         links[index].weight = value;
-        neuronCard.updateWeight (index, value);
+        neuronCardUi.updateWeight (index, value);
         this.playNote ({
           note: this.settings.outputByInput[e.controller.number],
           color: this.settings.colors.green,

@@ -2,27 +2,27 @@ import * as d3 from 'd3';
 import { playgroundFacade } from '../facades/playground.facade';
 import { networkState } from '../state/network.state';
 
-export const neuronCard = Object.create (null);
+export const neuronCardUi = Object.create (null);
 
-neuronCard.weightSelector = '.neuron-card__weight';
-neuronCard.weights = null;
-neuronCard.cardSelector = '#neuron-card';
-neuronCard.card = null;
+neuronCardUi.weightSelector = '.neuron-card__weight';
+neuronCardUi.weights = null;
+neuronCardUi.cardSelector = '#neuron-card';
+neuronCardUi.card = null;
 
-neuronCard.init = function () {
+neuronCardUi.init = function () {
   this.fetchWeights ();
   this.fetchCard ();
 };
 
-neuronCard.fetchCard = function () {
+neuronCardUi.fetchCard = function () {
   this.card = d3.select ('#neuron-card');
 };
 
-neuronCard.fetchWeights = function () {
+neuronCardUi.fetchWeights = function () {
   this.weights = document.querySelectorAll (this.weightSelector);
 };
 
-neuronCard.updateCard = function (nodeIndex: number) {
+neuronCardUi.updateCard = function (nodeIndex: number) {
   const { selectedNodes } = playgroundFacade;
 
   if (selectedNodes.length === 0) {
@@ -75,6 +75,6 @@ neuronCard.updateCard = function (nodeIndex: number) {
   });
 };
 
-neuronCard.updateWeight = function (index, weight) {
+neuronCardUi.updateWeight = function (index, weight) {
   this.weights[index].value = weight.toPrecision (2);
 };

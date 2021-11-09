@@ -1,5 +1,5 @@
 import { renderSetting } from './utils/render-setting';
-import { notifications } from '../app/ui/notifications';
+import { notificationsUi } from '../app/ui/notifications.ui';
 
 const initialState = {
   isLearning: false,
@@ -102,7 +102,7 @@ export const state = (function () {
       type,
     });
 
-    notifications.notify (
+    notificationsUi.notify (
       `Learn: control ${control} for ${parameter} (${type})`,
     );
 
@@ -126,7 +126,7 @@ export const state = (function () {
 
     renderSetting ({ parameter });
 
-    notifications.notify (`Unlearn: control ${control} for ${parameter}`);
+    notificationsUi.notify (`Unlearn: control ${control} for ${parameter}`);
 
     saveState ();
   }
@@ -166,7 +166,7 @@ export const state = (function () {
       device,
     ];
 
-    notifications.notify (
+    notificationsUi.notify (
       `device ${device.id} added`,
       500,
     );
@@ -175,7 +175,7 @@ export const state = (function () {
   function removeDevice (device) {
     devices = devices.filter ((d) => d.id !== device.id);
 
-    notifications.notify (
+    notificationsUi.notify (
       `device ${device.id} removed`,
       500,
     );
