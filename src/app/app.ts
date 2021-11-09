@@ -1,7 +1,7 @@
-import { midi } from './midi/midi';
+import { midi } from './devices/midi';
 import { devices } from './devices/devices';
 import { selectorDevice } from './devices/selector.device';
-import { controller } from './devices/controller';
+import { controllerDevice } from './devices/controller.device';
 import { playgroundFacade } from './facades/playground.facade';
 import { ui } from './ui/ui';
 
@@ -12,7 +12,7 @@ app.ui = ui;
 app.midi = midi;
 app.devices = devices;
 app.selector = selectorDevice;
-app.controller = controller;
+app.controller = controllerDevice;
 app.playground = playgroundFacade;
 
 /**
@@ -40,7 +40,7 @@ app.attachDevices = async function () {
   devices.init (midi.ports);
   await Promise.all ([
     selectorDevice.init (devices.pickSelector (1)),
-    controller.init (devices.pickController (0)),
+    controllerDevice.init (devices.pickController (0)),
   ]);
 };
 
@@ -50,6 +50,6 @@ app.attachDevices = async function () {
 app.resetDevices = async function () {
   devices.isInitialized = false;
   selectorDevice.isInitialized = false;
-  controller.isInitialized = false;
+  controllerDevice.isInitialized = false;
   await this.attachDevices ();
 };

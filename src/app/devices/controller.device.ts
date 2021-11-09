@@ -1,4 +1,4 @@
-import { devicePrototype } from './device.prototype';
+import { devicePrototype } from './device/device.prototype';
 import { state } from '../../coolearning/state';
 import { rangeMap } from '../utils/range-map';
 import { playgroundFacade } from '../facades/playground.facade';
@@ -13,7 +13,7 @@ import { networkState } from '../state/network.state';
  *   - Single selection `1`
  *   - Multiple selection `2`
  */
-export const controller = Object.create (devicePrototype);
+export const controllerDevice = Object.create (devicePrototype);
 
 /**
  * Initialize the controller.
@@ -21,7 +21,7 @@ export const controller = Object.create (devicePrototype);
  * @param {*} device - The device to initialize.
  * @returns {Promise<void>}
  */
-controller.init = async function (device: any): Promise<void> {
+controllerDevice.init = async function (device: any): Promise<void> {
   if (this.isInitialized) {
     throw new Error ('controller is already initialized');
   }
@@ -40,7 +40,7 @@ controller.init = async function (device: any): Promise<void> {
 /**
  * Draw all lights.
  */
-controller.drawLights = function () {
+controllerDevice.drawLights = function () {
   let color;
   if (this.isDefaultMode ()) {
     color = this.settings.colors.amber;
@@ -60,7 +60,7 @@ controller.drawLights = function () {
 /**
  * Set the mode of the controller.
  */
-controller.setMode = function () {
+controllerDevice.setMode = function () {
   this.clearControl ();
 
   if (this.isDefaultMode ()) {
@@ -75,7 +75,7 @@ controller.setMode = function () {
 /**
  * Set the default mode.
  */
-controller.setDefaultMode = function () {
+controllerDevice.setDefaultMode = function () {
   this.onControl ((e) => {
     const note = parseInt (e.controller.number);
     const { isLearning, learningParameter } = state;
@@ -106,7 +106,7 @@ controller.setDefaultMode = function () {
 /**
  * Set the single mode.
  */
-controller.setSingleMode = function () {
+controllerDevice.setSingleMode = function () {
   const selectedNode = playgroundFacade.selectedNodes[0];
   this.attachRangesToNeuron (selectedNode);
 };
@@ -114,7 +114,7 @@ controller.setSingleMode = function () {
 /**
  * Set the multiple mode.
  */
-controller.setMultipleMode = function () {
+controllerDevice.setMultipleMode = function () {
   const { selectedNodes } = playgroundFacade;
   selectedNodes.forEach ((n) => this.attachRangesToNeuron (n));
 };
@@ -122,7 +122,7 @@ controller.setMultipleMode = function () {
 /**
  * This is called when selection is made.
  */
-controller.onSelect = function () {
+controllerDevice.onSelect = function () {
   this.drawLights ();
   setTimeout (() => {
     this.setMode ();
@@ -132,7 +132,7 @@ controller.onSelect = function () {
 /**
  * Attach events to the buttons.
  */
-controller.attachButtons = function () {
+controllerDevice.attachButtons = function () {
   this.onNote ('on', (e) => {
     if (!this.isDefaultMode ()) {
       return;
@@ -169,7 +169,7 @@ controller.attachButtons = function () {
  *
  * @param {number} selectedNode - The selected node.
  */
-controller.attachRangesToNeuron = function (selectedNode: number): void {
+controllerDevice.attachRangesToNeuron = function (selectedNode: number): void {
   const { neuron } = networkState.getNeuron (selectedNode);
   const links = neuron.inputLinks;
 
@@ -218,14 +218,14 @@ controller.attachRangesToNeuron = function (selectedNode: number): void {
   });
 };
 
-controller.isDefaultMode = function () {
+controllerDevice.isDefaultMode = function () {
   return playgroundFacade.selectedNodes.length === 0;
 };
 
-controller.isSingleMode = function () {
+controllerDevice.isSingleMode = function () {
   return playgroundFacade.selectedNodes.length === 1;
 };
 
-controller.isMultipleMode = function () {
+controllerDevice.isMultipleMode = function () {
   return playgroundFacade.selectedNodes.length > 1;
 };

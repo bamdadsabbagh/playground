@@ -1,5 +1,5 @@
 import { Input, Output } from 'webmidi';
-import { Controller, Selector } from './known-devices/known-devices';
+import { Controller, Selector } from '../known-devices/known-devices';
 
 export enum DeviceCategory {
   select = 'Selector',

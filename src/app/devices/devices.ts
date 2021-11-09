@@ -3,7 +3,7 @@ import {
   Selector,
   knownDevices,
 } from './known-devices/known-devices';
-import { Controllers, Devices, Selectors } from './devices.types';
+import { Controllers, Devices, Selectors } from './device/device.types';
 
 export const devices = Object.create (null);
 

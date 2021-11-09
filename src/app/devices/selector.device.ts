@@ -1,4 +1,4 @@
-import { devicePrototype } from './device.prototype';
+import { devicePrototype } from './device/device.prototype';
 import { playgroundFacade } from '../facades/playground.facade';
 import { networkState } from '../state/network.state';
 import { networkUi } from '../ui/network.ui';

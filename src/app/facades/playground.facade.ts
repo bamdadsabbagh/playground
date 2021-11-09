@@ -7,7 +7,7 @@ import {
 } from '../../playground/playground';
 import { neuronCardUi } from '../ui/neuron-card.ui';
 import { selectorDevice } from '../devices/selector.device';
-import { controller } from '../devices/controller';
+import { controllerDevice } from '../devices/controller.device';
 
 export const playgroundFacade = Object.create (null);
 
@@ -46,5 +46,5 @@ playgroundFacade.toggleNodeSelection = function (nodeIndex: number, isSelected: 
     isSelected,
   });
 
-  controller.onSelect ();
+  controllerDevice.onSelect ();
 };

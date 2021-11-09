@@ -1,5 +1,5 @@
 import { InputEventNoteoff, InputEventNoteon } from 'webmidi';
-import { Device, DeviceSettings } from './devices.types';
+import { Device, DeviceSettings } from './device.types';
 
 export const devicePrototype = Object.create (null);
 

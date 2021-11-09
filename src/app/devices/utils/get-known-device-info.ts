@@ -1,4 +1,4 @@
-import { Device, DeviceCategory } from '../devices.types';
+import { Device, DeviceCategory } from '../device/device.types';
 import { devices } from '../devices';
 
 type GetKnownDeviceInfo = {

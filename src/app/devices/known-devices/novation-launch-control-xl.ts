@@ -1,4 +1,4 @@
-import { DeviceSettings, DeviceCategory } from '../devices.types';
+import { DeviceSettings, DeviceCategory } from '../device/device.types';
 
 export type NovationLaunchControlXl = DeviceSettings & {
   rows: any;
