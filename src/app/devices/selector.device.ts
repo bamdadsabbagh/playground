@@ -1,20 +1,18 @@
-import { toggleOutput } from '../utils/toggle-output';
-import { toggleNeuron } from '../utils/toggle-neuron';
-import { selectInputCanvas } from '../utils/select-input-canvas';
 import { devicePrototype } from './device.prototype';
 import { playgroundFacade } from '../facades/playground.facade';
 import { networkState } from '../state/network.state';
+import { networkUi } from '../ui/network.ui';
 
-export const selector = Object.create (devicePrototype);
+export const selectorDevice = Object.create (devicePrototype);
 
-selector.grid = null as number[][];
+selectorDevice.grid = null as number[][];
 
 /**
  * Initialize the selector
  *
  * @param {*} device - The device to initialize
  */
-selector.init = async function (device: any): Promise<void> {
+selectorDevice.init = async function (device: any): Promise<void> {
   if (this.isInitialized) {
     throw new Error ('selector is already initialized');
   }
@@ -33,7 +31,7 @@ selector.init = async function (device: any): Promise<void> {
 /**
  * First draw of the neural network
  */
-selector.drawGrid = function (): void {
+selectorDevice.drawGrid = function (): void {
   this.drawInputs ();
   this.drawNeurons ();
   this.drawOutputWeights ();
@@ -42,7 +40,7 @@ selector.drawGrid = function (): void {
 /**
  * Attach events to the grid
  */
-selector.attachEvents = function (): void {
+selectorDevice.attachEvents = function (): void {
   this.attachInputs ();
   this.attachNeurons ();
   this.attachOutputWeights ();
@@ -51,7 +49,7 @@ selector.attachEvents = function (): void {
 /**
  * Draw the inputs
  */
-selector.drawInputs = function (): void {
+selectorDevice.drawInputs = function (): void {
   for (let i = 0; i < networkState.inputs.length; ++i) {
     this.playNote ({
       note: this.grid[0][i],
@@ -63,7 +61,7 @@ selector.drawInputs = function (): void {
 /**
  * Attach events to the inputs
  */
-selector.attachInputs = function (): void {
+selectorDevice.attachInputs = function (): void {
   this.onNote ('on', (e) => {
     const flatIndex = this.getGridFlatIndex (e.note.number);
 
@@ -71,9 +69,8 @@ selector.attachInputs = function (): void {
       return;
     }
 
-    const inputNode = networkState.inputs[flatIndex];
-    const inputCanvas = selectInputCanvas (inputNode.id);
-    inputCanvas.click ();
+    const { id } = networkState.getInputByIndex (flatIndex);
+    networkUi.toggleInput (id, true);
   });
 };
 
@@ -83,7 +80,7 @@ selector.attachInputs = function (): void {
  * @param {string} inputName - The name of the input
  * @param {boolean} isEnabled - The state of the input
  */
-selector.setInput = function (inputName: string, isEnabled: boolean): void {
+selectorDevice.setInput = function (inputName: string, isEnabled: boolean): void {
   const map = {
     x: 1,
     y: 2,
@@ -105,7 +102,7 @@ selector.setInput = function (inputName: string, isEnabled: boolean): void {
 /**
  * Draw the neurons
  */
-selector.drawNeurons = function (): void {
+selectorDevice.drawNeurons = function (): void {
   const neuronsLength = networkState.neurons.flat ().length;
   for (let i = 1; i <= neuronsLength; ++i) {
     const {
@@ -126,7 +123,7 @@ selector.drawNeurons = function (): void {
 /**
  * Attach events to the neurons
  */
-selector.attachNeurons = function (): void {
+selectorDevice.attachNeurons = function (): void {
   this.onNote ('on', (e) => {
     const flatIndex = this.getGridFlatIndex (e.note.number);
 
@@ -153,7 +150,7 @@ selector.attachNeurons = function (): void {
       clickTimer = null;
       // payload
       playgroundFacade.toggleNodeSelection (nodeIndex, false);
-      toggleNeuron (nodeIndex);
+      networkUi.toggleNeuron (nodeIndex);
     }, this.settings.time.longClick);
 
     this.onNote ('off', () => {
@@ -178,7 +175,7 @@ type SetNeuronOptions = {
  *
  * @param {SetNeuronOptions} options - The options
  */
-selector.setNeuron = function (options: SetNeuronOptions): void {
+selectorDevice.setNeuronColor = function (options: SetNeuronOptions): void {
   const { index } = options;
   const isSelected = options.isSelected || null;
   const isDisabled = options.isDisabled || null;
@@ -207,7 +204,7 @@ selector.setNeuron = function (options: SetNeuronOptions): void {
 /**
  * Draw the output weights
  */
-selector.drawOutputWeights = function (): void {
+selectorDevice.drawOutputWeights = function (): void {
   const outputWeights = networkState.output.inputLinks;
   for (let i = 0; i < outputWeights.length; ++i) {
     const note = this.grid[this.grid.length - 1][i];
@@ -223,7 +220,7 @@ selector.drawOutputWeights = function (): void {
 /**
  * Attach events to the output weights
  */
-selector.attachOutputWeights = function (): void {
+selectorDevice.attachOutputWeights = function (): void {
   this.onNote ('on', (e) => {
     const flatIndex = this.getGridFlatIndex (e.note.number);
 
@@ -233,7 +230,7 @@ selector.attachOutputWeights = function (): void {
 
     const weights = networkState.output.inputLinks;
     const index = flatIndex - 56;
-    toggleOutput (index);
+    networkState.toggleOutput (index);
 
     const isEnabled = !weights[index].isDead
       && weights[index].weight !== 0;
@@ -251,6 +248,6 @@ selector.attachOutputWeights = function (): void {
  * @param {number} note - The note to get the flat index of
  * @returns {number} The flat index of the note
  */
-selector.getGridFlatIndex = function (note: number): number {
+selectorDevice.getGridFlatIndex = function (note: number): number {
   return this.grid.flat ().indexOf (note);
 };

@@ -1,4 +1,5 @@
 import { playgroundFacade } from '../facades/playground.facade';
+import { Link } from './network.state.types';
 
 /**
  * State object for the network.
@@ -82,4 +83,88 @@ networkState.getNeuron = function (nodeIndex: number): GetNeuron {
     neuron,
     isEnabled,
   };
+};
+
+networkState.toggleOutput = function (outputIndex: number): void {
+  const inputLink = this.output.inputLinks[outputIndex];
+
+  if (!inputLink.source.isEnabled) {
+    inputLink.isDead = true;
+    inputLink.weight = 0;
+    return;
+  }
+
+  if (!inputLink.source.isEnabled) {
+    inputLink.isDead = true;
+    inputLink.weight = 0;
+    return;
+  }
+
+  inputLink.isDead = !inputLink.isDead;
+  inputLink.weight = !inputLink.isDead
+    ? Math.random () - 0.5
+    : 0;
+};
+
+networkState.toggleNeuron = function (nodeIndex: number): void {
+  const { neuron, isEnabled } = this.getNeuron (nodeIndex);
+
+  // todo how to impact node.bias ?
+
+  neuron.isEnabled = !isEnabled;
+
+  // input weights
+  neuron.inputLinks.forEach ((link: Link) => {
+    // kill if source neuron is disabled
+    if (!link.source.isEnabled) {
+      link.isDead = true;
+      link.savedWeight = link.weight;
+      link.weight = 0;
+      return;
+    }
+
+    if (neuron.isEnabled) {
+      link.isDead = false;
+      link.weight = link.savedWeight || Math.random () - 0.5;
+    } else {
+      link.isDead = true;
+      link.savedWeight = link.weight;
+      link.weight = 0;
+    }
+  });
+
+  // output weights
+  neuron.outputs.forEach ((link: Link) => {
+    if (neuron.isEnabled) {
+      link.isDead = false;
+      link.weight = link.savedWeight || Math.random () - 0.5;
+    } else {
+      link.isDead = true;
+      link.savedWeight = link.weight;
+      link.weight = 0;
+    }
+  });
+};
+
+networkState.getInputByIndex = function (index: number) {
+  return this.inputs[index];
+};
+
+networkState.toggleInput = function (slug: string): any {
+  const input = this.inputs.filter ((input) => input.id === slug)[0];
+  input.isEnabled = !input.isEnabled;
+
+  input.outputs.forEach ((outputLink) => {
+    if (!outputLink.dest.isEnabled) {
+      outputLink.isDead = true;
+      outputLink.weight = 0;
+      return;
+    }
+
+    outputLink.isDead = !input.isEnabled;
+    outputLink.weight = input.isEnabled
+      ? Math.random () - 0.5
+      : 0;
+  });
+  return input;
 };

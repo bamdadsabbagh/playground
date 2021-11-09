@@ -1,6 +1,6 @@
 import { devicePrototype } from './device.prototype';
 import { state } from '../../coolearning/state';
-import { rangeMap } from '../../coolearning/utils/range-map';
+import { rangeMap } from '../utils/range-map';
 import { playgroundFacade } from '../facades/playground.facade';
 import { neuronCardUi } from '../ui/neuron-card.ui';
 import { networkUi } from '../ui/network.ui';

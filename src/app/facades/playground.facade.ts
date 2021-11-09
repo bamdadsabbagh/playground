@@ -6,7 +6,7 @@ import {
   selectedNodes as importedSelectedNodes,
 } from '../../playground/playground';
 import { neuronCardUi } from '../ui/neuron-card.ui';
-import { selector } from '../devices/selector';
+import { selectorDevice } from '../devices/selector.device';
 import { controller } from '../devices/controller';
 
 export const playgroundFacade = Object.create (null);
@@ -41,7 +41,7 @@ playgroundFacade.toggleNodeSelection = function (nodeIndex: number, isSelected: 
 
   neuronCardUi.updateCard (nodeIndex);
 
-  selector.setNeuron ({
+  selectorDevice.setNeuronColor ({
     index: nodeIndex,
     isSelected,
   });

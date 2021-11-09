@@ -29,9 +29,8 @@ import { Example2D, shuffle } from './dataset';
 import { AppendingLineChart } from './linechart';
 import * as d3 from 'd3';
 import { Coolearning } from '../coolearning/coolearning';
-import { toggleNeuron } from '../app/utils/toggle-neuron';
-import { toggleInput } from '../app/utils/toggle-input';
 import { playgroundFacade } from '../app/facades/playground.facade';
+import { networkUi } from '../app/ui/network.ui';
 
 Coolearning ();
 
@@ -524,7 +523,7 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
           return;
         }
 
-        toggleNeuron (parseInt (nodeId));
+        networkUi.toggleNeuron (parseInt (nodeId));
         clearTimeout (mouseTimer);
         mouseTimer = null;
       }, 600);
@@ -551,7 +550,7 @@ function drawNode (cx: number, cy: number, nodeId: string, isInput: boolean,
     });
   if (isInput) {
     div.on ('click', function () {
-      toggleInput (nodeId);
+      networkUi.toggleInput (nodeId);
       div.classed ('disabled', !div.classed ('disabled'));
     });
   }
