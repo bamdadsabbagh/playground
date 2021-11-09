@@ -29,7 +29,7 @@ networkUi.toggleInput = function (slug: string, render = false) {
   }
 };
 
-networkUi.drawParameter = function (parameter: Parameter, value: number): void {
+networkUi.renderParameter = function (parameter: Parameter, value: number): void {
   if (typeof parameter === 'undefined') {
     throw new Error ('parameter is not defined');
   }

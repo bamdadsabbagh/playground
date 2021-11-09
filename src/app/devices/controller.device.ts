@@ -83,7 +83,7 @@ controllerDevice.setDefaultMode = function () {
 
     if (parameters) {
       parameters.forEach ((parameter) => {
-        networkUi.drawParameter (parameter, e.value);
+        networkUi.renderParameter (parameter, e.value);
       });
     }
 
@@ -144,7 +144,7 @@ controllerDevice.attachButtons = function () {
 
     if (parameters) {
       parameters.forEach ((parameter) => {
-        networkUi.drawParameter (parameter, 1);
+        networkUi.renderParameter (parameter, 1);
       });
     }
 
