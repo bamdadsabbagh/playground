@@ -6,7 +6,7 @@ import { modal } from '../modal';
  *
  * @returns {{HTMLDivElement, HTMLDivElement}} - The modal container and the modal content.
  */
-export function Modal (): { container: HTMLDivElement; content: HTMLDivElement; } {
+export function ModalComponent (): { container: HTMLDivElement; content: HTMLDivElement; } {
   const container = document.createElement ('div');
   const content = document.createElement ('div');
 

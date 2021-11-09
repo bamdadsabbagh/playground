@@ -4,7 +4,7 @@
  * @see https://getmdl.io/components/index.html#snackbar-section
  * @returns {HTMLDivElement} Snackbar
  */
-export function Snackbar (): HTMLDivElement {
+export function SnackbarComponent (): HTMLDivElement {
   const snackbar = document.createElement ('div');
   snackbar.classList.add ('mdl-js-snackbar');
   snackbar.classList.add ('mdl-snackbar');

@@ -1,6 +1,6 @@
-import { MaterialList } from './components/base/material-list';
-import { MaterialChip } from './components/base/material-chip';
-import { MaterialDialog } from './components/base/material-dialog';
+import { ListMaterialComponent } from './components/material/list.material.component';
+import { ChipMaterialComponent } from './components/material/chip.material.component';
+import { DialogMaterialComponent } from './components/material/dialog.material.component';
 
 export const dialog = Object.create (null);
 
@@ -22,16 +22,16 @@ dialog.init = function () {
  * @todo programmed for future use
  */
 dialog.createFutureDialog = function () {
-  const list = MaterialList ([
+  const list = ListMaterialComponent ([
     'first',
     'second',
-    MaterialChip (
+    ChipMaterialComponent (
       'button',
       'hello',
       // eslint-disable-next-line no-console
       () => console.log ('button'),
     ),
-    MaterialChip (
+    ChipMaterialComponent (
       'range',
       '75',
       // eslint-disable-next-line no-console
@@ -39,7 +39,7 @@ dialog.createFutureDialog = function () {
     ),
   ]);
 
-  const dialog = MaterialDialog (
+  const dialog = DialogMaterialComponent (
     'Settings',
     list,
     650,

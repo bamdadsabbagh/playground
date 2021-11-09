@@ -4,7 +4,7 @@
  * @param {Array<string|HTMLElement>} items - The list items.
  * @returns {HTMLUListElement} The material list component.
  */
-export function MaterialList (items: Array<(string | HTMLElement)>): HTMLUListElement {
+export function ListMaterialComponent (items: Array<(string | HTMLElement)>): HTMLUListElement {
   if (!items) {
     throw new Error ('items is not defined');
   }

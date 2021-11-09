@@ -1,4 +1,4 @@
-import { Modal } from './components/modal';
+import { ModalComponent } from './components/modal.component';
 import { CLASSES, PARAMETERS } from '../../coolearning/constants';
 import { state } from '../../coolearning/state';
 
@@ -8,7 +8,7 @@ modal.container = null;
 modal.content = null;
 
 modal.init = function () {
-  const { container, content } = Modal ();
+  const { container, content } = ModalComponent ();
   this.container = container;
   this.content = content;
   document.body.insertBefore (this.container, document.body.firstChild);

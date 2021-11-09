@@ -5,7 +5,7 @@
  * @param {Function} handleClick - The click handler
  * @returns {HTMLButtonElement} - The button element
  */
-export function MaterialButton (
+export function ButtonMaterialComponent (
   icon: HTMLElement,
   handleClick: () => void = undefined,
 ): HTMLButtonElement {

@@ -1,4 +1,4 @@
-import { MaterialIcon } from './material-icon';
+import { IconMaterialComponent } from './icon.material.component';
 
 /**
  * Create a material chip element
@@ -8,7 +8,7 @@ import { MaterialIcon } from './material-icon';
  * @param {Function} handleClick - The function to handle the click event
  * @returns {HTMLElement} - The material chip element
  */
-export function MaterialChip (
+export function ChipMaterialComponent (
   type: string,
   content: string,
   handleClick: (e: PointerEvent) => void,
@@ -56,7 +56,7 @@ export function MaterialChip (
   // action
   const action = document.createElement ('a');
   action.classList.add ('mdl-chip__action');
-  action.appendChild (MaterialIcon ('cancel'));
+  action.appendChild (IconMaterialComponent ('cancel'));
   action.onclick = handleClick;
   action.appendTo (chip);
 

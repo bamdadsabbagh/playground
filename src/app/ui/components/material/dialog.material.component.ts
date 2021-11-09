@@ -8,7 +8,7 @@
  * @param {string} closeText - The text for the close button.
  * @returns {HTMLDialogElement} The dialog element.
  */
-export function MaterialDialog (
+export function DialogMaterialComponent (
   titleText: string,
   contentText: string | HTMLElement,
   width: number,

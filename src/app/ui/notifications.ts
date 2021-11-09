@@ -1,11 +1,11 @@
-import { Snackbar } from './components/snackbar';
+import { SnackbarComponent } from './components/snackbar.component';
 
 export const notifications = Object.create (null);
 
 notifications.snackbar = null;
 
 notifications.init = async function () {
-  this.snackbar = Snackbar ();
+  this.snackbar = SnackbarComponent ();
   document.body.appendChild (this.snackbar);
   await this.waitForMaterialScripts ();
 };

@@ -4,7 +4,7 @@
  * @param {string} slug - The slug of the icon
  * @returns {HTMLElement} - The material icon component
  */
-export function MaterialIcon (slug: string): HTMLElement {
+export function IconMaterialComponent (slug: string): HTMLElement {
   const element = document.createElement ('i');
   element.classList.add ('material-icons');
   element.innerText = slug;
